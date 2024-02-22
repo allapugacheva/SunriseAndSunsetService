@@ -1,4 +1,4 @@
-package com.example.SunriseAndSunsetService.model;
+package com.example.sunriseandsunsetservice.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @NoArgsConstructor
-public class SunriseData {
+public class sunrisedata {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,7 +23,7 @@ public class SunriseData {
     private LocalTime sunrise;
     private LocalTime sunset;
 
-    public SunriseData(Double lat, Double lng, LocalDate date, String place, LocalTime sunrise, LocalTime sunset){
+    public sunrisedata(Double lat, Double lng, LocalDate date, String place, LocalTime sunrise, LocalTime sunset){
         this.lat = lat;
         this.lng = lng;
         this.date = date;

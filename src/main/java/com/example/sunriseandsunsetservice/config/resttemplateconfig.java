@@ -1,4 +1,4 @@
-package com.example.SunriseAndSunsetService.config;
+package com.example.sunriseandsunsetservice.config;
 
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @NoArgsConstructor
-public class RestTemplateConfig {
+public class resttemplateconfig {
 
     @Bean
     public RestTemplate restTemplate() {
