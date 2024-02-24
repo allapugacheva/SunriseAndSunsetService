@@ -15,18 +15,18 @@ public class SunriseController {
 
     private final SunriseService service;
 
-    @GetMapping
+    @GetMapping("/show")
     public List<SunriseData> findAllData() {
         return service.findAllData();
     }
 
-    @GetMapping("/{lat}/{lng}/{date}")
-    public SunriseData findTime(@PathVariable Double lat, @PathVariable Double lng, @PathVariable LocalDate date) {
+    @GetMapping("/find")
+    public SunriseData findTime(@RequestParam("lat") Double lat, @RequestParam("lng") Double lng, @RequestParam("date") LocalDate date) {
         return service.findTime(lat, lng, date);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteData(@PathVariable Long id){
+    @DeleteMapping("/delete")
+    public void deleteData(@RequestParam("id") Long id){
         service.deleteData(id);
     }
 }
