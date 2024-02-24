@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class sunriseandsunsetserviceapplication {
+public class SunriseAndSunsetServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(sunriseandsunsetserviceapplication.class, args);
+		SpringApplication.run(SunriseAndSunsetServiceApplication.class, args);
 	}
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @NoArgsConstructor
-public class resttemplateconfig {
+public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplate() {

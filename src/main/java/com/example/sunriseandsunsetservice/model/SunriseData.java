@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @NoArgsConstructor
-public class sunrisedata {
+public class SunriseData {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,7 +23,7 @@ public class sunrisedata {
     private LocalTime sunrise;
     private LocalTime sunset;
 
-    public sunrisedata(Double lat, Double lng, LocalDate date, String place, LocalTime sunrise, LocalTime sunset){
+    public SunriseData(Double lat, Double lng, LocalDate date, String place, LocalTime sunrise, LocalTime sunset){
         this.lat = lat;
         this.lng = lng;
         this.date = date;
