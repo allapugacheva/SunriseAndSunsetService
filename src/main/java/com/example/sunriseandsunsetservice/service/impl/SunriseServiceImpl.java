@@ -1,4 +1,4 @@
-package com.example.sunriseandsunsetservice.service.Impl;
+package com.example.sunriseandsunsetservice.service.impl;
 
 import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
 import com.example.sunriseandsunsetservice.model.SunriseData;
@@ -31,13 +31,13 @@ public class SunriseServiceImpl implements SunriseService {
     @SneakyThrows
     @Override
     public SunriseData findTime(Double lat, Double lng, LocalDate date) {
-        if (!isValidLat(lat) || !isValidLng(lng))
+        if (Boolean.FALSE.equals(isValidLat(lat)) || Boolean.FALSE.equals(isValidLng(lng)))
             throw new MyRuntimeException("Wrong parameters.");
         String[] timezoneAndPlace = getTimezoneAndPlace(lat, lng);
         String url = "https://api.sunrise-sunset.org/json?lat=" + lat.toString() + "&lng=" + lng.toString()
                 + "&date=" + date.toString() + "&formatted=0&tzid=" + timezoneAndPlace[0];
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        if (!response.getStatusCode().is2xxSuccessful())
+        if (Boolean.FALSE.equals(response.getStatusCode().is2xxSuccessful()))
             throw new MyRuntimeException("Converting failure.");
         String responseBody = response.getBody();
         JsonNode root = objectMapper.readTree(responseBody);
@@ -56,7 +56,7 @@ public class SunriseServiceImpl implements SunriseService {
     private String[] getTimezoneAndPlace(Double lat, Double lng) {
         String url = "https://htmlweb.ru/json/geo/timezone/" + lat.toString() + "," + lng.toString();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        if (!response.getStatusCode().is2xxSuccessful())
+        if (Boolean.FALSE.equals(response.getStatusCode().is2xxSuccessful()))
             throw new MyRuntimeException("Wrong parameters.");
         String responseBody = response.getBody();
         JsonNode root = objectMapper.readTree(responseBody);
