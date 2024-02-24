@@ -28,5 +28,5 @@ public class SunriseController {
     @DeleteMapping("/{id}")
     public void deleteData(@PathVariable Long id){
         service.deleteData(id);
-    }пше 
+    }
 }
