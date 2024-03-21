@@ -28,8 +28,8 @@ public class SunriseAndSunsetController {
     }
 
     @PutMapping("/sunriseandsunset")
-    public ResponseDTO updateSunriseAndSunset(@RequestParam("locationId") int locationId,
-                                              @RequestParam("dateId") int dateId,
+    public ResponseDTO updateSunriseAndSunset(@RequestParam("locationId") Integer locationId,
+                                              @RequestParam("dateId") Integer dateId,
                                               @RequestParam("lat") Double lat,
                                               @RequestParam("lng") Double lng,
                                               @RequestParam("date") LocalDate date) {

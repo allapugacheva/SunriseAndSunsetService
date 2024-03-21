@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface TimezoneRepository extends JpaRepository<TimezoneModel, Integer> {
 
     TimezoneModel findByTimezone(String s);
-
-    TimezoneModel findById(int id);
 }

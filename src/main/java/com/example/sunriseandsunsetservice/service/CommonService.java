@@ -88,10 +88,9 @@ public class CommonService {
             timeRepository.delete(tm);
     }
 
-    public void updateDate(int id, LocalDate date) {
-        DateModel dateModel = dateRepository.findById(id);
-        if(dateModel == null)
-            throw new MyRuntimeException("Wrong id.");
+    public void updateDate(Integer id, LocalDate date) {
+        DateModel dateModel = dateRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         boolean flagDeleteDate = true;
 
@@ -133,10 +132,9 @@ public class CommonService {
             dateRepository.save(dateModel);
     }
 
-    public String updateLocation(int id, Double lat, Double lng) {
-        LocationModel locationModel = locationRepository.findById(id);
-        if(locationModel == null)
-            throw new MyRuntimeException("Wrong id.");
+    public String updateLocation(Integer id, Double lat, Double lng) {
+        LocationModel locationModel = locationRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         boolean flagDeleteLocation = true;
 

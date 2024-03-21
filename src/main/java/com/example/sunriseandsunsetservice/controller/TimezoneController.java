@@ -24,13 +24,13 @@ public class TimezoneController {
     }
 
     @PutMapping("/timezone")
-    public TimezoneDTO updateTimezone(@RequestParam("id") int id,
+    public TimezoneDTO updateTimezone(@RequestParam("id") Integer id,
                                       @RequestParam("timezone") String timezone) {
         return timezoneService.updateTimezone(id, timezone);
     }
 
     @DeleteMapping("/timezone")
-    public TimezoneDTO deleteTimezone(@RequestParam("id") int id) {
+    public TimezoneDTO deleteTimezone(@RequestParam("id") Integer id) {
         return timezoneService.deleteTimezone(id);
     }
 }

@@ -8,6 +8,6 @@ public interface SunriseAndSunsetService {
 
     ResponseDTO findSunriseAndSunsetTime(Double lat, Double lng, LocalDate date);
     List<ResponseDTO> readAllSunrisesAnsSunsets();
-    ResponseDTO updateSunriseAndSunset(int locationId, int dateId, Double lat, Double lng, LocalDate date);
+    ResponseDTO updateSunriseAndSunset(Integer locationId, Integer dateId, Double lat, Double lng, LocalDate date);
     ResponseDTO deleteSunriseAndSunsetTime(Integer locationId, Integer dateId);
 }

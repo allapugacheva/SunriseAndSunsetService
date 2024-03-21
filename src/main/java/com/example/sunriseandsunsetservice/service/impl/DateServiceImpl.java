@@ -35,14 +35,16 @@ public class DateServiceImpl implements DateService{
     public List<DateDTO> readAllDates() {
 
         List<DateDTO> dates = new ArrayList<>();
+
         for(DateModel dm : dateRepository.findAll())
             dates.add(new DateDTO(dm.getDate()));
+
         return dates;
     }
 
     @Override
     @Transactional
-    public DateDTO updateDate(int id, LocalDate date) {
+    public DateDTO updateDate(Integer id, LocalDate date) {
 
         commonService.updateDate(id, date);
 
@@ -51,11 +53,10 @@ public class DateServiceImpl implements DateService{
 
     @Override
     @Transactional
-    public DateDTO deleteDate(int id) {
+    public DateDTO deleteDate(Integer id) {
 
-        DateModel dateModel = dateRepository.findById(id);
-        if(dateModel == null)
-            throw new MyRuntimeException("Wrong id.");
+        DateModel dateModel = dateRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         if (dateModel.getTimes().isEmpty() && dateModel.getLocations().isEmpty())
             dateRepository.delete(dateModel);

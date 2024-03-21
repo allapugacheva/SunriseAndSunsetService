@@ -9,6 +9,4 @@ import java.time.LocalDate;
 public interface DateRepository extends JpaRepository<DateModel, Integer> {
 
     DateModel findByDate(LocalDate date);
-
-    DateModel findById(int id);
 }

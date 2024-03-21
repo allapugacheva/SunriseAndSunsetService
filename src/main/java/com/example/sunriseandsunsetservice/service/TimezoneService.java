@@ -7,6 +7,6 @@ public interface TimezoneService {
 
     TimezoneDTO createTimezone(String timezone);
     List<TimezoneDTO> readAllTimezones();
-    TimezoneDTO updateTimezone(int id, String timezone);
-    TimezoneDTO deleteTimezone(int id);
+    TimezoneDTO updateTimezone(Integer id, String timezone);
+    TimezoneDTO deleteTimezone(Integer id);
 }

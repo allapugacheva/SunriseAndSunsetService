@@ -26,14 +26,14 @@ public class TimeController {
     }
 
     @PutMapping("/time")
-    public TimeDTO updateTime(@RequestParam("id") int id,
+    public TimeDTO updateTime(@RequestParam("id") Integer id,
                               @RequestParam("sunriseTime") LocalTime sunriseTime,
                               @RequestParam("sunsetTime") LocalTime sunsetTime) {
         return timeService.updateTime(id, sunriseTime, sunsetTime);
     }
 
     @DeleteMapping("/time")
-    public TimeDTO deleteTime(@RequestParam("id") int id) {
+    public TimeDTO deleteTime(@RequestParam("id") Integer id) {
         return timeService.deleteTime(id);
     }
 }

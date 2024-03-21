@@ -41,11 +41,10 @@ public class TimeServiceImpl implements TimeService {
 
     @Override
     @Transactional
-    public TimeDTO updateTime(int id, LocalTime sunriseTime, LocalTime sunsetTime) {
+    public TimeDTO updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime) {
 
-        TimeModel timeModel = timeRepository.findById(id);
-        if(timeModel == null)
-            throw new MyRuntimeException("Wrong id.");
+        TimeModel timeModel = timeRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         timeModel.setSunriseTime(sunriseTime);
         timeModel.setSunsetTime(sunsetTime);
@@ -56,11 +55,10 @@ public class TimeServiceImpl implements TimeService {
 
     @Override
     @Transactional
-    public TimeDTO deleteTime(int id) {
+    public TimeDTO deleteTime(Integer id) {
 
-        TimeModel timeModel = timeRepository.findById(id);
-        if(timeModel == null)
-            throw new MyRuntimeException("Wrong id.");
+        TimeModel timeModel = timeRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         if (timeModel.getDates().isEmpty() && timeModel.getLocations().isEmpty())
             timeRepository.delete(timeModel);

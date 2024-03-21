@@ -25,14 +25,14 @@ public class LocationController {
     }
 
     @PutMapping("/location")
-    public LocationDTO updateLocation(@RequestParam("id") int id,
+    public LocationDTO updateLocation(@RequestParam("id") Integer id,
                                       @RequestParam("lat") Double lat,
                                       @RequestParam("lng") Double lng) {
         return locationService.updateLocation(id, lat, lng);
     }
 
     @DeleteMapping("/location")
-    public LocationDTO deleteLocation(@RequestParam("id") int id) {
+    public LocationDTO deleteLocation(@RequestParam("id") Integer id) {
         return locationService.deleteLocation(id);
     }
 

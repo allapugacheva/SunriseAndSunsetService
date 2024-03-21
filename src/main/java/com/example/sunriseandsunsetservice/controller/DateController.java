@@ -25,13 +25,13 @@ public class DateController {
     }
 
     @PutMapping("/date")
-    public DateDTO updateDate(@RequestParam("id") int id,
+    public DateDTO updateDate(@RequestParam("id") Integer id,
                               @RequestParam("date") LocalDate date) {
         return dateService.updateDate(id, date);
     }
 
     @DeleteMapping("/date")
-    public DateDTO deleteDate(@RequestParam("id") int id) {
+    public DateDTO deleteDate(@RequestParam("id") Integer id) {
         return dateService.deleteDate(id);
     }
 

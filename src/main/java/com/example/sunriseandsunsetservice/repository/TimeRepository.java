@@ -9,6 +9,4 @@ import java.time.LocalTime;
 public interface TimeRepository extends JpaRepository<TimeModel, Integer> {
 
     TimeModel findBySunriseTimeAndSunsetTime(LocalTime sunrise, LocalTime sunset);
-
-    TimeModel findById(int id);
 }

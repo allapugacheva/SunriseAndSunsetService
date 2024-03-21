@@ -55,18 +55,17 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    public LocationDTO updateLocation(int id, Double lat, Double lng) {
+    public LocationDTO updateLocation(Integer id, Double lat, Double lng) {
 
         return new LocationDTO(commonService.updateLocation(id, lat, lng), lat, lng);
     }
 
     @Override
     @Transactional
-    public LocationDTO deleteLocation(int id) {
+    public LocationDTO deleteLocation(Integer id) {
 
-        LocationModel locationModel = locationRepository.findById(id);
-        if(locationModel == null)
-            throw new MyRuntimeException("Wrong id");
+        LocationModel locationModel = locationRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         if (locationModel.getDates().isEmpty() && locationModel.getTimes().isEmpty())
             locationRepository.delete(locationModel);

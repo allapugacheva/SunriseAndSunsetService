@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface LocationRepository extends JpaRepository<LocationModel, Integer> {
 
     LocationModel findByLatitudeAndLongitude(Double lat, Double lng);
-
-    LocationModel findById(int id);
 }

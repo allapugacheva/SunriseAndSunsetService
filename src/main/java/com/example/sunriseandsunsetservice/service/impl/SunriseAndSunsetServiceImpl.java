@@ -87,7 +87,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
     @Override
     @Transactional
-    public ResponseDTO updateSunriseAndSunset(int locationId, int dateId, Double lat, Double lng, LocalDate date) {
+    public ResponseDTO updateSunriseAndSunset(Integer locationId, Integer dateId, Double lat, Double lng, LocalDate date) {
 
         if (commonService.notValidLat(lat) || commonService.notValidLng(lng))
             throw new MyRuntimeException("Not valid latitude or longitude");

@@ -40,11 +40,10 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     @Override
     @Transactional
-    public TimezoneDTO updateTimezone(int id, String timezone) {
+    public TimezoneDTO updateTimezone(Integer id, String timezone) {
 
-        TimezoneModel timezoneModel = timezoneRepository.findById(id);
-        if(timezoneModel == null)
-            throw new MyRuntimeException("Wrong id.");
+        TimezoneModel timezoneModel = timezoneRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         timezoneModel.setTimezone(timezone);
         timezoneRepository.save(timezoneModel);
@@ -54,11 +53,10 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     @Override
     @Transactional
-    public TimezoneDTO deleteTimezone(int id) {
+    public TimezoneDTO deleteTimezone(Integer id) {
 
-        TimezoneModel timezoneModel = timezoneRepository.findById(id);
-        if(timezoneModel == null)
-            throw new MyRuntimeException("Wrong id.");
+        TimezoneModel timezoneModel = timezoneRepository.findById(id).orElseThrow(
+                () -> new MyRuntimeException("Wrong id."));
 
         if (timezoneModel.getLocations().isEmpty())
             timezoneRepository.deleteById(id);
