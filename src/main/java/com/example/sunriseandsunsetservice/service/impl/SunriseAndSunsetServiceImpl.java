@@ -105,45 +105,30 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
     @Override
     @Transactional
-    public ResponseDTO deleteSunriseAndSunsetTime(int locationId, int dateId) {
+    public ResponseDTO deleteSunriseAndSunsetTime(Integer locationId, Integer dateId) {
 
-        DateModel dateModel = dateRepository.findById(dateId);
-        if(dateModel == null)
-            throw new MyRuntimeException("Wrong date id.");
-        LocationModel locationModel = locationRepository.findById(locationId);
-        if(locationModel == null)
-            throw new MyRuntimeException("Wrong location id.");
+        DateModel dateModel = dateRepository.findById(dateId).orElseThrow(
+                () -> new MyRuntimeException("Wrong date id."));
+        LocationModel locationModel = locationRepository.findById(locationId).orElseThrow(
+                () -> new MyRuntimeException("Wrong location id."));
 
         TimeModel timeModel = commonService.getCommonTime(dateModel, locationModel);
 
-        boolean flagDeleteLocation = false, flagDeleteTime = false, flagDeleteDate = false;
-
-        if (locationModel.getDates().contains(dateModel) && locationModel.getTimes().contains(timeModel))
-            flagDeleteLocation = true;
-
-        if (timeModel.getDates().contains(dateModel) && timeModel.getLocations().contains(locationModel))
-            flagDeleteTime = true;
-
-        if (dateModel.getTimes().contains(timeModel) && dateModel.getLocations().contains(locationModel))
-            flagDeleteDate = true;
-
-        if(!flagDeleteDate && !flagDeleteLocation && !flagDeleteTime)
-            throw new MyRuntimeException("Can't delete request.");
-
-        if (flagDeleteLocation) {
+        if ((locationModel.getDates().contains(dateModel) && locationModel.getTimes().contains(timeModel)) &&
+                (timeModel.getDates().contains(dateModel) && timeModel.getLocations().contains(locationModel)) &&
+                (dateModel.getTimes().contains(timeModel) && dateModel.getLocations().contains(locationModel)))
+        {
             dateModel.deleteLocation(locationModel);
             timeModel.deleteLocation(locationModel);
-        }
 
-        if (flagDeleteDate) {
-                locationModel.deleteDate(dateModel);
+            locationModel.deleteDate(dateModel);
             timeModel.deleteDate(dateModel);
-        }
 
-        if (flagDeleteTime) {
-                locationModel.deleteTime(timeModel);
-                dateModel.deleteTime(timeModel);
+            locationModel.deleteTime(timeModel);
+            dateModel.deleteTime(timeModel);
         }
+        else
+            throw new MyRuntimeException("Not connected data.");
 
         if(locationModel.getDates().isEmpty() && locationModel.getTimes().isEmpty())
             locationRepository.delete(locationModel);

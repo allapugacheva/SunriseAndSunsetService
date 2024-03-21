@@ -37,8 +37,8 @@ public class SunriseAndSunsetController {
     }
 
     @DeleteMapping("/sunriseandsunset")
-    public ResponseDTO deleteSunriseAndSunsetTime(@RequestParam("locationId") int locationId,
-                                                  @RequestParam("dateId") int dateId) {
+    public ResponseDTO deleteSunriseAndSunsetTime(@RequestParam("locationId") Integer locationId,
+                                                  @RequestParam("dateId") Integer dateId) {
         return service.deleteSunriseAndSunsetTime(locationId, dateId);
     }
 }

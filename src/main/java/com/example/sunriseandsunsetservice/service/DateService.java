@@ -1,7 +1,6 @@
 package com.example.sunriseandsunsetservice.service;
 
 import com.example.sunriseandsunsetservice.dto.DateDTO;
-import com.example.sunriseandsunsetservice.model.DateModel;
 import java.time.LocalDate;
 import java.util.List;
 

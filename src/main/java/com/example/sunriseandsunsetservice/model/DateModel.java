@@ -3,7 +3,6 @@ package com.example.sunriseandsunsetservice.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 import java.util.HashSet;

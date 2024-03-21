@@ -24,7 +24,7 @@ public class LocationServiceImpl implements LocationService {
     public LocationDTO createLocation(Double lat, Double lng) {
 
         if (commonService.notValidLat(lat) || commonService.notValidLng(lng))
-            throw new RuntimeException("Invalid latitude or longitude.");
+            throw new MyRuntimeException("Invalid latitude or longitude.");
 
         LocationModel locationModel;
         if ((locationModel = locationRepository.findByLatitudeAndLongitude(lat, lng)) == null) {
