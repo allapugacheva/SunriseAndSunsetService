@@ -8,11 +8,17 @@
 В приложении используются Sunset and sunrise times API для получения времени восхода и заката и Timezone API для получения часового пояса и города по указанным координатам.
 
 ## Запросы:
-Для получения информации отправляются GET запросы в формате:
-localhost:8080/api/v1/suntime/find?lat=latitude&lng=longitude&date=date
+Для получения информации отправляются POST запросы в формате:
+localhost:8080/api/v1/suntime/sunriseandsunset?lat=latitude&lng=longitude&date=date
 
-Вся полученная информация сохраняется в базе данных (PostgreSQL), чтобы её можно заново просмотреть. Получить доступ ко всем данным можно по запросу:
-localhost:8080/api/v1/suntime/show
+Вся полученная информация сохраняется в базе данных (PostgreSQL). Получить доступ ко всем данным можно по GET запросу:
+localhost:8080/api/v1/suntime/sunriseandsunset
 
-Если хочется удалить неактуальную информацию посылается DELETE запрос:
-localhost:8080/api/v1/suntime/delete?id=id
+Обновить данные запроса можно используя PUT, указав новые координаты и место:
+localhost:8080/api/v1/suntime/sunriseandsunset?lat=latitude&lng=longitude&date=date
+
+Если необходимо удалить неактуальную информацию посылается DELETE запрос:
+localhost:8080/api/v1/suntime/sunriseandsunset?locationId=id&dateId=id
+
+Также поддерживаются CRUD операции с каждой таблицей базы данных по отдельности.
+При изменении данных, которые связаны с другими данными, происходит обновление всех значений в соответствии с новыми параметрами.
