@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "date")
-public class DateModel {
+public class Date {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,28 +26,28 @@ public class DateModel {
             name = "location_date_mapping",
             joinColumns =  @JoinColumn(name = "date_id") ,
             inverseJoinColumns =  @JoinColumn(name = "location_id"))
-    private Set<LocationModel> locations = new HashSet<>();
+    private Set<Location> locations = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "date_time_mapping",
             joinColumns =  @JoinColumn(name = "date_id") ,
             inverseJoinColumns =  @JoinColumn(name = "sunrise_and_sunset_time_id"))
-    private Set<TimeModel> times = new HashSet<>();
+    private Set<Time> times = new HashSet<>();
 
-    public DateModel(LocalDate d) {
+    public Date(LocalDate d) {
         this.date = d;
     }
 
-    public void addTime(TimeModel timeModel) {
-        this.times.add(timeModel);
+    public void addTime(Time time) {
+        this.times.add(time);
     }
 
-    public void deleteTime(TimeModel timeModel) { this.times.remove(timeModel); }
+    public void deleteTime(Time time) { this.times.remove(time); }
 
-    public void addLocation(LocationModel locationModel) {
-        this.locations.add(locationModel);
+    public void addLocation(Location location) {
+        this.locations.add(location);
     }
 
-    public void deleteLocation(LocationModel locationModel) { this.locations.remove(locationModel); }
+    public void deleteLocation(Location location) { this.locations.remove(location); }
 }

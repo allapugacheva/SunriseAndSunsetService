@@ -1,67 +1,89 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
+import com.example.sunriseandsunsetservice.cache.InMemoryCache;
 import com.example.sunriseandsunsetservice.dto.TimezoneDTO;
 import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
-import com.example.sunriseandsunsetservice.model.TimezoneModel;
+import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.TimezoneRepository;
 import com.example.sunriseandsunsetservice.service.TimezoneService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class TimezoneServiceImpl implements TimezoneService {
+
     private final TimezoneRepository timezoneRepository;
 
-    @Override
-    @Transactional
-    public TimezoneDTO createTimezone(String timezone) {
-
-        if (timezoneRepository.findByTimezone(timezone) == null)
-            timezoneRepository.save(new TimezoneModel(timezone));
-
-        return new TimezoneDTO(timezone);
-    }
-
-    @Override
-    public List<TimezoneDTO> readAllTimezones() {
-
-        List<TimezoneDTO> timezones = new ArrayList<>();
-
-        for(TimezoneModel tm : timezoneRepository.findAll())
-            timezones.add(new TimezoneDTO(tm.getTimezone()));
-
-        return timezones;
-    }
+    private final InMemoryCache cache;
 
     @Override
     @Transactional
-    public TimezoneDTO updateTimezone(Integer id, String timezone) {
+    public TimezoneDTO createTimezone(String newTimezone) {
 
-        TimezoneModel timezoneModel = timezoneRepository.findById(id).orElseThrow(
+        Timezone timezone;
+        if ((timezone = timezoneRepository.findByTimezone(newTimezone)) == null)
+            timezone = timezoneRepository.save(new Timezone(newTimezone));
+
+        cache.put("Timezone" + timezone.getId().toString(), timezone);
+
+        return new TimezoneDTO(newTimezone);
+    }
+
+    @Override
+    public List<TimezoneDTO> readAllTimezones() { return timezoneRepository.findAllTimezones(); }
+
+    @Override
+    public TimezoneDTO getById(Integer id) {
+
+        Timezone tempTimezone = (Timezone) cache.get("Timezone" + id.toString());
+
+        if(tempTimezone == null) {
+            tempTimezone = timezoneRepository.findById(id).orElseThrow(
+                    () -> new MyRuntimeException("Timezone not found."));
+
+            cache.put("Timezone" + id, tempTimezone);
+        }
+
+        return new TimezoneDTO(tempTimezone.getTimezone());
+    }
+
+    @Override
+    @Transactional
+    public TimezoneDTO updateTimezone(Integer id, String newTimezone) {
+
+        Timezone timezone = (Timezone) cache.get("Timezone" + id);
+        if(timezone == null)
+            timezone = timezoneRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
-        timezoneModel.setTimezone(timezone);
-        timezoneRepository.save(timezoneModel);
+        cache.remove("Timezone" + id);
 
-        return new TimezoneDTO(timezone);
+        timezone.setTimezone(newTimezone);
+        timezoneRepository.save(timezone);
+
+        cache.put("Timezone" + id, timezone);
+
+        return new TimezoneDTO(newTimezone);
     }
 
     @Override
     @Transactional
     public TimezoneDTO deleteTimezone(Integer id) {
 
-        TimezoneModel timezoneModel = timezoneRepository.findById(id).orElseThrow(
+        Timezone timezone = (Timezone) cache.get("Timezone" + id);
+        if(timezone == null)
+            timezone = timezoneRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
-        if (timezoneModel.getLocations().isEmpty())
+        if (timezone.getLocations().isEmpty()) {
             timezoneRepository.deleteById(id);
+            cache.remove("Timezone" + id);
+        }
         else throw new MyRuntimeException("Timezone has connections.");
 
-        return new TimezoneDTO(timezoneModel.getTimezone());
+        return new TimezoneDTO(timezone.getTimezone());
     }
 }

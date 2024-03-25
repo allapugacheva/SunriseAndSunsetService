@@ -1,5 +1,6 @@
 package com.example.sunriseandsunsetservice.controller;
 
+import com.example.sunriseandsunsetservice.dto.DaytimeDTO;
 import com.example.sunriseandsunsetservice.dto.ResponseDTO;
 import com.example.sunriseandsunsetservice.service.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,12 @@ public class SunriseAndSunsetController {
         return service.readAllSunrisesAnsSunsets();
     }
 
+    @GetMapping("/sunriseandsunset/one")
+    public ResponseDTO getById(@RequestParam("locationId") Integer locationId,
+                               @RequestParam("dateId") Integer dateId) {
+        return service.getById(locationId, dateId);
+    }
+
     @PutMapping("/sunriseandsunset")
     public ResponseDTO updateSunriseAndSunset(@RequestParam("locationId") Integer locationId,
                                               @RequestParam("dateId") Integer dateId,
@@ -40,5 +47,11 @@ public class SunriseAndSunsetController {
     public ResponseDTO deleteSunriseAndSunsetTime(@RequestParam("locationId") Integer locationId,
                                                   @RequestParam("dateId") Integer dateId) {
         return service.deleteSunriseAndSunsetTime(locationId, dateId);
+    }
+
+    @GetMapping("/sunriseandsunset/daytime")
+    public DaytimeDTO findDaytimeLength(@RequestParam("dateId") Integer dateId,
+                                        @RequestParam("locationId") Integer locationId) {
+        return service.findDaytimeLength(dateId, locationId);
     }
 }

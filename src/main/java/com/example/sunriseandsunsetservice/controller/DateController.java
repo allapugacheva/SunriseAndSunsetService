@@ -24,6 +24,9 @@ public class DateController {
         return dateService.readAllDates();
     }
 
+    @GetMapping("/date/one")
+    public DateDTO getById(@RequestParam("id") Integer id) { return dateService.getById(id);  }
+
     @PutMapping("/date")
     public DateDTO updateDate(@RequestParam("id") Integer id,
                               @RequestParam("date") LocalDate date) {

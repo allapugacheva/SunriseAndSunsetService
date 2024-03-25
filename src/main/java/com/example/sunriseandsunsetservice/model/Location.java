@@ -12,7 +12,7 @@ import java.util.Set;
 @Setter
 @Table(name = "location")
 @NoArgsConstructor
-public class LocationModel {
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,33 +26,33 @@ public class LocationModel {
 
     @ManyToOne
     @JoinColumn(name = "timezone_id")
-    private TimezoneModel timezone;
+    private Timezone timezone;
 
     @ManyToMany(mappedBy = "locations", fetch = FetchType.LAZY)
-    private Set<DateModel> dates = new HashSet<>();
+    private Set<Date> dates = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "location_time_mapping",
             joinColumns =  @JoinColumn(name = "location_id") ,
             inverseJoinColumns =  @JoinColumn(name = "sunrise_and_sunset_time_id"))
-    private Set<TimeModel> times = new HashSet<>();
+    private Set<Time> times = new HashSet<>();
 
-    public LocationModel(String l, Double lat, Double lng) {
+    public Location(String l, Double lat, Double lng) {
         this.location = l;
         this.latitude = lat;
         this.longitude = lng;
     }
 
-    public void addDate(DateModel dateModel) {
-        this.dates.add(dateModel);
+    public void addDate(Date date) {
+        this.dates.add(date);
     }
 
-    public void deleteDate(DateModel dateModel) { this.dates.remove(dateModel); }
+    public void deleteDate(Date date) { this.dates.remove(date); }
 
-    public void addTime(TimeModel timeModel) {
-        this.times.add(timeModel);
+    public void addTime(Time time) {
+        this.times.add(time);
     }
 
-    public void deleteTime(TimeModel timeModel) { this.times.remove(timeModel); }
+    public void deleteTime(Time time) { this.times.remove(time); }
 }

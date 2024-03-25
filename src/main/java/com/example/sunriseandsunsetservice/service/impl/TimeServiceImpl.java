@@ -1,15 +1,15 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
+import com.example.sunriseandsunsetservice.cache.InMemoryCache;
 import com.example.sunriseandsunsetservice.dto.TimeDTO;
 import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
-import com.example.sunriseandsunsetservice.model.TimeModel;
+import com.example.sunriseandsunsetservice.model.Time;
 import com.example.sunriseandsunsetservice.repository.TimeRepository;
 import com.example.sunriseandsunsetservice.service.TimeService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,37 +18,55 @@ public class TimeServiceImpl implements TimeService {
 
     private final TimeRepository timeRepository;
 
+    private final InMemoryCache cache;
+
     @Override
     @Transactional
     public TimeDTO createTime(LocalTime sunriseTime, LocalTime sunsetTime) {
 
-        if (timeRepository.findBySunriseTimeAndSunsetTime(sunriseTime, sunsetTime) == null)
-            timeRepository.save(new TimeModel(sunriseTime, sunsetTime));
+        Time time;
+        if ((time = timeRepository.findBySunriseTimeAndSunsetTime(sunriseTime, sunsetTime)) == null)
+            time = timeRepository.save(new Time(sunriseTime, sunsetTime));
+
+        cache.put("Time" + time.getId().toString(), time);
 
         return new TimeDTO(sunriseTime, sunsetTime);
     }
 
     @Override
-    public List<TimeDTO> readAllTimes() {
+    public List<TimeDTO> readAllTimes() { return timeRepository.findAllTimes(); }
 
-        List<TimeDTO> times = new ArrayList<>();
+    @Override
+    public TimeDTO getById(Integer id) {
 
-        for(TimeModel tm : timeRepository.findAll())
-            times.add(new TimeDTO(tm.getSunriseTime(), tm.getSunsetTime()));
+        Time tempTime = (Time) cache.get("Time" + id.toString());
 
-        return times;
+        if(tempTime == null) {
+            tempTime = timeRepository.findById(id).orElseThrow(
+                    () -> new MyRuntimeException("Time not found."));
+
+            cache.put("Time" + id, tempTime);
+        }
+
+        return new TimeDTO(tempTime.getSunriseTime(), tempTime.getSunsetTime());
     }
 
     @Override
     @Transactional
     public TimeDTO updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime) {
 
-        TimeModel timeModel = timeRepository.findById(id).orElseThrow(
-                () -> new MyRuntimeException("Wrong id."));
+        Time time = (Time) cache.get("Time" + id);
+        if(time == null) {
+            time = timeRepository.findById(id).orElseThrow(
+                    () -> new MyRuntimeException("Wrong id."));
+            cache.remove("Time" + id);
+        }
 
-        timeModel.setSunriseTime(sunriseTime);
-        timeModel.setSunsetTime(sunsetTime);
-        timeRepository.save(timeModel);
+        time.setSunriseTime(sunriseTime);
+        time.setSunsetTime(sunsetTime);
+        timeRepository.save(time);
+
+        cache.put("Time" + id, time);
 
         return new TimeDTO(sunriseTime, sunsetTime);
     }
@@ -57,13 +75,17 @@ public class TimeServiceImpl implements TimeService {
     @Transactional
     public TimeDTO deleteTime(Integer id) {
 
-        TimeModel timeModel = timeRepository.findById(id).orElseThrow(
+        Time time = (Time) cache.get("Time" + id);
+        if(time == null)
+            time = timeRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
-        if (timeModel.getDates().isEmpty() && timeModel.getLocations().isEmpty())
-            timeRepository.delete(timeModel);
+        if (time.getDates().isEmpty() && time.getLocations().isEmpty()) {
+            timeRepository.delete(time);
+            cache.remove("Time" + id);
+        }
         else throw new MyRuntimeException("Time has connections.");
 
-        return new TimeDTO(timeModel.getSunriseTime(), timeModel.getSunsetTime());
+        return new TimeDTO(time.getSunriseTime(), time.getSunsetTime());
     }
 }

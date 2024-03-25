@@ -1,10 +1,11 @@
 package com.example.sunriseandsunsetservice.service;
 
+import com.example.sunriseandsunsetservice.cache.InMemoryCache;
 import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
-import com.example.sunriseandsunsetservice.model.DateModel;
-import com.example.sunriseandsunsetservice.model.LocationModel;
-import com.example.sunriseandsunsetservice.model.TimeModel;
-import com.example.sunriseandsunsetservice.model.TimezoneModel;
+import com.example.sunriseandsunsetservice.model.Date;
+import com.example.sunriseandsunsetservice.model.Location;
+import com.example.sunriseandsunsetservice.model.Time;
+import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.DateRepository;
 import com.example.sunriseandsunsetservice.repository.LocationRepository;
 import com.example.sunriseandsunsetservice.repository.TimeRepository;
@@ -34,6 +35,8 @@ public class CommonService {
     private final LocationRepository locationRepository;
     private final TimezoneRepository timezoneRepository;
 
+    private final InMemoryCache cache;
+
     @SneakyThrows
     public String[] getTimezoneAndPlace(Double lat, Double lng) {
 
@@ -53,7 +56,7 @@ public class CommonService {
     }
 
     @SneakyThrows
-    public TimeModel getSunriseAndSunsetTime(Double lat, Double lng, LocalDate date, String timezone) {
+    public Time getSunriseAndSunsetTime(Double lat, Double lng, LocalDate date, String timezone) {
 
         String url = "https://api.sunrise-sunset.org/json?lat=" + lat + "&lng=" + lng
                 + "&date=" + date + "&formatted=0&tzid=" + timezone;
@@ -63,132 +66,144 @@ public class CommonService {
         String[] sunriseAndSunsetTime = new String[]{root.path("results").path("sunrise").asText().substring(11, 19),
                 root.path("results").path("sunset").asText().substring(11, 19)};
 
-        TimeModel timeModel = timeRepository.findBySunriseTimeAndSunsetTime(LocalTime.parse(sunriseAndSunsetTime[0]),
+        Time time = timeRepository.findBySunriseTimeAndSunsetTime(LocalTime.parse(sunriseAndSunsetTime[0]),
                 LocalTime.parse(sunriseAndSunsetTime[1]));
-        if(timeModel == null)
-            timeModel = timeRepository.save(new TimeModel(LocalTime.parse(sunriseAndSunsetTime[0]),
+        if(time == null)
+            time = timeRepository.save(new Time(LocalTime.parse(sunriseAndSunsetTime[0]),
                     LocalTime.parse(sunriseAndSunsetTime[1])));
 
-        return timeModel;
+        return time;
     }
 
-    public TimeModel getCommonTime(DateModel dateModel, LocationModel locationModel) {
-        return locationModel.getTimes().stream()
-                .filter(dateModel.getTimes()::contains)
-                .findFirst().orElse(null);
+    public void clearTime(Date date, Location location, Time time) {
+        date.deleteTime(time);
+        location.deleteTime(time);
+        time.deleteDate(date);
+        time.deleteLocation(location);
+
+        if(time.getLocations().isEmpty() && time.getDates().isEmpty()) {
+            timeRepository.delete(time);
+            cache.remove("Time" + time.getId().toString());
+        }
     }
 
-    public void clearTime(DateModel dm, LocationModel lm, TimeModel tm) {
-        dm.deleteTime(tm);
-        lm.deleteTime(tm);
-        tm.deleteDate(dm);
-        tm.deleteLocation(lm);
+    public void updateDate(Integer id, LocalDate newDate) {
 
-        if(tm.getLocations().isEmpty() && tm.getDates().isEmpty())
-            timeRepository.delete(tm);
-    }
-
-    public void updateDate(Integer id, LocalDate date) {
-        DateModel dateModel = dateRepository.findById(id).orElseThrow(
+        Date date = (Date) cache.get("Date" + id);
+        if(date == null)
+            date = dateRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
         boolean flagDeleteDate = true;
 
-        DateModel dm;
-        if ((dm = dateRepository.findByDate(date)) == null) {
-            dateModel.setDate(date);
+        Date tempDate;
+        if ((tempDate = dateRepository.findByDate(newDate)) == null) {
+            date.setDate(newDate);
 
             flagDeleteDate = false;
         }
 
-        for (LocationModel lm : dateModel.getLocations()) {
+        for (Location tempLocation : date.getLocations()) {
 
-            clearTime(dateModel, lm, getCommonTime(dateModel, lm));
+            clearTime(date, tempLocation, timeRepository.findCommonTime(id, tempLocation.getId()));
 
-            TimeModel timeModel = getSunriseAndSunsetTime(lm.getLatitude(),
-                    lm.getLongitude(), dateModel.getDate(), lm.getTimezone().getTimezone());
+            Time time = getSunriseAndSunsetTime(tempLocation.getLatitude(),
+                    tempLocation.getLongitude(), date.getDate(), tempLocation.getTimezone().getTimezone());
 
             if (flagDeleteDate) {
-                lm.addDate(dm);
-                dm.addLocation(lm);
+                tempLocation.addDate(tempDate);
+                tempDate.addLocation(tempLocation);
             }
 
-            lm.addTime(timeModel);
-            timeModel.addLocation(lm);
+            tempLocation.addTime(time);
+            time.addLocation(tempLocation);
 
             if (flagDeleteDate) {
-                dm.addTime(timeModel);
-                timeModel.addDate(dm);
+                tempDate.addTime(time);
+                time.addDate(tempDate);
             } else {
-                dateModel.addTime(timeModel);
-                timeModel.addDate(dateModel);
+                date.addTime(time);
+                time.addDate(date);
             }
         }
 
+        cache.remove("Date" + id);
+
         if(flagDeleteDate) {
-            dateRepository.delete(dateModel);
-            dateRepository.save(dm);
-        } else
-            dateRepository.save(dateModel);
+            dateRepository.delete(date);
+            dateRepository.save(tempDate);
+            cache.put("Date" + tempDate.getId().toString(), tempDate);
+        } else {
+            dateRepository.save(date);
+            cache.put("Date" + date.getId().toString(), date);
+        }
     }
 
     public String updateLocation(Integer id, Double lat, Double lng) {
-        LocationModel locationModel = locationRepository.findById(id).orElseThrow(
+        Location location = (Location) cache.get("Location" + id);
+        if(location == null)
+            location = locationRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
         boolean flagDeleteLocation = true;
 
-        LocationModel lm;
-        TimezoneModel tm;
-        if ((lm = locationRepository.findByLatitudeAndLongitude(lat, lng)) == null) {
+        Location tempLocation;
+        Timezone tempTimezone;
+        if ((tempLocation = locationRepository.findByLatitudeAndLongitude(lat, lng)) == null) {
             String[] timezoneAndPlace = getTimezoneAndPlace(lat, lng);
 
-            if ((tm = timezoneRepository.findByTimezone(timezoneAndPlace[0])) == null)
-                tm = timezoneRepository.save(new TimezoneModel(timezoneAndPlace[0]));
+            if ((tempTimezone = timezoneRepository.findByTimezone(timezoneAndPlace[0])) == null)
+                tempTimezone = timezoneRepository.save(new Timezone(timezoneAndPlace[0]));
 
-            tm.addLocation(locationModel);
-            locationModel.setTimezone(tm);
-            locationModel.setLocation(timezoneAndPlace[1]);
-            locationModel.setLatitude(lat);
-            locationModel.setLongitude(lng);
+            tempTimezone.addLocation(location);
+            location.setTimezone(tempTimezone);
+            location.setLocation(timezoneAndPlace[1]);
+            location.setLatitude(lat);
+            location.setLongitude(lng);
 
             flagDeleteLocation = false;
         } else
-            tm = lm.getTimezone();
+            tempTimezone = tempLocation.getTimezone();
 
-        for (DateModel dm : locationModel.getDates()) {
+        for (Date tempDate : location.getDates()) {
 
-            clearTime(dm, locationModel, getCommonTime(dm, locationModel));
+            clearTime(tempDate, location, timeRepository.findCommonTime(tempDate.getId(), id));
 
-            TimeModel timeModel = getSunriseAndSunsetTime(locationModel.getLatitude(),
-                    locationModel.getLongitude(), dm.getDate(), tm.getTimezone());
+            Time time = getSunriseAndSunsetTime(location.getLatitude(),
+                    location.getLongitude(), tempDate.getDate(), tempTimezone.getTimezone());
 
             if (flagDeleteLocation) {
-                lm.addDate(dm);
-                dm.addLocation(lm);
+                tempLocation.addDate(tempDate);
+                tempDate.addLocation(tempLocation);
             }
 
-            dm.addTime(timeModel);
-            timeModel.addDate(dm);
+            tempDate.addTime(time);
+            time.addDate(tempDate);
 
             if (flagDeleteLocation) {
-                dm.addLocation(lm);
-                lm.addTime(timeModel);
+                tempDate.addLocation(tempLocation);
+                tempLocation.addTime(time);
             } else {
-                dm.addLocation(locationModel);
-                locationModel.addTime(timeModel);
+                tempDate.addLocation(location);
+                location.addTime(time);
             }
         }
 
+        cache.remove("Location" + id);
+
         if(flagDeleteLocation) {
-            locationRepository.delete(locationModel);
-            locationRepository.save(lm);
+            locationRepository.delete(location);
+            locationRepository.save(tempLocation);
 
-            return lm.getLocation();
+            cache.put("Location" + tempLocation.getId().toString(), tempLocation);
+
+            return tempLocation.getLocation();
         } else {
-            locationRepository.save(locationModel);
+            locationRepository.save(location);
 
-            return locationModel.getLocation();
+            cache.put("Location" + location.getId().toString(), location);
+
+            return location.getLocation();
         }
     }
 }

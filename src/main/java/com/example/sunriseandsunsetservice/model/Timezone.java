@@ -12,7 +12,7 @@ import java.util.Set;
 @Setter
 @Table(name = "timezone")
 @NoArgsConstructor
-public class TimezoneModel {
+public class Timezone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,11 @@ public class TimezoneModel {
     private String timezone;
 
     @OneToMany(mappedBy = "timezone", fetch = FetchType.LAZY)
-    private Set<LocationModel> locations = new HashSet<>();
+    private Set<Location> locations = new HashSet<>();
 
-    public TimezoneModel(String t) {
+    public Timezone(String t) {
         this.timezone = t;
     }
 
-    public void addLocation(LocationModel locationModel) { this.locations.add(locationModel); }
+    public void addLocation(Location location) { this.locations.add(location); }
 }

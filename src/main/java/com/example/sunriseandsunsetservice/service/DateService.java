@@ -8,6 +8,7 @@ public interface DateService{
 
     DateDTO createDate(LocalDate date);
     List<DateDTO> readAllDates();
+    DateDTO getById(Integer id);
     DateDTO updateDate(Integer id, LocalDate date);
     DateDTO deleteDate(Integer id);
 }

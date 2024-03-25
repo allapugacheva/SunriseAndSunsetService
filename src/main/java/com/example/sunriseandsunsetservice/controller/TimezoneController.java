@@ -23,6 +23,9 @@ public class TimezoneController {
         return timezoneService.readAllTimezones();
     }
 
+    @GetMapping("/timezone/one")
+    public TimezoneDTO getById(@RequestParam("id") Integer id) { return timezoneService.getById(id); }
+
     @PutMapping("/timezone")
     public TimezoneDTO updateTimezone(@RequestParam("id") Integer id,
                                       @RequestParam("timezone") String timezone) {

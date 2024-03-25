@@ -1,15 +1,15 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
+import com.example.sunriseandsunsetservice.cache.InMemoryCache;
 import com.example.sunriseandsunsetservice.dto.LocationDTO;
 import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
-import com.example.sunriseandsunsetservice.model.LocationModel;
+import com.example.sunriseandsunsetservice.model.Location;
 import com.example.sunriseandsunsetservice.repository.LocationRepository;
 import com.example.sunriseandsunsetservice.service.LocationService;
 import com.example.sunriseandsunsetservice.service.CommonService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +19,8 @@ public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
     private final CommonService commonService;
 
+    private final InMemoryCache cache;
+
     @Override
     @Transactional
     public LocationDTO createLocation(Double lat, Double lng) {
@@ -26,31 +28,40 @@ public class LocationServiceImpl implements LocationService {
         if (commonService.notValidLat(lat) || commonService.notValidLng(lng))
             throw new MyRuntimeException("Invalid latitude or longitude.");
 
-        LocationModel locationModel;
-        if ((locationModel = locationRepository.findByLatitudeAndLongitude(lat, lng)) == null) {
-            locationModel = new LocationModel();
+        Location location;
+        if ((location = locationRepository.findByLatitudeAndLongitude(lat, lng)) == null) {
+            location = new Location();
 
-            locationModel.setLatitude(lat);
-            locationModel.setLongitude(lng);
+            location.setLatitude(lat);
+            location.setLongitude(lng);
 
-            String[] location = commonService.getTimezoneAndPlace(lat, lng);
-            locationModel.setLocation(location[1]);
+            String[] place = commonService.getTimezoneAndPlace(lat, lng);
+            location.setLocation(place[1]);
 
-            locationRepository.save(locationModel);
+            locationRepository.save(location);
         }
 
-        return new LocationDTO(locationModel.getLocation(), lat, lng);
+        cache.put("Location" + location.getId().toString(), location);
+
+        return new LocationDTO(location.getLocation(), lat, lng);
     }
 
     @Override
-    public List<LocationDTO> readAllLocations() {
+    public List<LocationDTO> readAllLocations() { return locationRepository.findAllLocations(); }
 
-        List<LocationDTO> locations = new ArrayList<>();
+    @Override
+    public LocationDTO getById(Integer id) {
 
-        for(LocationModel lm : locationRepository.findAll())
-            locations.add(new LocationDTO(lm.getLocation(), lm.getLatitude(), lm.getLongitude()));
+        Location tempLocation = (Location) cache.get("Location" + id.toString());
 
-        return locations;
+        if (tempLocation == null) {
+            tempLocation = locationRepository.findById(id).orElseThrow(
+                    () -> new MyRuntimeException("Location not found."));
+
+            cache.put("Location" + id, tempLocation);
+        }
+
+        return new LocationDTO(tempLocation.getLocation(), tempLocation.getLatitude(), tempLocation.getLongitude());
     }
 
     @Override
@@ -64,13 +75,15 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public LocationDTO deleteLocation(Integer id) {
 
-        LocationModel locationModel = locationRepository.findById(id).orElseThrow(
+        Location location = locationRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
-        if (locationModel.getDates().isEmpty() && locationModel.getTimes().isEmpty())
-            locationRepository.delete(locationModel);
-        else throw new MyRuntimeException("Location has connections.");
+        if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {
+            locationRepository.delete(location);
+            cache.remove("Location" + id);
 
-        return new LocationDTO(locationModel.getLocation(), locationModel.getLatitude(), locationModel.getLongitude());
+        } else throw new MyRuntimeException("Location has connections.");
+
+        return new LocationDTO(location.getLocation(), location.getLatitude(), location.getLongitude());
     }
 }

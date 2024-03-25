@@ -1,5 +1,7 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
+import com.example.sunriseandsunsetservice.cache.InMemoryCache;
+import com.example.sunriseandsunsetservice.dto.DaytimeDTO;
 import com.example.sunriseandsunsetservice.dto.ResponseDTO;
 import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
 import com.example.sunriseandsunsetservice.model.*;
@@ -11,8 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,66 +26,87 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     private final TimezoneRepository timezoneRepository;
 
     private final CommonService commonService;
+    private final InMemoryCache cache;
 
     @Override
     @SneakyThrows
     @Transactional
-    public ResponseDTO findSunriseAndSunsetTime(Double lat, Double lng, LocalDate date) {
+    public ResponseDTO findSunriseAndSunsetTime(Double lat, Double lng, LocalDate newDate) {
 
         if (commonService.notValidLat(lat) || commonService.notValidLng(lng))
             throw new MyRuntimeException("Not valid latitude or longitude.");
 
-        TimezoneModel timezoneModel;
-        LocationModel locationModel = locationRepository.findByLatitudeAndLongitude(lat, lng);
-        if(locationModel == null) {
+        Timezone timezone;
+        Location location = locationRepository.findByLatitudeAndLongitude(lat, lng);
+        if(location == null) {
 
             String[] timezoneAndPlace = commonService.getTimezoneAndPlace(lat, lng);
-            locationModel = locationRepository.save(new LocationModel(timezoneAndPlace[1], lat, lng));
+            location = locationRepository.save(new Location(timezoneAndPlace[1], lat, lng));
 
-            if((timezoneModel = timezoneRepository.findByTimezone(timezoneAndPlace[0]))==null)
-                timezoneModel = timezoneRepository.save(new TimezoneModel(timezoneAndPlace[0]));
+            if((timezone = timezoneRepository.findByTimezone(timezoneAndPlace[0]))==null)
+                timezone = timezoneRepository.save(new Timezone(timezoneAndPlace[0]));
         } else
-            timezoneModel = locationModel.getTimezone();
+            timezone = location.getTimezone();
 
-        TimeModel timeModel = commonService.getSunriseAndSunsetTime(lat, lng, date, timezoneModel.getTimezone());
+        Time time = commonService.getSunriseAndSunsetTime(lat, lng, newDate, timezone.getTimezone());
 
-        DateModel dateModel = dateRepository.findByDate(date);
-        if(dateModel == null)
-            dateModel = dateRepository.save(new DateModel(date));
+        Date date = dateRepository.findByDate(newDate);
+        if(date == null)
+            date = dateRepository.save(new Date(newDate));
 
-        locationModel.addDate(dateModel);
-        dateModel.addLocation(locationModel);
+        location.addDate(date);
+        date.addLocation(location);
 
-        dateModel.addTime(timeModel);
-        timeModel.addDate(dateModel);
+        date.addTime(time);
+        time.addDate(date);
 
-        timezoneModel.addLocation(locationModel);
-        locationModel.setTimezone(timezoneModel);
+        timezone.addLocation(location);
+        location.setTimezone(timezone);
 
-        locationModel.addTime(timeModel);
-        timeModel.addLocation(locationModel);
+        location.addTime(time);
+        time.addLocation(location);
 
-        locationRepository.save(locationModel);
+        locationRepository.save(location);
 
-        return new ResponseDTO(locationModel.getLocation(), locationModel.getLatitude(), locationModel.getLongitude(),
-                dateModel.getDate(), timeModel.getSunriseTime(), timeModel.getSunsetTime());
+        cache.put("Date" + date.getId().toString(), date);
+        cache.put("Location" + location.getId().toString(), location);
+
+        return new ResponseDTO(location.getLocation(), location.getLatitude(), location.getLongitude(),
+                date.getDate(), time.getSunriseTime(), time.getSunsetTime());
     }
 
     @Override
     public List<ResponseDTO> readAllSunrisesAnsSunsets() {
-        List<ResponseDTO> responses = new ArrayList<>();
 
-        for(LocationModel lm : locationRepository.findAll()) {
-            for(DateModel dm : lm.getDates()) {
-                for(TimeModel tm : dm.getTimes()) {
-                    if(tm.getLocations().contains(lm) && tm.getDates().contains(dm))
-                        responses.add(new ResponseDTO(lm.getLocation(), lm.getLatitude(), lm.getLongitude(),
-                                dm.getDate(), tm.getSunriseTime(), tm.getSunsetTime()));
-                }
-            }
+        return locationRepository.findAllData().stream()
+                .map(row -> new ResponseDTO((String)row[0], (Double)row[1], (Double)row[2],
+                        ((java.sql.Date)row[3]).toLocalDate(),
+                        ((java.sql.Time)row[4]).toLocalTime(),
+                        ((java.sql.Time)row[5]).toLocalTime()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseDTO getById(Integer locationId, Integer dateId) {
+
+        Location tempLocation = (Location) cache.get("Location" + locationId);
+        if(tempLocation == null) {
+            tempLocation = locationRepository.findById(locationId).orElseThrow(
+                    () -> new MyRuntimeException("Location not found."));
+            cache.put("Location" + locationId, tempLocation);
         }
 
-        return responses;
+        Date tempDate = (Date) cache.get("Date" + dateId);
+        if(tempDate == null) {
+            tempDate = dateRepository.findById(dateId).orElseThrow(
+                    () -> new MyRuntimeException("Date not found."));
+            cache.put("Date" + dateId, tempDate);
+        }
+
+        Time tempTime = timeRepository.findCommonTime(dateId, locationId);
+
+        return new ResponseDTO(tempLocation.getLocation(), tempLocation.getLatitude(), tempLocation.getLongitude(),
+                tempDate.getDate(), tempTime.getSunriseTime(), tempTime.getSunsetTime());
     }
 
     @Override
@@ -92,55 +116,72 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
         if (commonService.notValidLat(lat) || commonService.notValidLng(lng))
             throw new MyRuntimeException("Not valid latitude or longitude");
 
-        commonService.updateDate(dateId, date);
-        commonService.updateLocation(locationId, lat, lng);
-
-        LocationModel lm = locationRepository.findByLatitudeAndLongitude(lat, lng);
-        DateModel dm = dateRepository.findByDate(date);
-        TimeModel tm = commonService.getCommonTime(dm, lm);
-
-        return new ResponseDTO(lm.getLocation(), lm.getLatitude(), lm.getLongitude(),
-                dm.getDate(), tm.getSunriseTime(), tm.getSunsetTime());
+        deleteSunriseAndSunsetTime(locationId, dateId);
+        return findSunriseAndSunsetTime(lat, lng, date);
     }
 
     @Override
     @Transactional
     public ResponseDTO deleteSunriseAndSunsetTime(Integer locationId, Integer dateId) {
 
-        DateModel dateModel = dateRepository.findById(dateId).orElseThrow(
+        Date date = (Date) cache.get("Date" + dateId);
+        if(date == null)
+            date = dateRepository.findById(dateId).orElseThrow(
                 () -> new MyRuntimeException("Wrong date id."));
-        LocationModel locationModel = locationRepository.findById(locationId).orElseThrow(
+        
+        Location location = (Location) cache.get("Location" + locationId);
+        if(location == null)
+            location = locationRepository.findById(locationId).orElseThrow(
                 () -> new MyRuntimeException("Wrong location id."));
 
-        TimeModel timeModel = commonService.getCommonTime(dateModel, locationModel);
+        Time time = timeRepository.findCommonTime(dateId, locationId);
 
-        if ((locationModel.getDates().contains(dateModel) && locationModel.getTimes().contains(timeModel)) &&
-                (timeModel.getDates().contains(dateModel) && timeModel.getLocations().contains(locationModel)) &&
-                (dateModel.getTimes().contains(timeModel) && dateModel.getLocations().contains(locationModel)))
+        if ((location.getDates().contains(date) && location.getTimes().contains(time)) &&
+                (time.getDates().contains(date) && time.getLocations().contains(location)) &&
+                (date.getTimes().contains(time) && date.getLocations().contains(location)))
         {
-            dateModel.deleteLocation(locationModel);
-            timeModel.deleteLocation(locationModel);
+            date.deleteLocation(location);
+            time.deleteLocation(location);
 
-            locationModel.deleteDate(dateModel);
-            timeModel.deleteDate(dateModel);
+            location.deleteDate(date);
+            time.deleteDate(date);
 
-            locationModel.deleteTime(timeModel);
-            dateModel.deleteTime(timeModel);
+            location.deleteTime(time);
+            date.deleteTime(time);
+
+            cache.remove("Date" + dateId);
+            cache.remove("Location" + locationId);
+            cache.remove("Time" + time.getId());
         }
         else
             throw new MyRuntimeException("Not connected data.");
 
-        if(locationModel.getDates().isEmpty() && locationModel.getTimes().isEmpty())
-            locationRepository.delete(locationModel);
+        if(location.getDates().isEmpty() && location.getTimes().isEmpty())
+            locationRepository.delete(location);
 
-        if(dateModel.getTimes().isEmpty() && dateModel.getLocations().isEmpty())
-            dateRepository.delete(dateModel);
+        if(date.getTimes().isEmpty() && date.getLocations().isEmpty())
+            dateRepository.delete(date);
 
-        if(timeModel.getDates().isEmpty() && timeModel.getLocations().isEmpty())
-            timeRepository.delete(timeModel);
+        if(time.getDates().isEmpty() && time.getLocations().isEmpty())
+            timeRepository.delete(time);
 
-        return new ResponseDTO(locationModel.getLocation(), locationModel.getLatitude(),
-                locationModel.getLongitude(), dateModel.getDate(), timeModel.getSunriseTime(),
-                timeModel.getSunsetTime());
+        return new ResponseDTO(location.getLocation(), location.getLatitude(),
+                location.getLongitude(), date.getDate(), time.getSunriseTime(),
+                time.getSunsetTime());
+    }
+
+    @Override
+    public DaytimeDTO findDaytimeLength(Integer dateId, Integer locationId) {
+
+        DaytimeDTO response = (DaytimeDTO) cache.get("Daytime" + dateId + locationId);
+
+        if(response == null) {
+            response = new DaytimeDTO(LocalTime.MIDNIGHT.plusSeconds(locationRepository
+                    .findDaytimeLength(dateId, locationId)));
+
+            cache.put("Daytime" + dateId + locationId, response);
+        }
+
+        return response;
     }
 }

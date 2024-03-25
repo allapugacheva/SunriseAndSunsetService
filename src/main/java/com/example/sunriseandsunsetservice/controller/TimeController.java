@@ -25,6 +25,9 @@ public class TimeController {
         return timeService.readAllTimes();
     }
 
+    @GetMapping("/time/one")
+    public TimeDTO getById(@RequestParam("id") Integer id) { return timeService.getById(id); }
+
     @PutMapping("/time")
     public TimeDTO updateTime(@RequestParam("id") Integer id,
                               @RequestParam("sunriseTime") LocalTime sunriseTime,

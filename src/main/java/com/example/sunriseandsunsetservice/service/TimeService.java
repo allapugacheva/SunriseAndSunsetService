@@ -8,6 +8,7 @@ public interface TimeService {
 
     TimeDTO createTime(LocalTime sunriseTime, LocalTime sunsetTime);
     List<TimeDTO> readAllTimes();
+    TimeDTO getById(Integer id);
     TimeDTO updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime);
     TimeDTO deleteTime(Integer id);
 }

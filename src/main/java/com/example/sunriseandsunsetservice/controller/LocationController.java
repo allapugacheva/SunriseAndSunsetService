@@ -24,6 +24,9 @@ public class LocationController {
         return locationService.readAllLocations();
     }
 
+    @GetMapping("/location/one")
+    public LocationDTO getById(@RequestParam("id") Integer id) { return locationService.getById(id); }
+
     @PutMapping("/location")
     public LocationDTO updateLocation(@RequestParam("id") Integer id,
                                       @RequestParam("lat") Double lat,
