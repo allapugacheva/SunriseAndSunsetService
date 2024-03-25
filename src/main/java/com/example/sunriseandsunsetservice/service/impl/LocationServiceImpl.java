@@ -29,6 +29,7 @@ public class LocationServiceImpl implements LocationService {
   private final InMemoryCache cache;
 
   private static final String LOCATION_KEY = "Location";
+  private static final String LOCATION_INFO = "Location with id ";
 
   @Override
   @SneakyThrows
@@ -74,12 +75,12 @@ public class LocationServiceImpl implements LocationService {
 
     if (tempLocation == null) {
       tempLocation = locationRepository.findById(id).orElseThrow(
-              () -> new NoSuchElementException("Location with id " + id + " not found."));
+              () -> new NoSuchElementException(LOCATION_INFO + id + " not found."));
 
       cache.put(LOCATION_KEY + id, tempLocation);
     }
 
-    log.info("Location with id " + id + " is shown.");
+    log.info(LOCATION_INFO + id + " is shown.");
 
     return new LocationDto(tempLocation.getSunLocation(), tempLocation.getLatitude(),
         tempLocation.getLongitude());
@@ -97,17 +98,17 @@ public class LocationServiceImpl implements LocationService {
   public LocationDto deleteLocation(Integer id) {
 
     Location location = locationRepository.findById(id).orElseThrow(
-            () -> new NoSuchElementException("Location with id " + id + " not found."));
+            () -> new NoSuchElementException(LOCATION_INFO + id + " not found."));
 
     if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {
       locationRepository.delete(location);
       cache.remove(LOCATION_KEY + id);
 
     } else {
-      throw new NoSuchElementException("Location with id " + id + " has connections.");
+      throw new NoSuchElementException(LOCATION_INFO + id + " has connections.");
     }
 
-    log.info("Location with id " + id + " deleted.");
+    log.info(LOCATION_INFO + id + " deleted.");
 
     return new LocationDto(location.getSunLocation(), location.getLatitude(),
         location.getLongitude());

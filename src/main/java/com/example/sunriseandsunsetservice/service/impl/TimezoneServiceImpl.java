@@ -27,6 +27,8 @@ public class TimezoneServiceImpl implements TimezoneService {
   private final InMemoryCache cache;
 
   private static final String TIMEZONE_KEY = "Timezone";
+  private static final String TIMEZONE_INFO = "Time with id ";
+  private static final String NOT_FOUND_STRING = " not found.";
 
   @Override
   @Transactional
@@ -59,12 +61,12 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     if (tempTimezone == null) {
       tempTimezone = timezoneRepository.findById(id).orElseThrow(
-               () -> new NoSuchElementException("Timezone with id " + id + " not found."));
+               () -> new NoSuchElementException(TIMEZONE_INFO + id + NOT_FOUND_STRING));
 
       cache.put(TIMEZONE_KEY + id, tempTimezone);
     }
 
-    log.info("Timezone with id " + id + " is shown.");
+    log.info(TIMEZONE_INFO + id + " is shown.");
 
     return new TimezoneDto(tempTimezone.getSunTimezone());
   }
@@ -76,7 +78,7 @@ public class TimezoneServiceImpl implements TimezoneService {
     Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
     if (timezone == null) {
       timezone = timezoneRepository.findById(id).orElseThrow(
-              () -> new NoSuchElementException("Timezone with id " + id + " not found."));
+              () -> new NoSuchElementException(TIMEZONE_INFO + id + NOT_FOUND_STRING));
     }
 
     cache.remove(TIMEZONE_KEY + id);
@@ -86,7 +88,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + id, timezone);
 
-    log.info("Timezone with id " + id + " updated.");
+    log.info(TIMEZONE_INFO + id + " updated.");
 
     return new TimezoneDto(newTimezone);
   }
@@ -99,17 +101,17 @@ public class TimezoneServiceImpl implements TimezoneService {
     Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
     if (timezone == null) {
       timezone = timezoneRepository.findById(id).orElseThrow(
-              () -> new NoSuchElementException("Timezone with id " + id + " not found."));
+              () -> new NoSuchElementException(TIMEZONE_INFO + id + NOT_FOUND_STRING));
     }
 
     if (timezone.getLocations().isEmpty()) {
       timezoneRepository.deleteById(id);
       cache.remove(TIMEZONE_KEY + id);
     } else {
-      throw new BadRequestException("Timezone with id " + id + " has connections.");
+      throw new BadRequestException(TIMEZONE_INFO + id + " has connections.");
     }
 
-    log.info("Timezone with id " + id + " deleted.");
+    log.info(TIMEZONE_INFO + id + " deleted.");
 
     return new TimezoneDto(timezone.getSunTimezone());
   }

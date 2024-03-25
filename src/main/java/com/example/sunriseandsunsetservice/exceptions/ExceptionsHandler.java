@@ -24,7 +24,7 @@ public class ExceptionsHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Object> internalServerErrorException(Exception ex) {
 
-    log.error("Internal server error: " + ex.getMessage());
+    log.error(String.format("Internal server error: %s", ex.getMessage()));
     return new ResponseEntity<>(new ErrorResponse(LocalDateTime.now(), 500, ex.getMessage()),
             HttpStatus.INTERNAL_SERVER_ERROR);
   }
@@ -35,7 +35,7 @@ public class ExceptionsHandler {
   @ExceptionHandler(BadRequestException.class)
   public ResponseEntity<Object> badRequestException(Exception ex) {
 
-    log.error("Bad request error: " + ex.getMessage());
+    log.error(String.format("Bad request error: %s", ex.getMessage()));
     return new ResponseEntity<>(new ErrorResponse(LocalDateTime.now(), 400, ex.getMessage()),
             HttpStatus.BAD_REQUEST);
   }
@@ -46,7 +46,7 @@ public class ExceptionsHandler {
   @ExceptionHandler(NoSuchElementException.class)
   public ResponseEntity<Object> notFoundException(Exception ex) {
 
-    log.error("No such element error: " + ex.getMessage());
+    log.error(String.format("No such element error: %s", ex.getMessage()));
     return new ResponseEntity<>(new ErrorResponse(LocalDateTime.now(), 404, ex.getMessage()),
             HttpStatus.NOT_FOUND);
   }

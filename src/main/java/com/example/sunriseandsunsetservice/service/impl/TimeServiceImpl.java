@@ -28,6 +28,8 @@ public class TimeServiceImpl implements TimeService {
   private final InMemoryCache cache;
 
   private static final String TIME_KEY = "Time";
+  private static final String TIME_INFO = "Time with id ";
+  private static final String NOT_FOUND_STRING = " not found.";
 
   @Override
   @Transactional
@@ -60,12 +62,12 @@ public class TimeServiceImpl implements TimeService {
 
     if (tempTime == null) {
       tempTime = timeRepository.findById(id).orElseThrow(
-            () -> new NoSuchElementException("Time with id " + id + " not found."));
+            () -> new NoSuchElementException(TIME_INFO + id + NOT_FOUND_STRING));
 
       cache.put(TIME_KEY + id, tempTime);
     }
 
-    log.info("Time with id " + id + " is shown.");
+    log.info(TIME_INFO + id + " is shown.");
 
     return new TimeDto(tempTime.getSunriseTime(), tempTime.getSunsetTime());
   }
@@ -77,7 +79,7 @@ public class TimeServiceImpl implements TimeService {
     Time time = (Time) cache.get(TIME_KEY + id);
     if (time == null) {
       time = timeRepository.findById(id).orElseThrow(
-             () -> new NoSuchElementException("Time with id " + id + " not found."));
+             () -> new NoSuchElementException(TIME_INFO + id + NOT_FOUND_STRING));
 
       cache.remove(TIME_KEY + id);
     }
@@ -88,7 +90,7 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + id, time);
 
-    log.info("Time with id " + id + " updated.");
+    log.info(TIME_INFO + id + " updated.");
 
     return new TimeDto(sunriseTime, sunsetTime);
   }
@@ -101,17 +103,17 @@ public class TimeServiceImpl implements TimeService {
     Time time = (Time) cache.get(TIME_KEY + id);
     if (time == null) {
       time = timeRepository.findById(id).orElseThrow(
-              () -> new NoSuchElementException("Time with id " + id + " not found."));
+              () -> new NoSuchElementException(TIME_INFO + id + NOT_FOUND_STRING));
     }
 
     if (time.getDates().isEmpty() && time.getLocations().isEmpty()) {
       timeRepository.delete(time);
       cache.remove(TIME_KEY + id);
     } else {
-      throw new BadRequestException("Time with id " + id + " has connections.");
+      throw new BadRequestException(TIME_INFO + id + " has connections.");
     }
 
-    log.info("Time with id " + id + " deleted.");
+    log.info(TIME_INFO + id + " deleted.");
 
     return new TimeDto(time.getSunriseTime(), time.getSunsetTime());
   }

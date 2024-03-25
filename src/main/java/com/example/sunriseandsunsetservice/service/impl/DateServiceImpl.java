@@ -30,6 +30,7 @@ public class DateServiceImpl implements DateService {
   private final InMemoryCache cache;
 
   private static final String DATE_KEY = "Date";
+  private static final String DATE_INFO = "Date with id ";
 
   @Override
   @Transactional
@@ -62,11 +63,11 @@ public class DateServiceImpl implements DateService {
 
     if (tempDate == null) {
       tempDate = dateRepository.findById(id).orElseThrow(
-              () -> new NoSuchElementException("Date with id " + id + " not found."));
+              () -> new NoSuchElementException(DATE_INFO + id + " not found."));
       cache.put(DATE_KEY + id, tempDate);
     }
 
-    log.info("Date with id " + id + " is shown.");
+    log.info(DATE_INFO + id + " is shown.");
 
     return new DateDto(tempDate.getSunDate());
   }
@@ -86,17 +87,17 @@ public class DateServiceImpl implements DateService {
   public DateDto deleteDate(Integer id) {
 
     Date date = dateRepository.findById(id).orElseThrow(
-            () -> new NoSuchElementException("Date with id " + id + " not found."));
+            () -> new NoSuchElementException(DATE_INFO + id + " not found."));
 
     if (date.getTimes().isEmpty() && date.getLocations().isEmpty()) {
       dateRepository.delete(date);
       cache.remove(DATE_KEY + id);
 
     } else {
-      throw new BadRequestException("Date with id " + id + " has connections.");
+      throw new BadRequestException(DATE_INFO + id + " has connections.");
     }
 
-    log.info("Date with id " + id + " deleted.");
+    log.info(DATE_INFO + id + " deleted.");
 
     return new DateDto(date.getSunDate());
   }
