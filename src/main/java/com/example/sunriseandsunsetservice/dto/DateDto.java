@@ -1,14 +1,16 @@
 package com.example.sunriseandsunsetservice.dto;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
+/**
+ * Dto for date.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
-public class DateDTO {
-    LocalDate date;
+public class DateDto {
+  LocalDate date;
 }

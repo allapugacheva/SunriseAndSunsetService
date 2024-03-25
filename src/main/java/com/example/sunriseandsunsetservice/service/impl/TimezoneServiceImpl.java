@@ -1,91 +1,116 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
 import com.example.sunriseandsunsetservice.cache.InMemoryCache;
-import com.example.sunriseandsunsetservice.dto.TimezoneDTO;
-import com.example.sunriseandsunsetservice.exceptions.MyRuntimeException;
+import com.example.sunriseandsunsetservice.dto.TimezoneDto;
 import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.TimezoneRepository;
 import com.example.sunriseandsunsetservice.service.TimezoneService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.NoSuchElementException;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
+import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of timezone service.
+ */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class TimezoneServiceImpl implements TimezoneService {
 
-    private final TimezoneRepository timezoneRepository;
+  private final TimezoneRepository timezoneRepository;
 
-    private final InMemoryCache cache;
+  private final InMemoryCache cache;
 
-    private static final String TIMEZONE_KEY = "Timezone";
+  private static final String TIMEZONE_KEY = "Timezone";
 
-    @Override
-    @Transactional
-    public TimezoneDTO createTimezone(String newTimezone) {
+  @Override
+  @Transactional
+  public TimezoneDto createTimezone(String newTimezone) {
 
-        Timezone timezone;
-        if ((timezone = timezoneRepository.findBySunTimezone(newTimezone)) == null)
-            timezone = timezoneRepository.save(new Timezone(newTimezone));
-
-        cache.put(TIMEZONE_KEY + timezone.getId().toString(), timezone);
-
-        return new TimezoneDTO(newTimezone);
+    Timezone timezone;
+    if ((timezone = timezoneRepository.findBySunTimezone(newTimezone)) == null) {
+      timezone = timezoneRepository.save(new Timezone(newTimezone));
     }
 
-    @Override
-    public List<TimezoneDTO> readAllTimezones() { return timezoneRepository.findAllTimezones(); }
+    cache.put(TIMEZONE_KEY + timezone.getId().toString(), timezone);
 
-    @Override
-    public TimezoneDTO getById(Integer id) {
+    log.info("Added new timezone: " + timezone.getSunTimezone() + ".");
 
-        Timezone tempTimezone = (Timezone) cache.get(TIMEZONE_KEY + id.toString());
+    return new TimezoneDto(newTimezone);
+  }
 
-        if(tempTimezone == null) {
-            tempTimezone = timezoneRepository.findById(id).orElseThrow(
-                    () -> new MyRuntimeException("Timezone not found."));
+  @Override
+  public List<TimezoneDto> readAllTimezones() {
 
-            cache.put(TIMEZONE_KEY + id, tempTimezone);
-        }
+    log.info("All timezones are shown.");
 
-        return new TimezoneDTO(tempTimezone.getSunTimezone());
+    return timezoneRepository.findAllTimezones();
+  }
+
+  @Override
+  public TimezoneDto getById(Integer id) {
+
+    Timezone tempTimezone = (Timezone) cache.get(TIMEZONE_KEY + id.toString());
+
+    if (tempTimezone == null) {
+      tempTimezone = timezoneRepository.findById(id).orElseThrow(
+               () -> new NoSuchElementException("Timezone with id " + id + " not found."));
+
+      cache.put(TIMEZONE_KEY + id, tempTimezone);
     }
 
-    @Override
-    @Transactional
-    public TimezoneDTO updateTimezone(Integer id, String newTimezone) {
+    log.info("Timezone with id " + id + " is shown.");
 
-        Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
-        if(timezone == null)
-            timezone = timezoneRepository.findById(id).orElseThrow(
-                () -> new MyRuntimeException("Wrong id."));
+    return new TimezoneDto(tempTimezone.getSunTimezone());
+  }
 
-        cache.remove(TIMEZONE_KEY + id);
+  @Override
+  @Transactional
+  public TimezoneDto updateTimezone(Integer id, String newTimezone) {
 
-        timezone.setSunTimezone(newTimezone);
-        timezoneRepository.save(timezone);
-
-        cache.put(TIMEZONE_KEY + id, timezone);
-
-        return new TimezoneDTO(newTimezone);
+    Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
+    if (timezone == null) {
+      timezone = timezoneRepository.findById(id).orElseThrow(
+              () -> new NoSuchElementException("Timezone with id " + id + " not found."));
     }
 
-    @Override
-    @Transactional
-    public TimezoneDTO deleteTimezone(Integer id) {
+    cache.remove(TIMEZONE_KEY + id);
 
-        Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
-        if(timezone == null)
-            timezone = timezoneRepository.findById(id).orElseThrow(
-                () -> new MyRuntimeException("Wrong id."));
+    timezone.setSunTimezone(newTimezone);
+    timezoneRepository.save(timezone);
 
-        if (timezone.getLocations().isEmpty()) {
-            timezoneRepository.deleteById(id);
-            cache.remove(TIMEZONE_KEY + id);
-        }
-        else throw new MyRuntimeException("Timezone has connections.");
+    cache.put(TIMEZONE_KEY + id, timezone);
 
-        return new TimezoneDTO(timezone.getSunTimezone());
+    log.info("Timezone with id " + id + " updated.");
+
+    return new TimezoneDto(newTimezone);
+  }
+
+  @Override
+  @SneakyThrows
+  @Transactional
+  public TimezoneDto deleteTimezone(Integer id) {
+
+    Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
+    if (timezone == null) {
+      timezone = timezoneRepository.findById(id).orElseThrow(
+              () -> new NoSuchElementException("Timezone with id " + id + " not found."));
     }
+
+    if (timezone.getLocations().isEmpty()) {
+      timezoneRepository.deleteById(id);
+      cache.remove(TIMEZONE_KEY + id);
+    } else {
+      throw new BadRequestException("Timezone with id " + id + " has connections.");
+    }
+
+    log.info("Timezone with id " + id + " deleted.");
+
+    return new TimezoneDto(timezone.getSunTimezone());
+  }
 }

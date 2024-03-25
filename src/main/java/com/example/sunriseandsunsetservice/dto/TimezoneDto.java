@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Dto for timezone.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
-public class LocationDTO {
-    private String location;
-    private Double latitude;
-    private Double longitude;
+public class TimezoneDto {
+  private String timezone;
 }

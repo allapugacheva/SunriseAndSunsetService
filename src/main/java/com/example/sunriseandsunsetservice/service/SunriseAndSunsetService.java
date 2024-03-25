@@ -1,16 +1,25 @@
 package com.example.sunriseandsunsetservice.service;
 
-import com.example.sunriseandsunsetservice.dto.DaytimeDTO;
-import com.example.sunriseandsunsetservice.dto.ResponseDTO;
+import com.example.sunriseandsunsetservice.dto.DaytimeDto;
+import com.example.sunriseandsunsetservice.dto.ResponseDto;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Interface for sunrise and sunset service.
+ */
 public interface SunriseAndSunsetService {
 
-    ResponseDTO findSunriseAndSunsetTime(Double lat, Double lng, LocalDate date);
-    List<ResponseDTO> readAllSunrisesAnsSunsets();
-    ResponseDTO getById(Integer locationId, Integer dateId);
-    ResponseDTO updateSunriseAndSunset(Integer locationId, Integer dateId, Double lat, Double lng, LocalDate date);
-    ResponseDTO deleteSunriseAndSunsetTime(Integer locationId, Integer dateId);
-    DaytimeDTO findDaytimeLength(Integer dateId, Integer locationId);
+  ResponseDto findSunriseAndSunsetTime(Double lat, Double lng, LocalDate date);
+
+  List<ResponseDto> readAllSunrisesAnsSunsets();
+
+  ResponseDto getById(Integer locationId, Integer dateId);
+
+  ResponseDto updateSunriseAndSunset(Integer locationId, Integer dateId, Double lat,
+                                     Double lng, LocalDate date);
+
+  ResponseDto deleteSunriseAndSunsetTime(Integer locationId, Integer dateId);
+
+  DaytimeDto findDaytimeLength(Integer dateId, Integer locationId);
 }

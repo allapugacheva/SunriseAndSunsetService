@@ -3,11 +3,15 @@ package com.example.sunriseandsunsetservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalTime;
 
+/**
+ * Dto for location.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
-public class DaytimeDTO {
-    LocalTime duration;
+public class LocationDto {
+  private String location;
+  private Double latitude;
+  private Double longitude;
 }

@@ -1,41 +1,64 @@
 package com.example.sunriseandsunsetservice.controller;
 
-import com.example.sunriseandsunsetservice.dto.DateDTO;
-import com.example.sunriseandsunsetservice.service.*;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import com.example.sunriseandsunsetservice.dto.DateDto;
+import com.example.sunriseandsunsetservice.service.DateService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for date.
+ */
+@Tag(name = "Date CRUD")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/suntime")
 public class DateController {
 
-    private final DateService dateService;
+  private final DateService dateService;
 
-    @PostMapping("/date")
-    public DateDTO createDate(@RequestParam("date") LocalDate date) {
-        return dateService.createDate(date);
-    }
+  @Operation(summary = "Create date")
+  @PostMapping("/date")
+  public ResponseEntity<DateDto> createDate(@RequestParam LocalDate date) {
 
-    @GetMapping("/date")
-    public List<DateDTO> readAllDates() {
-        return dateService.readAllDates();
-    }
+    return ResponseEntity.ok(dateService.createDate(date));
+  }
 
-    @GetMapping("/date/one")
-    public DateDTO getById(@RequestParam("id") Integer id) { return dateService.getById(id);  }
+  @Operation(summary = "Show all dates")
+  @GetMapping("/date")
+  public ResponseEntity<List<DateDto>> readAllDates() {
 
-    @PutMapping("/date")
-    public DateDTO updateDate(@RequestParam("id") Integer id,
-                              @RequestParam("date") LocalDate date) {
-        return dateService.updateDate(id, date);
-    }
+    return ResponseEntity.ok(dateService.readAllDates());
+  }
 
-    @DeleteMapping("/date")
-    public DateDTO deleteDate(@RequestParam("id") Integer id) {
-        return dateService.deleteDate(id);
-    }
+  @Operation(summary = "Find date by id")
+  @GetMapping("/date/one")
+  public ResponseEntity<DateDto> getById(@RequestParam Integer id) {
 
+    return ResponseEntity.ok(dateService.getById(id));
+  }
+
+  @Operation(summary = "Update date")
+  @PutMapping("/date")
+  public ResponseEntity<DateDto> updateDate(@RequestParam Integer id,
+                                            @RequestParam("date") LocalDate date) {
+    return ResponseEntity.ok(dateService.updateDate(id, date));
+  }
+
+  @Operation(summary = "Delete date")
+  @DeleteMapping("/date")
+  public ResponseEntity<DateDto> deleteDate(@RequestParam Integer id) {
+
+    return ResponseEntity.ok(dateService.deleteDate(id));
+  }
 }

@@ -1,14 +1,20 @@
 package com.example.sunriseandsunsetservice.service;
 
-import com.example.sunriseandsunsetservice.dto.LocationDTO;
-
+import com.example.sunriseandsunsetservice.dto.LocationDto;
 import java.util.List;
 
+/**
+ * Interface for location service.
+ */
 public interface LocationService {
 
-    LocationDTO createLocation(Double lat, Double lng);
-    List<LocationDTO> readAllLocations();
-    LocationDTO getById(Integer id);
-    LocationDTO updateLocation(Integer id, Double lat, Double lng);
-    LocationDTO deleteLocation(Integer id);
+  LocationDto createLocation(Double lat, Double lng);
+
+  List<LocationDto> readAllLocations();
+
+  LocationDto getById(Integer id);
+
+  LocationDto updateLocation(Integer id, Double lat, Double lng);
+
+  LocationDto deleteLocation(Integer id);
 }

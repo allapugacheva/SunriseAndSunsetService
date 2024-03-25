@@ -1,15 +1,16 @@
 package com.example.sunriseandsunsetservice.dto;
 
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalTime;
-
+/**
+ * Dto for daytime.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
-public class TimeDTO {
-    private LocalTime sunriseTime;
-    private LocalTime sunsetTime;
+public class DaytimeDto {
+  LocalTime duration;
 }
