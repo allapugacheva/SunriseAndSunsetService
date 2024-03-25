@@ -7,7 +7,7 @@ import java.util.Map;
 @Component
 public class InMemoryCache {
 
-    private final Integer capacity = 20;
+    private final static Integer capacity = 20;
 
     private final Map<String, Object> cache = new LinkedHashMap<>(capacity, 0.75f, true) {
         @Override

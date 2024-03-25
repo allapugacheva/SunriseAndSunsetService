@@ -19,7 +19,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     private final InMemoryCache cache;
 
-    private final String key = "Timezone";
+    private final static String key = "Timezone";
 
     @Override
     @Transactional

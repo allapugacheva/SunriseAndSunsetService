@@ -28,8 +28,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     private final CommonService commonService;
     private final InMemoryCache cache;
 
-    private final String locationKey = "Location";
-    private final String dateKey = "Date";
+    private final static String locationKey = "Location";
+    private final static String dateKey = "Date";
 
     @Override
     @SneakyThrows

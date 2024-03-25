@@ -20,7 +20,7 @@ public class TimeServiceImpl implements TimeService {
 
     private final InMemoryCache cache;
 
-    private final String key = "Time";
+    private final static String key = "Time";
 
     @Override
     @Transactional

@@ -21,7 +21,7 @@ public class LocationServiceImpl implements LocationService {
 
     private final InMemoryCache cache;
 
-    private final String key = "Location";
+    private final static String key = "Location";
 
     @Override
     @Transactional
