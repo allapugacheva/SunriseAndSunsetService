@@ -24,7 +24,7 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
     Long findDaytimeLength(@Param("date_id") Integer dateId,
                                  @Param("location_id") Integer locationId);
 
-    @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.LocationDTO(l.location, l.latitude, l.longitude) " +
+    @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.LocationDTO(l.sunLocation, l.latitude, l.longitude) " +
             "FROM Location AS l")
     List<LocationDTO> findAllLocations();
 

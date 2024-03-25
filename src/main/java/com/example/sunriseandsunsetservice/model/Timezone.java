@@ -18,13 +18,13 @@ public class Timezone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String timezone;
+    private String sunTimezone;
 
     @OneToMany(mappedBy = "timezone", fetch = FetchType.LAZY)
     private Set<Location> locations = new HashSet<>();
 
     public Timezone(String t) {
-        this.timezone = t;
+        this.sunTimezone = t;
     }
 
     public void addLocation(Location location) { this.locations.add(location); }

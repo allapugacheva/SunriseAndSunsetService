@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface DateRepository extends JpaRepository<Date, Integer> {
 
-    Date findByDate(LocalDate date);
+    Date findBySunDate(LocalDate date);
 
-    @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.DateDTO(d.date) FROM Date AS d")
+    @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.DateDTO(d.sunDate) FROM Date AS d")
     List<DateDTO> findAllDates();
 }

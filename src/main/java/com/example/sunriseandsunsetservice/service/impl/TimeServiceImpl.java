@@ -20,6 +20,8 @@ public class TimeServiceImpl implements TimeService {
 
     private final InMemoryCache cache;
 
+    private final String key = "Time";
+
     @Override
     @Transactional
     public TimeDTO createTime(LocalTime sunriseTime, LocalTime sunsetTime) {
@@ -28,7 +30,7 @@ public class TimeServiceImpl implements TimeService {
         if ((time = timeRepository.findBySunriseTimeAndSunsetTime(sunriseTime, sunsetTime)) == null)
             time = timeRepository.save(new Time(sunriseTime, sunsetTime));
 
-        cache.put("Time" + time.getId().toString(), time);
+        cache.put(key + time.getId().toString(), time);
 
         return new TimeDTO(sunriseTime, sunsetTime);
     }
@@ -39,13 +41,13 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public TimeDTO getById(Integer id) {
 
-        Time tempTime = (Time) cache.get("Time" + id.toString());
+        Time tempTime = (Time) cache.get(key + id.toString());
 
         if(tempTime == null) {
             tempTime = timeRepository.findById(id).orElseThrow(
                     () -> new MyRuntimeException("Time not found."));
 
-            cache.put("Time" + id, tempTime);
+            cache.put(key + id, tempTime);
         }
 
         return new TimeDTO(tempTime.getSunriseTime(), tempTime.getSunsetTime());
@@ -55,18 +57,18 @@ public class TimeServiceImpl implements TimeService {
     @Transactional
     public TimeDTO updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime) {
 
-        Time time = (Time) cache.get("Time" + id);
+        Time time = (Time) cache.get(key + id);
         if(time == null) {
             time = timeRepository.findById(id).orElseThrow(
                     () -> new MyRuntimeException("Wrong id."));
-            cache.remove("Time" + id);
+            cache.remove(key + id);
         }
 
         time.setSunriseTime(sunriseTime);
         time.setSunsetTime(sunsetTime);
         timeRepository.save(time);
 
-        cache.put("Time" + id, time);
+        cache.put(key + id, time);
 
         return new TimeDTO(sunriseTime, sunsetTime);
     }
@@ -75,14 +77,14 @@ public class TimeServiceImpl implements TimeService {
     @Transactional
     public TimeDTO deleteTime(Integer id) {
 
-        Time time = (Time) cache.get("Time" + id);
+        Time time = (Time) cache.get(key + id);
         if(time == null)
             time = timeRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
         if (time.getDates().isEmpty() && time.getLocations().isEmpty()) {
             timeRepository.delete(time);
-            cache.remove("Time" + id);
+            cache.remove(key + id);
         }
         else throw new MyRuntimeException("Time has connections.");
 

@@ -97,8 +97,8 @@ public class CommonService {
         boolean flagDeleteDate = true;
 
         Date tempDate;
-        if ((tempDate = dateRepository.findByDate(newDate)) == null) {
-            date.setDate(newDate);
+        if ((tempDate = dateRepository.findBySunDate(newDate)) == null) {
+            date.setSunDate(newDate);
 
             flagDeleteDate = false;
         }
@@ -108,7 +108,7 @@ public class CommonService {
             clearTime(date, tempLocation, timeRepository.findCommonTime(id, tempLocation.getId()));
 
             Time time = getSunriseAndSunsetTime(tempLocation.getLatitude(),
-                    tempLocation.getLongitude(), date.getDate(), tempLocation.getTimezone().getTimezone());
+                    tempLocation.getLongitude(), date.getSunDate(), tempLocation.getTimezone().getSunTimezone());
 
             if (flagDeleteDate) {
                 tempLocation.addDate(tempDate);
@@ -140,7 +140,9 @@ public class CommonService {
     }
 
     public String updateLocation(Integer id, Double lat, Double lng) {
-        Location location = (Location) cache.get("Location" + id);
+        String key = "Location";
+
+        Location location = (Location) cache.get(key + id);
         if(location == null)
             location = locationRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
@@ -152,12 +154,12 @@ public class CommonService {
         if ((tempLocation = locationRepository.findByLatitudeAndLongitude(lat, lng)) == null) {
             String[] timezoneAndPlace = getTimezoneAndPlace(lat, lng);
 
-            if ((tempTimezone = timezoneRepository.findByTimezone(timezoneAndPlace[0])) == null)
+            if ((tempTimezone = timezoneRepository.findBySunTimezone(timezoneAndPlace[0])) == null)
                 tempTimezone = timezoneRepository.save(new Timezone(timezoneAndPlace[0]));
 
             tempTimezone.addLocation(location);
             location.setTimezone(tempTimezone);
-            location.setLocation(timezoneAndPlace[1]);
+            location.setSunLocation(timezoneAndPlace[1]);
             location.setLatitude(lat);
             location.setLongitude(lng);
 
@@ -170,7 +172,7 @@ public class CommonService {
             clearTime(tempDate, location, timeRepository.findCommonTime(tempDate.getId(), id));
 
             Time time = getSunriseAndSunsetTime(location.getLatitude(),
-                    location.getLongitude(), tempDate.getDate(), tempTimezone.getTimezone());
+                    location.getLongitude(), tempDate.getSunDate(), tempTimezone.getSunTimezone());
 
             if (flagDeleteLocation) {
                 tempLocation.addDate(tempDate);
@@ -189,21 +191,21 @@ public class CommonService {
             }
         }
 
-        cache.remove("Location" + id);
+        cache.remove(key + id);
 
         if(flagDeleteLocation) {
             locationRepository.delete(location);
             locationRepository.save(tempLocation);
 
-            cache.put("Location" + tempLocation.getId().toString(), tempLocation);
+            cache.put(key + tempLocation.getId().toString(), tempLocation);
 
-            return tempLocation.getLocation();
+            return tempLocation.getSunLocation();
         } else {
             locationRepository.save(location);
 
-            cache.put("Location" + location.getId().toString(), location);
+            cache.put(key + location.getId().toString(), location);
 
-            return location.getLocation();
+            return location.getSunLocation();
         }
     }
 }

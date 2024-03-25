@@ -27,12 +27,12 @@ public class DateServiceImpl implements DateService {
     public DateDTO createDate(LocalDate newDate) {
 
         Date date;
-        if ((date = dateRepository.findByDate(newDate)) == null)
+        if ((date = dateRepository.findBySunDate(newDate)) == null)
             date = dateRepository.save(new Date(newDate));
 
         cache.put("Date" + date.getId().toString(), date);
 
-        return new DateDTO(date.getDate());
+        return new DateDTO(date.getSunDate());
     }
 
     @Override
@@ -51,7 +51,7 @@ public class DateServiceImpl implements DateService {
             cache.put("Date" + id, tempDate);
         }
 
-        return new DateDTO(tempDate.getDate());
+        return new DateDTO(tempDate.getSunDate());
     }
 
     @Override
@@ -76,6 +76,6 @@ public class DateServiceImpl implements DateService {
 
         } else throw new MyRuntimeException("Date has connections.");
 
-        return new DateDTO(date.getDate());
+        return new DateDTO(date.getSunDate());
     }
 }

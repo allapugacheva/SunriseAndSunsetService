@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface TimezoneRepository extends JpaRepository<Timezone, Integer> {
 
-    Timezone findByTimezone(String s);
+    Timezone findBySunTimezone(String s);
 
-    @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.TimezoneDTO(tz.timezone) " +
+    @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.TimezoneDTO(tz.sunTimezone) " +
             "FROM Timezone AS tz")
     List<TimezoneDTO> findAllTimezones();
 }

@@ -28,6 +28,9 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     private final CommonService commonService;
     private final InMemoryCache cache;
 
+    private final String locationKey = "Location";
+    private final String dateKey = "Date";
+
     @Override
     @SneakyThrows
     @Transactional
@@ -43,14 +46,14 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
             String[] timezoneAndPlace = commonService.getTimezoneAndPlace(lat, lng);
             location = locationRepository.save(new Location(timezoneAndPlace[1], lat, lng));
 
-            if((timezone = timezoneRepository.findByTimezone(timezoneAndPlace[0]))==null)
+            if((timezone = timezoneRepository.findBySunTimezone(timezoneAndPlace[0]))==null)
                 timezone = timezoneRepository.save(new Timezone(timezoneAndPlace[0]));
         } else
             timezone = location.getTimezone();
 
-        Time time = commonService.getSunriseAndSunsetTime(lat, lng, newDate, timezone.getTimezone());
+        Time time = commonService.getSunriseAndSunsetTime(lat, lng, newDate, timezone.getSunTimezone());
 
-        Date date = dateRepository.findByDate(newDate);
+        Date date = dateRepository.findBySunDate(newDate);
         if(date == null)
             date = dateRepository.save(new Date(newDate));
 
@@ -68,11 +71,11 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
         locationRepository.save(location);
 
-        cache.put("Date" + date.getId().toString(), date);
-        cache.put("Location" + location.getId().toString(), location);
+        cache.put(dateKey + date.getId().toString(), date);
+        cache.put(locationKey + location.getId().toString(), location);
 
-        return new ResponseDTO(location.getLocation(), location.getLatitude(), location.getLongitude(),
-                date.getDate(), time.getSunriseTime(), time.getSunsetTime());
+        return new ResponseDTO(location.getSunLocation(), location.getLatitude(), location.getLongitude(),
+                date.getSunDate(), time.getSunriseTime(), time.getSunsetTime());
     }
 
     @Override
@@ -83,30 +86,30 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
                         ((java.sql.Date)row[3]).toLocalDate(),
                         ((java.sql.Time)row[4]).toLocalTime(),
                         ((java.sql.Time)row[5]).toLocalTime()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public ResponseDTO getById(Integer locationId, Integer dateId) {
 
-        Location tempLocation = (Location) cache.get("Location" + locationId);
+        Location tempLocation = (Location) cache.get(locationKey + locationId);
         if(tempLocation == null) {
             tempLocation = locationRepository.findById(locationId).orElseThrow(
                     () -> new MyRuntimeException("Location not found."));
-            cache.put("Location" + locationId, tempLocation);
+            cache.put(locationKey + locationId, tempLocation);
         }
 
-        Date tempDate = (Date) cache.get("Date" + dateId);
+        Date tempDate = (Date) cache.get(dateKey + dateId);
         if(tempDate == null) {
             tempDate = dateRepository.findById(dateId).orElseThrow(
                     () -> new MyRuntimeException("Date not found."));
-            cache.put("Date" + dateId, tempDate);
+            cache.put(dateKey + dateId, tempDate);
         }
 
         Time tempTime = timeRepository.findCommonTime(dateId, locationId);
 
-        return new ResponseDTO(tempLocation.getLocation(), tempLocation.getLatitude(), tempLocation.getLongitude(),
-                tempDate.getDate(), tempTime.getSunriseTime(), tempTime.getSunsetTime());
+        return new ResponseDTO(tempLocation.getSunLocation(), tempLocation.getLatitude(), tempLocation.getLongitude(),
+                tempDate.getSunDate(), tempTime.getSunriseTime(), tempTime.getSunsetTime());
     }
 
     @Override
@@ -124,12 +127,12 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     @Transactional
     public ResponseDTO deleteSunriseAndSunsetTime(Integer locationId, Integer dateId) {
 
-        Date date = (Date) cache.get("Date" + dateId);
+        Date date = (Date) cache.get(dateKey + dateId);
         if(date == null)
             date = dateRepository.findById(dateId).orElseThrow(
                 () -> new MyRuntimeException("Wrong date id."));
         
-        Location location = (Location) cache.get("Location" + locationId);
+        Location location = (Location) cache.get(locationKey + locationId);
         if(location == null)
             location = locationRepository.findById(locationId).orElseThrow(
                 () -> new MyRuntimeException("Wrong location id."));
@@ -149,8 +152,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
             location.deleteTime(time);
             date.deleteTime(time);
 
-            cache.remove("Date" + dateId);
-            cache.remove("Location" + locationId);
+            cache.remove(dateKey + dateId);
+            cache.remove(locationKey + locationId);
             cache.remove("Time" + time.getId());
         }
         else
@@ -165,8 +168,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
         if(time.getDates().isEmpty() && time.getLocations().isEmpty())
             timeRepository.delete(time);
 
-        return new ResponseDTO(location.getLocation(), location.getLatitude(),
-                location.getLongitude(), date.getDate(), time.getSunriseTime(),
+        return new ResponseDTO(location.getSunLocation(), location.getLatitude(),
+                location.getLongitude(), date.getSunDate(), time.getSunriseTime(),
                 time.getSunsetTime());
     }
 

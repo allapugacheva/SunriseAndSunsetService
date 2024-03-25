@@ -19,7 +19,7 @@ public class Date {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private LocalDate date;
+    private LocalDate sunDate;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -36,7 +36,7 @@ public class Date {
     private Set<Time> times = new HashSet<>();
 
     public Date(LocalDate d) {
-        this.date = d;
+        this.sunDate = d;
     }
 
     public void addTime(Time time) {

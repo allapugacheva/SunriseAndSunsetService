@@ -21,6 +21,8 @@ public class LocationServiceImpl implements LocationService {
 
     private final InMemoryCache cache;
 
+    private final String key = "Location";
+
     @Override
     @Transactional
     public LocationDTO createLocation(Double lat, Double lng) {
@@ -36,14 +38,14 @@ public class LocationServiceImpl implements LocationService {
             location.setLongitude(lng);
 
             String[] place = commonService.getTimezoneAndPlace(lat, lng);
-            location.setLocation(place[1]);
+            location.setSunLocation(place[1]);
 
             locationRepository.save(location);
         }
 
-        cache.put("Location" + location.getId().toString(), location);
+        cache.put(key + location.getId().toString(), location);
 
-        return new LocationDTO(location.getLocation(), lat, lng);
+        return new LocationDTO(location.getSunLocation(), lat, lng);
     }
 
     @Override
@@ -52,16 +54,16 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationDTO getById(Integer id) {
 
-        Location tempLocation = (Location) cache.get("Location" + id.toString());
+        Location tempLocation = (Location) cache.get(key + id.toString());
 
         if (tempLocation == null) {
             tempLocation = locationRepository.findById(id).orElseThrow(
                     () -> new MyRuntimeException("Location not found."));
 
-            cache.put("Location" + id, tempLocation);
+            cache.put(key + id, tempLocation);
         }
 
-        return new LocationDTO(tempLocation.getLocation(), tempLocation.getLatitude(), tempLocation.getLongitude());
+        return new LocationDTO(tempLocation.getSunLocation(), tempLocation.getLatitude(), tempLocation.getLongitude());
     }
 
     @Override
@@ -80,10 +82,10 @@ public class LocationServiceImpl implements LocationService {
 
         if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {
             locationRepository.delete(location);
-            cache.remove("Location" + id);
+            cache.remove(key + id);
 
         } else throw new MyRuntimeException("Location has connections.");
 
-        return new LocationDTO(location.getLocation(), location.getLatitude(), location.getLongitude());
+        return new LocationDTO(location.getSunLocation(), location.getLatitude(), location.getLongitude());
     }
 }

@@ -18,7 +18,7 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String location;
+    private String sunLocation;
 
     private Double latitude;
 
@@ -39,7 +39,7 @@ public class Location {
     private Set<Time> times = new HashSet<>();
 
     public Location(String l, Double lat, Double lng) {
-        this.location = l;
+        this.sunLocation = l;
         this.latitude = lat;
         this.longitude = lng;
     }
