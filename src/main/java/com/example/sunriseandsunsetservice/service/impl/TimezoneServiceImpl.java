@@ -19,7 +19,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     private final InMemoryCache cache;
 
-    private final static String key = "Timezone";
+    private static final String Key = "Timezone";
 
     @Override
     @Transactional
@@ -29,7 +29,7 @@ public class TimezoneServiceImpl implements TimezoneService {
         if ((timezone = timezoneRepository.findBySunTimezone(newTimezone)) == null)
             timezone = timezoneRepository.save(new Timezone(newTimezone));
 
-        cache.put(key + timezone.getId().toString(), timezone);
+        cache.put(Key + timezone.getId().toString(), timezone);
 
         return new TimezoneDTO(newTimezone);
     }
@@ -40,13 +40,13 @@ public class TimezoneServiceImpl implements TimezoneService {
     @Override
     public TimezoneDTO getById(Integer id) {
 
-        Timezone tempTimezone = (Timezone) cache.get(key + id.toString());
+        Timezone tempTimezone = (Timezone) cache.get(Key + id.toString());
 
         if(tempTimezone == null) {
             tempTimezone = timezoneRepository.findById(id).orElseThrow(
                     () -> new MyRuntimeException("Timezone not found."));
 
-            cache.put(key + id, tempTimezone);
+            cache.put(Key + id, tempTimezone);
         }
 
         return new TimezoneDTO(tempTimezone.getSunTimezone());
@@ -56,17 +56,17 @@ public class TimezoneServiceImpl implements TimezoneService {
     @Transactional
     public TimezoneDTO updateTimezone(Integer id, String newTimezone) {
 
-        Timezone timezone = (Timezone) cache.get(key + id);
+        Timezone timezone = (Timezone) cache.get(Key + id);
         if(timezone == null)
             timezone = timezoneRepository.findById(id).orElseThrow(
                 () -> new MyRuntimeException("Wrong id."));
 
-        cache.remove(key + id);
+        cache.remove(Key + id);
 
         timezone.setSunTimezone(newTimezone);
         timezoneRepository.save(timezone);
 
-        cache.put(key + id, timezone);
+        cache.put(Key + id, timezone);
 
         return new TimezoneDTO(newTimezone);
     }
@@ -82,7 +82,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
         if (timezone.getLocations().isEmpty()) {
             timezoneRepository.deleteById(id);
-            cache.remove(key + id);
+            cache.remove(Key + id);
         }
         else throw new MyRuntimeException("Timezone has connections.");
 

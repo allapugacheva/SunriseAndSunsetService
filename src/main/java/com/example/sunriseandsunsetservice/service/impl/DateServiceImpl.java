@@ -22,7 +22,7 @@ public class DateServiceImpl implements DateService {
 
     private final InMemoryCache cache;
 
-    private final static String key = "Date";
+    private static final String Key = "Date";
 
     @Override
     @Transactional
@@ -32,7 +32,7 @@ public class DateServiceImpl implements DateService {
         if ((date = dateRepository.findBySunDate(newDate)) == null)
             date = dateRepository.save(new Date(newDate));
 
-        cache.put(key + date.getId().toString(), date);
+        cache.put(Key + date.getId().toString(), date);
 
         return new DateDTO(date.getSunDate());
     }
@@ -45,12 +45,12 @@ public class DateServiceImpl implements DateService {
     @Override
     public DateDTO getById(Integer id) {
 
-        Date tempDate = (Date)cache.get(key + id.toString());
+        Date tempDate = (Date)cache.get(Key + id.toString());
 
         if(tempDate == null) {
             tempDate = dateRepository.findById(id).orElseThrow(
                     () -> new MyRuntimeException("Date not found."));
-            cache.put(key + id, tempDate);
+            cache.put(Key + id, tempDate);
         }
 
         return new DateDTO(tempDate.getSunDate());
@@ -74,7 +74,7 @@ public class DateServiceImpl implements DateService {
 
         if (date.getTimes().isEmpty() && date.getLocations().isEmpty()) {
             dateRepository.delete(date);
-            cache.remove(key + id);
+            cache.remove(Key + id);
 
         } else throw new MyRuntimeException("Date has connections.");
 

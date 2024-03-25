@@ -7,12 +7,12 @@ import java.util.Map;
 @Component
 public class InMemoryCache {
 
-    private final static Integer capacity = 20;
+    private static final Integer Capacity = 20;
 
-    private final Map<String, Object> cache = new LinkedHashMap<>(capacity, 0.75f, true) {
+    private final Map<String, Object> cache = new LinkedHashMap<>(Capacity, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, Object> eldest) {
-            return size() > capacity;
+            return size() > Capacity;
         }
     };
 
