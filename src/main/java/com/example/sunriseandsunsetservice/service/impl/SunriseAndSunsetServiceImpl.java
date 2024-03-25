@@ -42,6 +42,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
   private static final String LOCATION_KEY = "Location";
   private static final String DATE_KEY = "Date";
   private static final String NOT_FOUND_STRING = " not found.";
+  private static final String DATE_INFO = "Date with id ";
 
   @Override
   @SneakyThrows
@@ -124,13 +125,13 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     Date tempDate = (Date) cache.get(DATE_KEY + dateId);
     if (tempDate == null) {
       tempDate = dateRepository.findById(dateId).orElseThrow(
-                () -> new NoSuchElementException("Date with id " + dateId + NOT_FOUND_STRING));
+                () -> new NoSuchElementException(DATE_INFO + dateId + NOT_FOUND_STRING));
       cache.put(DATE_KEY + dateId, tempDate);
     }
 
     Time tempTime = timeRepository.findCommonTime(dateId, locationId);
     if (tempTime == null) {
-      throw new NoSuchElementException("Date with id " + dateId + " and location with id "
+      throw new NoSuchElementException(DATE_INFO + dateId + " and location with id "
               + locationId + " have no common time.");
     }
 
@@ -164,7 +165,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     Date date = (Date) cache.get(DATE_KEY + dateId);
     if (date == null) {
       date = dateRepository.findById(dateId).orElseThrow(
-            () -> new NoSuchElementException("Date with id " + dateId + NOT_FOUND_STRING));
+            () -> new NoSuchElementException(DATE_INFO + dateId + NOT_FOUND_STRING));
     }
 
     Location location = (Location) cache.get(LOCATION_KEY + locationId);
@@ -225,7 +226,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
            .findDaytimeLength(dateId, locationId)));
 
       if (response.getDuration() == null) {
-        throw new NoSuchElementException("Date with id " + dateId + " and location with id "
+        throw new NoSuchElementException(DATE_INFO + dateId + " and location with id "
                 + locationId + " have no common time.");
       }
 
