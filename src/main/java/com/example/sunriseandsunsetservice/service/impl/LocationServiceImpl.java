@@ -21,7 +21,7 @@ public class LocationServiceImpl implements LocationService {
 
     private final InMemoryCache cache;
 
-    private static final String Key = "Location";
+    private static final String LOCATION_KEY = "Location";
 
     @Override
     @Transactional
@@ -43,7 +43,7 @@ public class LocationServiceImpl implements LocationService {
             locationRepository.save(location);
         }
 
-        cache.put(Key + location.getId().toString(), location);
+        cache.put(LOCATION_KEY + location.getId().toString(), location);
 
         return new LocationDTO(location.getSunLocation(), lat, lng);
     }
@@ -54,13 +54,13 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationDTO getById(Integer id) {
 
-        Location tempLocation = (Location) cache.get(Key + id.toString());
+        Location tempLocation = (Location) cache.get(LOCATION_KEY + id.toString());
 
         if (tempLocation == null) {
             tempLocation = locationRepository.findById(id).orElseThrow(
                     () -> new MyRuntimeException("Location not found."));
 
-            cache.put(Key + id, tempLocation);
+            cache.put(LOCATION_KEY + id, tempLocation);
         }
 
         return new LocationDTO(tempLocation.getSunLocation(), tempLocation.getLatitude(), tempLocation.getLongitude());
@@ -82,7 +82,7 @@ public class LocationServiceImpl implements LocationService {
 
         if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {
             locationRepository.delete(location);
-            cache.remove(Key + id);
+            cache.remove(LOCATION_KEY + id);
 
         } else throw new MyRuntimeException("Location has connections.");
 

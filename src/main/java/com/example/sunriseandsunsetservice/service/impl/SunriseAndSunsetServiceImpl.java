@@ -27,8 +27,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     private final CommonService commonService;
     private final InMemoryCache cache;
 
-    private static final String LocationKey = "Location";
-    private static final String DateKey = "Date";
+    private static final String LOCATION_KEY = "Location";
+    private static final String DATE_KEY = "Date";
 
     @Override
     @SneakyThrows
@@ -70,8 +70,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
         locationRepository.save(location);
 
-        cache.put(DateKey + date.getId().toString(), date);
-        cache.put(LocationKey + location.getId().toString(), location);
+        cache.put(DATE_KEY + date.getId().toString(), date);
+        cache.put(LOCATION_KEY + location.getId().toString(), location);
 
         return new ResponseDTO(location.getSunLocation(), location.getLatitude(), location.getLongitude(),
                 date.getSunDate(), time.getSunriseTime(), time.getSunsetTime());
@@ -91,18 +91,18 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     @Override
     public ResponseDTO getById(Integer locationId, Integer dateId) {
 
-        Location tempLocation = (Location) cache.get(LocationKey + locationId);
+        Location tempLocation = (Location) cache.get(LOCATION_KEY + locationId);
         if(tempLocation == null) {
             tempLocation = locationRepository.findById(locationId).orElseThrow(
                     () -> new MyRuntimeException("Location not found."));
-            cache.put(LocationKey + locationId, tempLocation);
+            cache.put(LOCATION_KEY + locationId, tempLocation);
         }
 
-        Date tempDate = (Date) cache.get(DateKey + dateId);
+        Date tempDate = (Date) cache.get(DATE_KEY + dateId);
         if(tempDate == null) {
             tempDate = dateRepository.findById(dateId).orElseThrow(
                     () -> new MyRuntimeException("Date not found."));
-            cache.put(DateKey + dateId, tempDate);
+            cache.put(DATE_KEY + dateId, tempDate);
         }
 
         Time tempTime = timeRepository.findCommonTime(dateId, locationId);
@@ -126,12 +126,12 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     @Transactional
     public ResponseDTO deleteSunriseAndSunsetTime(Integer locationId, Integer dateId) {
 
-        Date date = (Date) cache.get(DateKey + dateId);
+        Date date = (Date) cache.get(DATE_KEY + dateId);
         if(date == null)
             date = dateRepository.findById(dateId).orElseThrow(
                 () -> new MyRuntimeException("Wrong date id."));
         
-        Location location = (Location) cache.get(LocationKey + locationId);
+        Location location = (Location) cache.get(LOCATION_KEY + locationId);
         if(location == null)
             location = locationRepository.findById(locationId).orElseThrow(
                 () -> new MyRuntimeException("Wrong location id."));
@@ -151,8 +151,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
             location.deleteTime(time);
             date.deleteTime(time);
 
-            cache.remove(DateKey + dateId);
-            cache.remove(LocationKey + locationId);
+            cache.remove(DATE_KEY + dateId);
+            cache.remove(LOCATION_KEY + locationId);
             cache.remove("Time" + time.getId());
         }
         else
