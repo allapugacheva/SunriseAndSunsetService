@@ -28,8 +28,8 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
             "FROM Location AS l")
     List<LocationDTO> findAllLocations();
 
-    @Query(value = "SELECT l.location," +
-            " l.latitude, l.longitude, d.date, t.sunrise_time, t.sunset_time FROM date AS d" +
+    @Query(value = "SELECT l.sun_location," +
+            " l.latitude, l.longitude, d.sun_date, t.sunrise_time, t.sunset_time FROM date AS d" +
             " JOIN location_date_mapping AS ldm ON d.id = ldm.date_id" +
             " JOIN location l ON ldm.location_id = l.id" +
             " JOIN date_time_mapping AS dtm ON d.id = dtm.date_id" +
