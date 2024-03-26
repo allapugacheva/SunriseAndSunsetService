@@ -9,15 +9,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class InMemoryCache {
-  private static final Integer CAPACITY = 20;
 
-  private final Map<String, Object> cache = new LinkedHashMap<>(CAPACITY, 0.75f, true) {
-      @Override
-      protected boolean removeEldestEntry(Map.Entry<String, Object> eldest) {
-
-      return size() > CAPACITY;
-    }
-  };
+  private final Map<String, Object> cache = new CustomLinkedHashMap<>(20);
 
   public void put(String key, Object value) {
 
