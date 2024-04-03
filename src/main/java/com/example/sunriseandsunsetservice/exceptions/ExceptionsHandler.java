@@ -3,8 +3,6 @@ package com.example.sunriseandsunsetservice.exceptions;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import org.apache.coyote.BadRequestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class ExceptionsHandler {
-
-  private static final Logger log = LoggerFactory.getLogger(ExceptionsHandler.class);
 
   /**
    * Handler for 500.
