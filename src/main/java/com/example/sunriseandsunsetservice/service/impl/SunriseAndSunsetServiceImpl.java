@@ -91,9 +91,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     cache.put(DATE_KEY + date.getId().toString(), date);
     cache.put(LOCATION_KEY + location.getId().toString(), location);
 
-    log.info(String.format("Added new sunrise and sunset time for location with id"
-            + " %d and date with id %d.", location.getId(), date.getId()));
-
     return new ResponseDto(location.getSunLocation(), location.getLatitude(),
             location.getLongitude(), date.getSunDate(), time.getSunriseTime(),
             time.getSunsetTime());
@@ -101,8 +98,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
   @Override
   public List<ResponseDto> readAllSunrisesAnsSunsets() {
-
-    log.info("All sunrise and sunset data are shown.");
 
     return locationRepository.findAllData().stream()
             .map(row -> new ResponseDto((String) row[0], (Double) row[1], (Double) row[2],
@@ -118,7 +113,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     Location tempLocation = (Location) cache.get(LOCATION_KEY + locationId);
     if (tempLocation == null) {
       tempLocation = locationRepository.findById(locationId).orElseThrow(
-               () -> new NoSuchElementException("Location with id " + locationId + NOT_FOUND_STRING));
+             () -> new NoSuchElementException("Location with id " + locationId + NOT_FOUND_STRING));
       cache.put(LOCATION_KEY + locationId, tempLocation);
     }
 
@@ -134,9 +129,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
       throw new NoSuchElementException(DATE_INFO + dateId + " and location with id "
               + locationId + " have no common time.");
     }
-
-    log.info(String.format("Sunrise and sunset data for location with id"
-            + " %d and date with id %d is shown", locationId, dateId));
 
     return new ResponseDto(tempLocation.getSunLocation(), tempLocation.getLatitude(),
             tempLocation.getLongitude(), tempDate.getSunDate(),
@@ -171,7 +163,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     Location location = (Location) cache.get(LOCATION_KEY + locationId);
     if (location == null) {
       location = locationRepository.findById(locationId).orElseThrow(
-              () -> new NoSuchElementException("Location with id " + locationId + NOT_FOUND_STRING));
+            () -> new NoSuchElementException("Location with id " + locationId + NOT_FOUND_STRING));
     }
 
     Time time = timeRepository.findCommonTime(dateId, locationId);
@@ -195,9 +187,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     } else {
       throw new BadRequestException("Data has connections.");
     }
-
-    log.info(String.format("Sunrise and sunset data for location with id"
-            + " %d and date with id %d deleted", locationId, dateId));
 
     if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {
       locationRepository.delete(location);
@@ -232,9 +221,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
       cache.put("Daytime" + dateId + locationId, response);
     }
-
-    log.info(String.format("Found daytime length for location with id"
-            + " %d and date with id %d.", locationId, dateId));
 
     return response;
   }

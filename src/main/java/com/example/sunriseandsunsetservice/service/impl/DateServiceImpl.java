@@ -43,15 +43,11 @@ public class DateServiceImpl implements DateService {
 
     cache.put(DATE_KEY + date.getId().toString(), date);
 
-    log.info("Added new date: " + date.getSunDate().toString() + ".");
-
     return new DateDto(date.getSunDate());
   }
 
   @Override
   public List<DateDto> readAllDates() {
-
-    log.info("All dates are shown.");
 
     return dateRepository.findAllDates();
   }
@@ -66,8 +62,6 @@ public class DateServiceImpl implements DateService {
               () -> new NoSuchElementException(DATE_INFO + id + " not found."));
       cache.put(DATE_KEY + id, tempDate);
     }
-
-    log.info(DATE_INFO + id + " is shown.");
 
     return new DateDto(tempDate.getSunDate());
   }
@@ -96,8 +90,6 @@ public class DateServiceImpl implements DateService {
     } else {
       throw new BadRequestException(DATE_INFO + id + " has connections.");
     }
-
-    log.info(DATE_INFO + id + " deleted.");
 
     return new DateDto(date.getSunDate());
   }

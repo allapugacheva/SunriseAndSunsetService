@@ -42,15 +42,11 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + time.getId().toString(), time);
 
-    log.info("Added new time: " + sunriseTime.toString() + " - " + sunsetTime.toString() + ".");
-
     return new TimeDto(sunriseTime, sunsetTime);
   }
 
   @Override
   public List<TimeDto> readAllTimes() {
-
-    log.info("All times are shown.");
 
     return timeRepository.findAllTimes();
   }
@@ -66,8 +62,6 @@ public class TimeServiceImpl implements TimeService {
 
       cache.put(TIME_KEY + id, tempTime);
     }
-
-    log.info(TIME_INFO + id + " is shown.");
 
     return new TimeDto(tempTime.getSunriseTime(), tempTime.getSunsetTime());
   }
@@ -90,8 +84,6 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + id, time);
 
-    log.info(TIME_INFO + id + " updated.");
-
     return new TimeDto(sunriseTime, sunsetTime);
   }
 
@@ -112,8 +104,6 @@ public class TimeServiceImpl implements TimeService {
     } else {
       throw new BadRequestException(TIME_INFO + id + " has connections.");
     }
-
-    log.info(TIME_INFO + id + " deleted.");
 
     return new TimeDto(time.getSunriseTime(), time.getSunsetTime());
   }

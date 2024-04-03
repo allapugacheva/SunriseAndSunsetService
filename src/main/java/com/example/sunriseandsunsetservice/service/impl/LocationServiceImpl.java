@@ -55,15 +55,11 @@ public class LocationServiceImpl implements LocationService {
 
     cache.put(LOCATION_KEY + location.getId().toString(), location);
 
-    log.info("Added new location: " + lat + ", " + lng + ".");
-
     return new LocationDto(location.getSunLocation(), lat, lng);
   }
 
   @Override
   public List<LocationDto> readAllLocations() {
-
-    log.info("All locations are shown.");
 
     return locationRepository.findAllLocations();
   }
@@ -79,8 +75,6 @@ public class LocationServiceImpl implements LocationService {
 
       cache.put(LOCATION_KEY + id, tempLocation);
     }
-
-    log.info(LOCATION_INFO + id + " is shown.");
 
     return new LocationDto(tempLocation.getSunLocation(), tempLocation.getLatitude(),
         tempLocation.getLongitude());
@@ -107,8 +101,6 @@ public class LocationServiceImpl implements LocationService {
     } else {
       throw new NoSuchElementException(LOCATION_INFO + id + " has connections.");
     }
-
-    log.info(LOCATION_INFO + id + " deleted.");
 
     return new LocationDto(location.getSunLocation(), location.getLatitude(),
         location.getLongitude());

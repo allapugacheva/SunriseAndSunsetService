@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InMemoryCache {
 
-  private final Map<String, Object> cache = new CustomLinkedHashMap<>(20);
+  private final Map<String, Object> cache = new CustomLinkedHashMap<>(16);
 
   public void put(String key, Object value) {
 

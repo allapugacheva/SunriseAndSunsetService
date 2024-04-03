@@ -52,8 +52,6 @@ public class CommonService {
 
     JsonNode root = objectMapper.readTree(restTemplate.getForEntity(url, String.class).getBody());
 
-    log.info("Found timezone and place for " + lat + ", " + lng + ".");
-
     return new String[]{root.path("name").asText(), root.path("city").path("name").asText()};
   }
 
@@ -88,8 +86,6 @@ public class CommonService {
       time = timeRepository.save(new Time(LocalTime.parse(sunriseAndSunsetTime[0]),
               LocalTime.parse(sunriseAndSunsetTime[1])));
     }
-
-    log.info("Found sunrise and sunset time " + date + " for " + lat + ", " + lng + ".");
 
     return time;
   }
@@ -126,9 +122,6 @@ public class CommonService {
     }
 
     boolean flagDeleteDate = true;
-
-    log.info("Updated date with id " + id + " from " + date.getSunDate().toString()
-            + " to " + newDate.toString() + ".");
 
     Date tempDate;
     if ((tempDate = dateRepository.findBySunDate(newDate)) == null) {
@@ -186,9 +179,6 @@ public class CommonService {
     }
 
     boolean flagDeleteLocation = true;
-
-    log.info("Updated location with id " + id + " from " + location.getLatitude()
-            + ", " + location.getLongitude() + " to " + lat + ", " + lng + ".");
 
     Location tempLocation;
     Timezone tempTimezone;

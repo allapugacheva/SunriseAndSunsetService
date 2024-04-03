@@ -12,7 +12,7 @@ public class CustomLinkedHashMap<K, V> extends LinkedHashMap<K, V> {
   private final Integer maxSize;
 
   public CustomLinkedHashMap(Integer maxSize) {
-    super(maxSize, 0.75f, true);
+    super(maxSize, 1f, true);
     this.maxSize = maxSize;
   }
 

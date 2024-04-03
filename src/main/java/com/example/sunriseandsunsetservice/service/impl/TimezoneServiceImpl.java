@@ -41,15 +41,11 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + timezone.getId().toString(), timezone);
 
-    log.info("Added new timezone: " + timezone.getSunTimezone() + ".");
-
     return new TimezoneDto(newTimezone);
   }
 
   @Override
   public List<TimezoneDto> readAllTimezones() {
-
-    log.info("All timezones are shown.");
 
     return timezoneRepository.findAllTimezones();
   }
@@ -65,8 +61,6 @@ public class TimezoneServiceImpl implements TimezoneService {
 
       cache.put(TIMEZONE_KEY + id, tempTimezone);
     }
-
-    log.info(TIMEZONE_INFO + id + " is shown.");
 
     return new TimezoneDto(tempTimezone.getSunTimezone());
   }
@@ -88,8 +82,6 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + id, timezone);
 
-    log.info(TIMEZONE_INFO + id + " updated.");
-
     return new TimezoneDto(newTimezone);
   }
 
@@ -110,8 +102,6 @@ public class TimezoneServiceImpl implements TimezoneService {
     } else {
       throw new BadRequestException(TIMEZONE_INFO + id + " has connections.");
     }
-
-    log.info(TIMEZONE_INFO + id + " deleted.");
 
     return new TimezoneDto(timezone.getSunTimezone());
   }
