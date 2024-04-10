@@ -1,4 +1,4 @@
-package com.example.sunriseandsunsetservice.dto;
+package com.example.sunriseandsunsetservice.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class LocationDto {
+public class LocationResponse {
   private String location;
   private Double latitude;
   private Double longitude;

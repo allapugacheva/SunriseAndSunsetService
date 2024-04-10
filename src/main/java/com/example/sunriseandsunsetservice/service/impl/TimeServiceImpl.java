@@ -1,7 +1,8 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
 import com.example.sunriseandsunsetservice.cache.InMemoryCache;
-import com.example.sunriseandsunsetservice.dto.TimeDto;
+import com.example.sunriseandsunsetservice.dto.request.TimeRequest;
+import com.example.sunriseandsunsetservice.dto.response.TimeResponse;
 import com.example.sunriseandsunsetservice.model.Time;
 import com.example.sunriseandsunsetservice.repository.TimeRepository;
 import com.example.sunriseandsunsetservice.service.TimeService;
@@ -9,10 +10,10 @@ import jakarta.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,7 +34,7 @@ public class TimeServiceImpl implements TimeService {
 
   @Override
   @Transactional
-  public TimeDto createTime(LocalTime sunriseTime, LocalTime sunsetTime) {
+  public TimeResponse createTime(LocalTime sunriseTime, LocalTime sunsetTime) {
 
     Time time;
     if ((time = timeRepository.findBySunriseTimeAndSunsetTime(sunriseTime, sunsetTime)) == null) {
@@ -42,17 +43,27 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + time.getId().toString(), time);
 
-    return new TimeDto(sunriseTime, sunsetTime);
+    return new TimeResponse(sunriseTime, sunsetTime);
   }
 
   @Override
-  public List<TimeDto> readAllTimes() {
+  @Transactional
+  public List<TimeResponse> createManyTimes(List<TimeRequest> times) {
+
+    return times.stream()
+            .map(timeRequest -> createTime(timeRequest.getSunriseTime(),
+                                           timeRequest.getSunsetTime()))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<TimeResponse> readAllTimes() {
 
     return timeRepository.findAllTimes();
   }
 
   @Override
-  public TimeDto getById(Integer id) {
+  public TimeResponse getById(Integer id) {
 
     Time tempTime = (Time) cache.get(TIME_KEY + id.toString());
 
@@ -63,12 +74,12 @@ public class TimeServiceImpl implements TimeService {
       cache.put(TIME_KEY + id, tempTime);
     }
 
-    return new TimeDto(tempTime.getSunriseTime(), tempTime.getSunsetTime());
+    return new TimeResponse(tempTime.getSunriseTime(), tempTime.getSunsetTime());
   }
 
   @Override
   @Transactional
-  public TimeDto updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime) {
+  public TimeResponse updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime) {
 
     Time time = (Time) cache.get(TIME_KEY + id);
     if (time == null) {
@@ -84,13 +95,13 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + id, time);
 
-    return new TimeDto(sunriseTime, sunsetTime);
+    return new TimeResponse(sunriseTime, sunsetTime);
   }
 
   @Override
   @SneakyThrows
   @Transactional
-  public TimeDto deleteTime(Integer id) {
+  public TimeResponse deleteTime(Integer id) {
 
     Time time = (Time) cache.get(TIME_KEY + id);
     if (time == null) {
@@ -102,9 +113,9 @@ public class TimeServiceImpl implements TimeService {
       timeRepository.delete(time);
       cache.remove(TIME_KEY + id);
     } else {
-      throw new BadRequestException(TIME_INFO + id + " has connections.");
+      throw new RuntimeException(TIME_INFO + id + " has connections.");
     }
 
-    return new TimeDto(time.getSunriseTime(), time.getSunsetTime());
+    return new TimeResponse(time.getSunriseTime(), time.getSunsetTime());
   }
 }

@@ -1,7 +1,8 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
 import com.example.sunriseandsunsetservice.cache.InMemoryCache;
-import com.example.sunriseandsunsetservice.dto.LocationDto;
+import com.example.sunriseandsunsetservice.dto.request.LocationRequest;
+import com.example.sunriseandsunsetservice.dto.response.LocationResponse;
 import com.example.sunriseandsunsetservice.model.Location;
 import com.example.sunriseandsunsetservice.repository.LocationRepository;
 import com.example.sunriseandsunsetservice.service.CommonService;
@@ -9,10 +10,10 @@ import com.example.sunriseandsunsetservice.service.LocationService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,10 +35,10 @@ public class LocationServiceImpl implements LocationService {
   @Override
   @SneakyThrows
   @Transactional
-  public LocationDto createLocation(Double lat, Double lng) {
+  public LocationResponse createLocation(Double lat, Double lng) {
 
     if (commonService.notValidLat(lat) || commonService.notValidLng(lng)) {
-      throw new BadRequestException("Invalid latitude or longitude");
+      throw new RuntimeException("Invalid latitude or longitude");
     }
 
     Location location;
@@ -55,17 +56,27 @@ public class LocationServiceImpl implements LocationService {
 
     cache.put(LOCATION_KEY + location.getId().toString(), location);
 
-    return new LocationDto(location.getSunLocation(), lat, lng);
+    return new LocationResponse(location.getSunLocation(), lat, lng);
   }
 
   @Override
-  public List<LocationDto> readAllLocations() {
+  @Transactional
+  public List<LocationResponse> createManyLocations(List<LocationRequest> locations) {
+
+    return locations.stream()
+            .map(locationRequest -> createLocation(locationRequest.getLat(),
+                                                   locationRequest.getLng()))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<LocationResponse> readAllLocations() {
 
     return locationRepository.findAllLocations();
   }
 
   @Override
-  public LocationDto getById(Integer id) {
+  public LocationResponse getById(Integer id) {
 
     Location tempLocation = (Location) cache.get(LOCATION_KEY + id.toString());
 
@@ -76,20 +87,20 @@ public class LocationServiceImpl implements LocationService {
       cache.put(LOCATION_KEY + id, tempLocation);
     }
 
-    return new LocationDto(tempLocation.getSunLocation(), tempLocation.getLatitude(),
+    return new LocationResponse(tempLocation.getSunLocation(), tempLocation.getLatitude(),
         tempLocation.getLongitude());
   }
 
   @Override
   @Transactional
-  public LocationDto updateLocation(Integer id, Double lat, Double lng) {
+  public LocationResponse updateLocation(Integer id, Double lat, Double lng) {
 
-    return new LocationDto(commonService.updateLocation(id, lat, lng), lat, lng);
+    return new LocationResponse(commonService.updateLocation(id, lat, lng), lat, lng);
   }
 
   @Override
   @Transactional
-  public LocationDto deleteLocation(Integer id) {
+  public LocationResponse deleteLocation(Integer id) {
 
     Location location = locationRepository.findById(id).orElseThrow(
             () -> new NoSuchElementException(LOCATION_INFO + id + " not found."));
@@ -99,10 +110,10 @@ public class LocationServiceImpl implements LocationService {
       cache.remove(LOCATION_KEY + id);
 
     } else {
-      throw new NoSuchElementException(LOCATION_INFO + id + " has connections.");
+      throw new RuntimeException(LOCATION_INFO + id + " has connections.");
     }
 
-    return new LocationDto(location.getSunLocation(), location.getLatitude(),
+    return new LocationResponse(location.getSunLocation(), location.getLatitude(),
         location.getLongitude());
   }
 }

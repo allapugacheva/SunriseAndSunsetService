@@ -1,6 +1,7 @@
 package com.example.sunriseandsunsetservice.service;
 
-import com.example.sunriseandsunsetservice.dto.LocationDto;
+import com.example.sunriseandsunsetservice.dto.request.LocationRequest;
+import com.example.sunriseandsunsetservice.dto.response.LocationResponse;
 import java.util.List;
 
 /**
@@ -8,13 +9,15 @@ import java.util.List;
  */
 public interface LocationService {
 
-  LocationDto createLocation(Double lat, Double lng);
+  LocationResponse createLocation(Double lat, Double lng);
 
-  List<LocationDto> readAllLocations();
+  List<LocationResponse> createManyLocations(List<LocationRequest> locations);
 
-  LocationDto getById(Integer id);
+  List<LocationResponse> readAllLocations();
 
-  LocationDto updateLocation(Integer id, Double lat, Double lng);
+  LocationResponse getById(Integer id);
 
-  LocationDto deleteLocation(Integer id);
+  LocationResponse updateLocation(Integer id, Double lat, Double lng);
+
+  LocationResponse deleteLocation(Integer id);
 }

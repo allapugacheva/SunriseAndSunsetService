@@ -1,6 +1,6 @@
 package com.example.sunriseandsunsetservice.repository;
 
-import com.example.sunriseandsunsetservice.dto.TimeDto;
+import com.example.sunriseandsunsetservice.dto.response.TimeResponse;
 import com.example.sunriseandsunsetservice.model.Time;
 import java.time.LocalTime;
 import java.util.List;
@@ -17,9 +17,9 @@ public interface TimeRepository extends JpaRepository<Time, Integer> {
 
   Time findBySunriseTimeAndSunsetTime(LocalTime sunrise, LocalTime sunset);
 
-  @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto"
-         + ".TimeDto(t.sunriseTime, t.sunsetTime) FROM Time AS t")
-  List<TimeDto> findAllTimes();
+  @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.response"
+         + ".TimeResponse(t.sunriseTime, t.sunsetTime) FROM Time AS t")
+  List<TimeResponse> findAllTimes();
 
   @Query(value = "SELECT t FROM Time t"
          + " JOIN t.dates AS d"

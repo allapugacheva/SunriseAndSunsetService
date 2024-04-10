@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,13 +33,29 @@ public class Timezone {
   @OneToMany(mappedBy = "timezone", fetch = FetchType.LAZY)
   private Set<Location> locations = new HashSet<>();
 
+  /**
+   * Constructor.
+   */
   public Timezone(String t) {
 
+    this.id = 0;
     this.sunTimezone = t;
   }
 
   public void addLocation(Location location) {
 
     this.locations.add(location);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Timezone timezone)) return false;
+    return Objects.equals(id, timezone.id) && Objects.equals(sunTimezone, timezone.sunTimezone);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, sunTimezone);
   }
 }

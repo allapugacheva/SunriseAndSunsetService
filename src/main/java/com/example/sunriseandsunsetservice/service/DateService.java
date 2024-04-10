@@ -1,6 +1,7 @@
 package com.example.sunriseandsunsetservice.service;
 
-import com.example.sunriseandsunsetservice.dto.DateDto;
+import com.example.sunriseandsunsetservice.dto.request.DateRequest;
+import com.example.sunriseandsunsetservice.dto.response.DateResponse;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,13 +10,15 @@ import java.util.List;
  */
 public interface DateService {
 
-  DateDto createDate(LocalDate date);
+  DateResponse createDate(LocalDate date);
 
-  List<DateDto> readAllDates();
+  List<DateResponse> createManyDates(List<DateRequest> dates);
 
-  DateDto getById(Integer id);
+  List<DateResponse> readAllDates();
 
-  DateDto updateDate(Integer id, LocalDate date);
+  DateResponse getById(Integer id);
 
-  DateDto deleteDate(Integer id);
+  DateResponse updateDate(Integer id, LocalDate date);
+
+  DateResponse deleteDate(Integer id);
 }

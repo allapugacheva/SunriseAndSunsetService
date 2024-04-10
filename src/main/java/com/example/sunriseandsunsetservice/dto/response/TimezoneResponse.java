@@ -1,4 +1,4 @@
-package com.example.sunriseandsunsetservice.dto;
+package com.example.sunriseandsunsetservice.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TimezoneDto {
+public class TimezoneResponse {
   private String timezone;
 }

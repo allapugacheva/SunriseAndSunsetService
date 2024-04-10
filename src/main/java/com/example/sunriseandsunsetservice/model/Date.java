@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,8 +50,12 @@ public class Date {
         inverseJoinColumns =  @JoinColumn(name = "sunrise_and_sunset_time_id"))
   private Set<Time> times = new HashSet<>();
 
+  /**
+   * Constructor.
+   */
   public Date(LocalDate d) {
 
+    this.id = 0;
     this.sunDate = d;
   }
 
@@ -71,5 +76,17 @@ public class Date {
 
   public void deleteLocation(Location location) {
     this.locations.remove(location);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Date date)) return false;
+    return Objects.equals(id, date.id) && Objects.equals(sunDate, date.sunDate);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, sunDate);
   }
 }

@@ -1,6 +1,6 @@
 package com.example.sunriseandsunsetservice.repository;
 
-import com.example.sunriseandsunsetservice.dto.TimezoneDto;
+import com.example.sunriseandsunsetservice.dto.response.TimezoneResponse;
 import com.example.sunriseandsunsetservice.model.Timezone;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +15,7 @@ public interface TimezoneRepository extends JpaRepository<Timezone, Integer> {
 
   Timezone findBySunTimezone(String s);
 
-  @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto."
-         + "TimezoneDto(tz.sunTimezone) FROM Timezone AS tz")
-  List<TimezoneDto> findAllTimezones();
+  @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.response."
+         + "TimezoneResponse(tz.sunTimezone) FROM Timezone AS tz")
+  List<TimezoneResponse> findAllTimezones();
 }

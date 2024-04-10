@@ -1,7 +1,8 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
 import com.example.sunriseandsunsetservice.cache.InMemoryCache;
-import com.example.sunriseandsunsetservice.dto.DateDto;
+import com.example.sunriseandsunsetservice.dto.request.DateRequest;
+import com.example.sunriseandsunsetservice.dto.response.DateResponse;
 import com.example.sunriseandsunsetservice.model.Date;
 import com.example.sunriseandsunsetservice.repository.DateRepository;
 import com.example.sunriseandsunsetservice.service.CommonService;
@@ -10,10 +11,10 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,7 +35,7 @@ public class DateServiceImpl implements DateService {
 
   @Override
   @Transactional
-  public DateDto createDate(LocalDate newDate) {
+  public DateResponse createDate(LocalDate newDate) {
 
     Date date;
     if ((date = dateRepository.findBySunDate(newDate)) == null) {
@@ -43,17 +44,26 @@ public class DateServiceImpl implements DateService {
 
     cache.put(DATE_KEY + date.getId().toString(), date);
 
-    return new DateDto(date.getSunDate());
+    return new DateResponse(date.getSunDate());
   }
 
   @Override
-  public List<DateDto> readAllDates() {
+  @Transactional
+  public List<DateResponse> createManyDates(List<DateRequest> dates) {
+
+    return dates.stream()
+            .map(dateRequest -> this.createDate(dateRequest.getDate()))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<DateResponse> readAllDates() {
 
     return dateRepository.findAllDates();
   }
 
   @Override
-  public DateDto getById(Integer id) {
+  public DateResponse getById(Integer id) {
 
     Date tempDate = (Date) cache.get(DATE_KEY + id.toString());
 
@@ -63,22 +73,22 @@ public class DateServiceImpl implements DateService {
       cache.put(DATE_KEY + id, tempDate);
     }
 
-    return new DateDto(tempDate.getSunDate());
+    return new DateResponse(tempDate.getSunDate());
   }
 
   @Override
   @Transactional
-  public DateDto updateDate(Integer id, LocalDate date) {
+  public DateResponse updateDate(Integer id, LocalDate date) {
 
     commonService.updateDate(id, date);
 
-    return new DateDto(date);
+    return new DateResponse(date);
   }
 
   @Override
   @SneakyThrows
   @Transactional
-  public DateDto deleteDate(Integer id) {
+  public DateResponse deleteDate(Integer id) {
 
     Date date = dateRepository.findById(id).orElseThrow(
             () -> new NoSuchElementException(DATE_INFO + id + " not found."));
@@ -88,9 +98,9 @@ public class DateServiceImpl implements DateService {
       cache.remove(DATE_KEY + id);
 
     } else {
-      throw new BadRequestException(DATE_INFO + id + " has connections.");
+      throw new RuntimeException(DATE_INFO + id + " has connections.");
     }
 
-    return new DateDto(date.getSunDate());
+    return new DateResponse(date.getSunDate());
   }
 }

@@ -1,67 +1,170 @@
-23:01:04.523 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
-23:01:04.593 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Starting SunriseAndSunsetServiceApplication using Java 17.0.10 with PID 7648 (D:\SunriseAndSunsetService\target\classes started by user in D:\SunriseAndSunsetService)
-23:01:04.594 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - No active profile set, falling back to 1 default profile: "default"
-23:01:05.378 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-23:01:05.471 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 4 JPA repository interfaces.
-23:01:06.215 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-23:01:06.225 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-23:01:06.227 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-23:01:06.227 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
-23:01:06.283 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-23:01:06.283 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1625 ms
-23:01:06.472 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-23:01:06.533 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
-23:01:06.561 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-23:01:06.767 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-23:01:06.791 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-23:01:06.944 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@280d5a82
-23:01:06.946 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-23:01:08.259 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-23:01:08.408 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-23:01:08.881 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-23:01:09.835 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-23:01:10.992 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-23:01:11.015 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
-23:01:11.024 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Started SunriseAndSunsetServiceApplication in 6.838 seconds (process running for 7.539)
-23:01:14.024 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-23:01:14.024 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-23:01:14.025 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-23:01:14.056 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with arguments 
-23:01:14.147 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
-23:02:03.433 [http-nio-8080-exec-8] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 325 ms
-23:03:04.559 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-23:03:04.564 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-23:03:04.574 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:03:10.739 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
-23:03:10.804 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Starting SunriseAndSunsetServiceApplication using Java 17.0.10 with PID 2768 (D:\SunriseAndSunsetService\target\classes started by user in D:\SunriseAndSunsetService)
-23:03:10.805 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - No active profile set, falling back to 1 default profile: "default"
-23:03:11.724 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-23:03:11.802 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 68 ms. Found 4 JPA repository interfaces.
-23:03:12.573 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-23:03:12.581 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-23:03:12.582 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-23:03:12.582 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
-23:03:12.637 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-23:03:12.637 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1784 ms
-23:03:12.798 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-23:03:12.860 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
-23:03:12.887 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-23:03:13.070 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-23:03:13.092 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-23:03:13.238 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@24615687
-23:03:13.239 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-23:03:14.280 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-23:03:14.434 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-23:03:14.921 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-23:03:15.838 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-23:03:17.012 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-23:03:17.032 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
-23:03:17.041 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Started SunriseAndSunsetServiceApplication in 6.727 seconds (process running for 7.434)
-23:03:19.107 [http-nio-8080-exec-8] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-23:03:19.107 [http-nio-8080-exec-8] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-23:03:19.108 [http-nio-8080-exec-8] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-23:03:19.145 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
-23:03:19.222 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
-23:03:29.288 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-23:03:29.291 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-23:03:29.303 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+17:27:35.090 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+17:27:35.137 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Starting SunriseAndSunsetServiceApplication using Java 17.0.10 with PID 4548 (D:\SunriseAndSunsetService\target\classes started by user in D:\SunriseAndSunsetService)
+17:27:35.138 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - No active profile set, falling back to 1 default profile: "default"
+17:27:36.008 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:27:36.094 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 4 JPA repository interfaces.
+17:27:36.825 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+17:27:36.835 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+17:27:36.836 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+17:27:36.837 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+17:27:36.894 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:27:36.895 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1713 ms
+17:27:37.097 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+17:27:37.146 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+17:27:37.181 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+17:27:37.391 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+17:27:37.417 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:27:37.583 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3fd33f48
+17:27:37.585 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:27:38.668 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+17:27:38.836 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:27:39.320 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+17:27:40.209 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:27:40.355 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'timezoneController' method 
+com.example.sunriseandsunsetservice.controller.TimezoneController#createTimezone(String)
+to {POST [/api/v1/suntime/timezone]}: There is already 'timezoneController' bean method
+com.example.sunriseandsunsetservice.controller.TimezoneController#createManyTimezones(List) mapped.
+17:27:40.356 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+17:27:40.358 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+17:27:40.366 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+17:27:40.370 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+17:27:40.387 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+17:27:40.401 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'timezoneController' method 
+com.example.sunriseandsunsetservice.controller.TimezoneController#createTimezone(String)
+to {POST [/api/v1/suntime/timezone]}: There is already 'timezoneController' bean method
+com.example.sunriseandsunsetservice.controller.TimezoneController#createManyTimezones(List) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.example.sunriseandsunsetservice.SunriseAndSunsetServiceApplication.main(SunriseAndSunsetServiceApplication.java:13)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'timezoneController' method 
+com.example.sunriseandsunsetservice.controller.TimezoneController#createTimezone(String)
+to {POST [/api/v1/suntime/timezone]}: There is already 'timezoneController' bean method
+com.example.sunriseandsunsetservice.controller.TimezoneController#createManyTimezones(List) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.validateMethodMapping(AbstractHandlerMethodMapping.java:672)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:634)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:331)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:508)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.registerHandlerMethod(RequestMappingHandlerMapping.java:84)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lambda$detectHandlerMethods$2(AbstractHandlerMethodMapping.java:298)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:721)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:296)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.processCandidateBean(AbstractHandlerMethodMapping.java:265)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:224)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:212)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:239)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 16 common frames omitted
+17:28:30.721 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+17:28:30.766 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Starting SunriseAndSunsetServiceApplication using Java 17.0.10 with PID 3736 (D:\SunriseAndSunsetService\target\classes started by user in D:\SunriseAndSunsetService)
+17:28:30.767 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - No active profile set, falling back to 1 default profile: "default"
+17:28:31.610 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:28:31.689 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 71 ms. Found 4 JPA repository interfaces.
+17:28:32.458 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+17:28:32.468 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+17:28:32.469 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+17:28:32.470 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+17:28:32.534 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:28:32.534 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1722 ms
+17:28:32.740 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+17:28:32.790 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+17:28:32.823 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+17:28:33.042 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+17:28:33.069 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:28:33.239 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@186481d4
+17:28:33.241 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:28:34.493 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+17:28:34.667 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:28:35.181 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+17:28:36.162 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:28:37.498 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+17:28:37.525 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+17:28:37.538 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Started SunriseAndSunsetServiceApplication in 7.307 seconds (process running for 8.083)
+17:28:46.102 [http-nio-8080-exec-5] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:28:46.102 [http-nio-8080-exec-5] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+17:28:46.105 [http-nio-8080-exec-5] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+17:28:46.240 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Started method findManySunriseAndSunsetTimes with arguments [com.example.sunriseandsunsetservice.dto.request.SunriseAndSunsetRequest@32a01873, com.example.sunriseandsunsetservice.dto.request.SunriseAndSunsetRequest@16bffa61]
+17:28:46.359 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Started method getTimezoneAndPlace with arguments 52.111385, 26.102528
+17:28:47.871 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Method getTimezoneAndPlace executed.
+17:28:47.996 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Started method getSunriseAndSunsetTime with arguments 52.111385, 26.102528, 2024-04-10, 
+17:28:52.097 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Method getSunriseAndSunsetTime executed.
+17:28:52.179 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Started method getSunriseAndSunsetTime with arguments 52.111385, 26.102528, 2024-04-11, 
+17:28:52.378 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Method getSunriseAndSunsetTime executed.
+17:28:52.380 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Method findManySunriseAndSunsetTimes executed.
+17:29:19.722 [http-nio-8080-exec-3] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+17:29:19.779 [http-nio-8080-exec-3] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+17:33:07.894 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 12
+17:33:07.913 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime threw an exception RuntimeException with message Data has connections.
+17:33:14.663 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 13
+17:33:14.670 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime threw an exception RuntimeException with message Data has connections.
+17:35:42.513 [http-nio-8080-exec-10] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 12
+17:36:47.356 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m13s883ms847µs500ns).
+17:36:47.363 [http-nio-8080-exec-10] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime threw an exception RuntimeException with message Data has connections.
+17:36:57.054 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 16
+17:36:57.058 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime threw an exception RuntimeException with message Data has connections.
+17:37:07.408 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 16
+17:38:57.129 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m9s772ms679µs600ns).
+17:42:30.148 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m33s19ms881µs500ns).
+17:42:30.153 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime threw an exception RuntimeException with message Data has connections.
+17:42:30.234 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+17:42:30.237 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+17:42:30.242 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+17:54:43.939 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+17:54:44.005 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Starting SunriseAndSunsetServiceApplication using Java 17.0.10 with PID 3768 (D:\SunriseAndSunsetService\target\classes started by user in D:\SunriseAndSunsetService)
+17:54:44.006 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - No active profile set, falling back to 1 default profile: "default"
+17:54:45.331 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:54:45.427 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 82 ms. Found 4 JPA repository interfaces.
+17:54:46.519 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+17:54:46.536 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+17:54:46.539 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+17:54:46.539 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+17:54:46.629 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:54:46.630 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2561 ms
+17:54:46.885 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+17:54:46.998 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+17:54:47.042 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+17:54:47.413 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+17:54:47.456 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:54:47.701 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@e49437
+17:54:47.703 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:54:49.070 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+17:54:49.306 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:54:49.829 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+17:54:50.885 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:54:52.151 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+17:54:52.184 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+17:54:52.203 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Started SunriseAndSunsetServiceApplication in 8.77 seconds (process running for 10.213)
+17:54:54.398 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:54:54.398 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+17:54:54.399 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+17:54:54.447 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 16
+17:55:05.230 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime executed.
+17:55:12.500 [http-nio-8080-exec-9] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 10, 17
+17:55:12.529 [http-nio-8080-exec-9] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime executed.
+17:56:40.718 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Started method findManySunriseAndSunsetTimes with arguments [com.example.sunriseandsunsetservice.dto.request.SunriseAndSunsetRequest@64a995d2, com.example.sunriseandsunsetservice.dto.request.SunriseAndSunsetRequest@27f90cdf]
+17:57:07.269 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49s453ms732µs900ns).
+17:57:07.365 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Started method getSunriseAndSunsetTime with arguments 52.1113862, 26.1025274, 2024-04-10, Europe/Minsk
+17:57:08.846 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Method getSunriseAndSunsetTime executed.
+17:57:08.868 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Started method getSunriseAndSunsetTime with arguments 52.1113862, 26.1025274, 2024-04-11, Europe/Minsk
+17:57:09.074 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Method getSunriseAndSunsetTime executed.
+17:57:09.076 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Method findManySunriseAndSunsetTimes executed.
+17:57:25.527 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+17:57:25.530 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+17:57:25.540 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

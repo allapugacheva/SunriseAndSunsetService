@@ -1,6 +1,7 @@
 package com.example.sunriseandsunsetservice.service;
 
-import com.example.sunriseandsunsetservice.dto.TimezoneDto;
+import com.example.sunriseandsunsetservice.dto.request.TimezoneRequest;
+import com.example.sunriseandsunsetservice.dto.response.TimezoneResponse;
 import java.util.List;
 
 /**
@@ -8,13 +9,15 @@ import java.util.List;
  */
 public interface TimezoneService {
 
-  TimezoneDto createTimezone(String timezone);
+  TimezoneResponse createTimezone(String timezone);
 
-  List<TimezoneDto> readAllTimezones();
+  List<TimezoneResponse> createManyTimezones(List<TimezoneRequest> timezones);
 
-  TimezoneDto getById(Integer id);
+  List<TimezoneResponse> readAllTimezones();
 
-  TimezoneDto updateTimezone(Integer id, String timezone);
+  TimezoneResponse getById(Integer id);
 
-  TimezoneDto deleteTimezone(Integer id);
+  TimezoneResponse updateTimezone(Integer id, String timezone);
+
+  TimezoneResponse deleteTimezone(Integer id);
 }

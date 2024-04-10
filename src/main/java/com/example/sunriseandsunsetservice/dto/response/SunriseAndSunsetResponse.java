@@ -1,4 +1,4 @@
-package com.example.sunriseandsunsetservice.dto;
+package com.example.sunriseandsunsetservice.dto.response;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResponseDto {
+public class SunriseAndSunsetResponse {
   private String location;
   private Double latitude;
   private Double longitude;

@@ -1,4 +1,4 @@
-package com.example.sunriseandsunsetservice.dto;
+package com.example.sunriseandsunsetservice.dto.response;
 
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TimeDto {
+public class TimeResponse {
   private LocalTime sunriseTime;
   private LocalTime sunsetTime;
 }

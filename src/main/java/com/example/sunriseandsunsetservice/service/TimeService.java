@@ -1,6 +1,7 @@
 package com.example.sunriseandsunsetservice.service;
 
-import com.example.sunriseandsunsetservice.dto.TimeDto;
+import com.example.sunriseandsunsetservice.dto.request.TimeRequest;
+import com.example.sunriseandsunsetservice.dto.response.TimeResponse;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -9,13 +10,15 @@ import java.util.List;
  */
 public interface TimeService {
 
-  TimeDto createTime(LocalTime sunriseTime, LocalTime sunsetTime);
+  TimeResponse createTime(LocalTime sunriseTime, LocalTime sunsetTime);
 
-  List<TimeDto> readAllTimes();
+  List<TimeResponse> createManyTimes(List<TimeRequest> times);
 
-  TimeDto getById(Integer id);
+  List<TimeResponse> readAllTimes();
 
-  TimeDto updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime);
+  TimeResponse getById(Integer id);
 
-  TimeDto deleteTime(Integer id);
+  TimeResponse updateTime(Integer id, LocalTime sunriseTime, LocalTime sunsetTime);
+
+  TimeResponse deleteTime(Integer id);
 }

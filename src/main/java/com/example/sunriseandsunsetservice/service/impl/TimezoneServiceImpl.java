@@ -1,17 +1,18 @@
 package com.example.sunriseandsunsetservice.service.impl;
 
 import com.example.sunriseandsunsetservice.cache.InMemoryCache;
-import com.example.sunriseandsunsetservice.dto.TimezoneDto;
+import com.example.sunriseandsunsetservice.dto.request.TimezoneRequest;
+import com.example.sunriseandsunsetservice.dto.response.TimezoneResponse;
 import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.TimezoneRepository;
 import com.example.sunriseandsunsetservice.service.TimezoneService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,7 +33,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
   @Override
   @Transactional
-  public TimezoneDto createTimezone(String newTimezone) {
+  public TimezoneResponse createTimezone(String newTimezone) {
 
     Timezone timezone;
     if ((timezone = timezoneRepository.findBySunTimezone(newTimezone)) == null) {
@@ -41,17 +42,26 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + timezone.getId().toString(), timezone);
 
-    return new TimezoneDto(newTimezone);
+    return new TimezoneResponse(newTimezone);
   }
 
   @Override
-  public List<TimezoneDto> readAllTimezones() {
+  @Transactional
+  public List<TimezoneResponse> createManyTimezones(List<TimezoneRequest> timezones) {
+
+    return timezones.stream()
+            .map(timezoneRequest -> createTimezone(timezoneRequest.getTimezone()))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<TimezoneResponse> readAllTimezones() {
 
     return timezoneRepository.findAllTimezones();
   }
 
   @Override
-  public TimezoneDto getById(Integer id) {
+  public TimezoneResponse getById(Integer id) {
 
     Timezone tempTimezone = (Timezone) cache.get(TIMEZONE_KEY + id.toString());
 
@@ -62,12 +72,12 @@ public class TimezoneServiceImpl implements TimezoneService {
       cache.put(TIMEZONE_KEY + id, tempTimezone);
     }
 
-    return new TimezoneDto(tempTimezone.getSunTimezone());
+    return new TimezoneResponse(tempTimezone.getSunTimezone());
   }
 
   @Override
   @Transactional
-  public TimezoneDto updateTimezone(Integer id, String newTimezone) {
+  public TimezoneResponse updateTimezone(Integer id, String newTimezone) {
 
     Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
     if (timezone == null) {
@@ -82,13 +92,13 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + id, timezone);
 
-    return new TimezoneDto(newTimezone);
+    return new TimezoneResponse(newTimezone);
   }
 
   @Override
   @SneakyThrows
   @Transactional
-  public TimezoneDto deleteTimezone(Integer id) {
+  public TimezoneResponse deleteTimezone(Integer id) {
 
     Timezone timezone = (Timezone) cache.get(TIMEZONE_KEY + id);
     if (timezone == null) {
@@ -100,9 +110,9 @@ public class TimezoneServiceImpl implements TimezoneService {
       timezoneRepository.deleteById(id);
       cache.remove(TIMEZONE_KEY + id);
     } else {
-      throw new BadRequestException(TIMEZONE_INFO + id + " has connections.");
+      throw new RuntimeException(TIMEZONE_INFO + id + " has connections.");
     }
 
-    return new TimezoneDto(timezone.getSunTimezone());
+    return new TimezoneResponse(timezone.getSunTimezone());
   }
 }

@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,6 +57,8 @@ public class Location {
    * Constructor for location.
    */
   public Location(String l, Double lat, Double lng) {
+
+    this.id = 0;
     this.sunLocation = l;
     this.latitude = lat;
     this.longitude = lng;
@@ -79,5 +82,17 @@ public class Location {
   public void deleteTime(Time time) {
 
     this.times.remove(time);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Location location)) return false;
+    return Objects.equals(id, location.id) && Objects.equals(sunLocation, location.sunLocation) && Objects.equals(latitude, location.latitude) && Objects.equals(longitude, location.longitude);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, sunLocation, latitude, longitude);
   }
 }
