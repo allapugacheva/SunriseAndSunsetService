@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class TimezoneServiceImplTest {
+class TimezoneServiceImplTest {
 
     @Mock
     private TimezoneRepository timezoneRepository;
@@ -31,7 +31,7 @@ public class TimezoneServiceImplTest {
     private TimezoneServiceImpl timezoneService;
 
     @Test
-    public void createTimezoneTestNew() {
+    void createTimezoneTestNew() {
 
         String testTimezone = "Europe/Minsk";
         Timezone expectedResult = new Timezone(testTimezone);
@@ -48,7 +48,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void createTimeTestExisting() {
+    void createTimeTestExisting() {
 
         String testTimezone = "Europe/Minsk";
         Timezone expectedResult = new Timezone(testTimezone);
@@ -63,7 +63,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void createManyTimesTest() {
+    void createManyTimesTest() {
 
         List<TimezoneRequest> testTimezones = List.of(new TimezoneRequest("Europe/Minsk"), new TimezoneRequest("Europe/Moscow"));
         List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
@@ -81,7 +81,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void readAllTimesTest() {
+    void readAllTimesTest() {
 
         List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
 
@@ -97,7 +97,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromCache() {
+    void getByIdTestFromCache() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -113,7 +113,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromDatabase() {
+    void getByIdTestFromDatabase() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -131,7 +131,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNotFound() {
+    void getByIdTestNotFound() {
 
         Integer testId = 1;
 
@@ -145,7 +145,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void updateTimeTestFromCache() {
+    void updateTimeTestFromCache() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -161,7 +161,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void updateTimeTestFromDatabase() {
+    void updateTimeTestFromDatabase() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -179,7 +179,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void deleteTimeTestFromCache() {
+    void deleteTimeTestFromCache() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -195,7 +195,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void deleteTimeTestFromDatabase() {
+    void deleteTimeTestFromDatabase() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -213,7 +213,7 @@ public class TimezoneServiceImplTest {
     }
 
     @Test
-    public void deleteTimeTestNotFound() {
+    void deleteTimeTestNotFound() {
 
         Integer testId = 1;
 

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TimezoneControllerTest {
+class TimezoneControllerTest {
 
     @Mock
     private TimezoneService timezoneService;
@@ -26,7 +26,7 @@ public class TimezoneControllerTest {
     private TimezoneController timezoneController;
 
     @Test
-    public void createTimezoneTest() {
+    void createTimezoneTest() {
 
         String testTimezone = "Europe/Minsk";
         TimezoneResponse expectedResult = new TimezoneResponse(testTimezone);
@@ -40,7 +40,7 @@ public class TimezoneControllerTest {
     }
 
     @Test
-    public void createManyTimezonesTest() {
+    void createManyTimezonesTest() {
 
         List<TimezoneRequest> testTimezones = List.of(new TimezoneRequest("Europe/Minsk"), new TimezoneRequest("Europe/Moscow"));
         List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
@@ -54,7 +54,7 @@ public class TimezoneControllerTest {
     }
 
     @Test
-    public void readAllTimezonesTest() {
+    void readAllTimezonesTest() {
 
         List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
 
@@ -67,7 +67,7 @@ public class TimezoneControllerTest {
     }
 
     @Test
-    public void getByIdTest() {
+    void getByIdTest() {
 
         Integer testId = 1;
         TimezoneResponse expectedResult = new TimezoneResponse("Europe/Minsk");
@@ -81,7 +81,7 @@ public class TimezoneControllerTest {
     }
 
     @Test
-    public void updateTimezoneTest() {
+    void updateTimezoneTest() {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
@@ -96,7 +96,7 @@ public class TimezoneControllerTest {
     }
 
     @Test
-    public void deleteTimezoneTest() {
+    void deleteTimezoneTest() {
 
         Integer testId = 1;
         TimezoneResponse expectedResult = new TimezoneResponse("Europe/Minsk");

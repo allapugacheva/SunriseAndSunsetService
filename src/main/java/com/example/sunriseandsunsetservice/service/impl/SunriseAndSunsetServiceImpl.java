@@ -143,7 +143,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
 
     Time tempTime = timeRepository.findCommonTime(dateId, locationId);
     if (tempTime == null) {
-      throw new RuntimeException(DATE_INFO + dateId + " and location with id "
+      throw new IllegalArgumentException(DATE_INFO + dateId + " and location with id "
               + locationId + " have no common time.");
     }
 
@@ -202,7 +202,7 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
       cache.remove(LOCATION_KEY + locationId);
       cache.remove("Time" + time.getId());
     } else {
-      throw new RuntimeException("Data has connections.");
+      throw new IllegalArgumentException("Data has connections.");
     }
 
     if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {

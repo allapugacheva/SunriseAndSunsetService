@@ -29,7 +29,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class SunriseAndSunsetServiceImplTest {
+class SunriseAndSunsetServiceImplTest {
 
     @Mock
     private LocationRepository locationRepository;
@@ -53,7 +53,7 @@ public class SunriseAndSunsetServiceImplTest {
     private SunriseAndSunsetServiceImpl service;
 
     @Test
-    public void findSunriseAndSunsetTimeTestExisting() {
+    void findSunriseAndSunsetTimeTestExisting() {
 
         LocalDate testDate = LocalDate.of(2024, 4, 8);
         Date expectedDate = new Date(testDate);
@@ -79,7 +79,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void findSunriseAndSunsetTimeTestNoLocation() {
+    void findSunriseAndSunsetTimeTestNoLocation() {
 
         LocalDate testDate = LocalDate.of(2024, 4, 8);
         Date expectedDate = new Date(testDate);
@@ -109,7 +109,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void findSunriseAndSunsetTimeTestNoDate() {
+    void findSunriseAndSunsetTimeTestNoDate() {
 
         LocalDate testDate = LocalDate.of(2024, 4, 8);
         String testLocation = "Пинск";
@@ -137,7 +137,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void findSunriseAndSunsetTimeTestNew() {
+    void findSunriseAndSunsetTimeTestNew() {
 
         LocalDate testDate = LocalDate.of(2024, 4, 8);
         String testLocation = "Пинск";
@@ -169,7 +169,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void createManyLocationsTest() {
+    void createManyLocationsTest() {
 
         Double testLat1 = 52.111385, testLng1 = 26.102528, testLat2 = 53.132294, testLng2 = 26.018415;
         String testLocation1 = "Пинск", testLocation2 = "Барановичи";
@@ -210,7 +210,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void readAllLocationsTest() {
+    void readAllLocationsTest() {
 
         Object[] row1 = {"Пинск", 52.111385, 26.102528, java.sql.Date.valueOf(LocalDate.of(2024, 4, 8)), java.sql.Time.valueOf(LocalTime.of(6, 31, 10)), java.sql.Time.valueOf(LocalTime.of(20, 3, 28))};
         Object[] row2 = {"Барановичи", 53.132294, 26.018415, java.sql.Date.valueOf(LocalDate.of(2024, 4, 9)), java.sql.Time.valueOf(LocalTime.of(6, 29, 51)), java.sql.Time.valueOf(LocalTime.of(20, 5, 28))};
@@ -233,7 +233,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromCache() {
+    void getByIdTestFromCache() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -260,7 +260,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromDatabase() {
+    void getByIdTestFromDatabase() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -289,7 +289,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNoLocation() {
+    void getByIdTestNoLocation() {
 
         Integer testDateId = 1, testLocationId = 1;
 
@@ -303,7 +303,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNoCommonTime() {
+    void getByIdTestNoCommonTime() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -326,7 +326,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNoDate() {
+    void getByIdTestNoDate() {
 
         Integer testDateId = 1, testLocationId = 1;
         String testLocation = "Пинск";
@@ -347,7 +347,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void updateSunriseAnsSunsetTestValidCoordinates() {
+    void updateSunriseAnsSunsetTestValidCoordinates() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -386,7 +386,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void updateSunriseAnsSunsetTestInValidCoordinates() {
+    void updateSunriseAnsSunsetTestInValidCoordinates() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -400,7 +400,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void deleteSunriseAnsSunsetTestFromCache() {
+    void deleteSunriseAnsSunsetTestFromCache() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -435,7 +435,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void deleteSunriseAnsSunsetTestFromDatabase() {
+    void deleteSunriseAnsSunsetTestFromDatabase() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -474,7 +474,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void deleteSunriseAnsSunsetTestNoDate() {
+    void deleteSunriseAnsSunsetTestNoDate() {
 
         Integer testDateId = 1, testLocationId = 1;
 
@@ -488,7 +488,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void deleteSunriseAnsSunsetTestNoLocation() {
+    void deleteSunriseAnsSunsetTestNoLocation() {
 
         Integer testDateId = 1, testLocationId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -507,7 +507,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void findDaytimeLengthTestValid() {
+    void findDaytimeLengthTestValid() {
 
         Integer testDateId = 1, testLocationId = 1;
         long expectedDuration = 13 * 60 * 60 + 32 * 60 + 18;
@@ -525,7 +525,7 @@ public class SunriseAndSunsetServiceImplTest {
     }
 
     @Test
-    public void findDaytimeLengthTestInvalid() {
+    void findDaytimeLengthTestInvalid() {
 
         Integer testDateId = 1, testLocationId = 1;
 

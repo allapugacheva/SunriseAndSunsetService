@@ -10,15 +10,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.time.LocalTime;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TimeControllerTest {
+class TimeControllerTest {
 
     @Mock
     private TimeService timeService;
@@ -27,7 +25,7 @@ public class TimeControllerTest {
     private TimeController timeController;
 
     @Test
-    public void createTimeTest() {
+    void createTimeTest() {
 
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
         TimeResponse expectedResult = new TimeResponse(testSunriseTime, testSunsetTime);
@@ -41,7 +39,7 @@ public class TimeControllerTest {
     }
 
     @Test
-    public void createManyTimesTest() {
+    void createManyTimesTest() {
 
         List<TimeRequest> testTimes = List.of(new TimeRequest(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
                 new TimeRequest(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
@@ -57,7 +55,7 @@ public class TimeControllerTest {
     }
 
     @Test
-    public void readAllTimesTest() {
+    void readAllTimesTest() {
 
         List<TimeResponse> expectedResult = List.of(new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
                 new TimeResponse(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
@@ -71,7 +69,7 @@ public class TimeControllerTest {
     }
 
     @Test
-    public void getByIdTest() {
+    void getByIdTest() {
 
         Integer testId = 1;
         TimeResponse expectedResult = new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28));
@@ -85,7 +83,7 @@ public class TimeControllerTest {
     }
 
     @Test
-    public void updateTimeTest() {
+    void updateTimeTest() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -100,7 +98,7 @@ public class TimeControllerTest {
     }
 
     @Test
-    public void deleteTimeTest() {
+    void deleteTimeTest() {
 
         Integer testId = 1;
         TimeResponse expectedResult = new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28));

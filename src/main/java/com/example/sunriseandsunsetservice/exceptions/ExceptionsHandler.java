@@ -16,7 +16,7 @@ public class ExceptionsHandler {
   /**
    * Handler for 400.
    */
-  @ExceptionHandler(RuntimeException.class)
+  @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<Object> badRequestException(Exception ex) {
 
     return new ResponseEntity<>(new ErrorResponse(LocalDateTime.now(), 400, ex.getMessage()),

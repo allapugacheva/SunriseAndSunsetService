@@ -98,7 +98,7 @@ public class DateServiceImpl implements DateService {
       cache.remove(DATE_KEY + id);
 
     } else {
-      throw new RuntimeException(DATE_INFO + id + " has connections.");
+      throw new IllegalArgumentException(DATE_INFO + id + " has connections.");
     }
 
     return new DateResponse(date.getSunDate());

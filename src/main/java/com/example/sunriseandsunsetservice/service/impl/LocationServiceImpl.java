@@ -38,7 +38,7 @@ public class LocationServiceImpl implements LocationService {
   public LocationResponse createLocation(Double lat, Double lng) {
 
     if (commonService.notValidLat(lat) || commonService.notValidLng(lng)) {
-      throw new RuntimeException("Invalid latitude or longitude");
+      throw new IllegalArgumentException("Invalid latitude or longitude");
     }
 
     Location location;
@@ -110,7 +110,7 @@ public class LocationServiceImpl implements LocationService {
       cache.remove(LOCATION_KEY + id);
 
     } else {
-      throw new RuntimeException(LOCATION_INFO + id + " has connections.");
+      throw new IllegalArgumentException(LOCATION_INFO + id + " has connections.");
     }
 
     return new LocationResponse(location.getSunLocation(), location.getLatitude(),

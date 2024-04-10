@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class DateControllerTest {
+class DateControllerTest {
 
     @Mock
     private DateService dateService;
@@ -25,7 +25,7 @@ public class DateControllerTest {
     private DateController dateController;
 
     @Test
-    public void createDateTest() {
+    void createDateTest() {
 
         LocalDate testDate = LocalDate.of(2024, 4,8);
         DateResponse expectedResult = new DateResponse(testDate);
@@ -39,7 +39,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void createManyDatesTest() {
+    void createManyDatesTest() {
 
         List<DateRequest> testDates = List.of(new DateRequest(LocalDate.of(2024, 4,8)),
                 new DateRequest(LocalDate.of(2024, 4,9)));
@@ -55,7 +55,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void readAllDatesTest() {
+    void readAllDatesTest() {
 
         List<DateResponse> expectedResult = List.of(new DateResponse(LocalDate.of(2024, 4,8)),
                 new DateResponse(LocalDate.of(2024, 4,9)));
@@ -69,7 +69,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void getByIdTest() {
+    void getByIdTest() {
 
         Integer testId = 1;
         DateResponse expectedResult = new DateResponse(LocalDate.of(2024, 4,8));
@@ -83,7 +83,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void updateDateTest() {
+    void updateDateTest() {
 
         Integer testId = 1;
         LocalDate testDate = LocalDate.of(2024, 4,8);
@@ -98,7 +98,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void deleteDateTest() {
+    void deleteDateTest() {
 
         Integer testId = 1;
         DateResponse expectedResult = new DateResponse(LocalDate.of(2024, 4,8));

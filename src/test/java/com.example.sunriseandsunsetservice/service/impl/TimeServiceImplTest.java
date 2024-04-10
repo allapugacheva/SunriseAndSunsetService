@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TimeServiceImplTest {
+class TimeServiceImplTest {
 
     @Mock
     private TimeRepository timeRepository;
@@ -32,7 +32,7 @@ public class TimeServiceImplTest {
     private TimeServiceImpl timeService;
 
     @Test
-    public void createTimeTestNew() {
+    void createTimeTestNew() {
 
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
         Time expectedResult = new Time(testSunriseTime, testSunsetTime);
@@ -50,7 +50,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void createTimeTestExisting() {
+    void createTimeTestExisting() {
 
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
         Time expectedResult = new Time(testSunriseTime, testSunsetTime);
@@ -66,7 +66,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void createManyTimesTest() {
+    void createManyTimesTest() {
 
         List<TimeRequest> testTimes = List.of(new TimeRequest(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
                 new TimeRequest(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
@@ -89,7 +89,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void readAllTimesTest() {
+    void readAllTimesTest() {
 
         List<TimeResponse> expectedResult = List.of(new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
                 new TimeResponse(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
@@ -108,7 +108,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromCache() {
+    void getByIdTestFromCache() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -125,7 +125,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromDatabase() {
+    void getByIdTestFromDatabase() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -144,7 +144,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNotFound() {
+    void getByIdTestNotFound() {
 
         Integer testId = 1;
 
@@ -158,7 +158,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void updateTimeTestFromCache() {
+    void updateTimeTestFromCache() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -175,7 +175,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void updateTimeTestFromDatabase() {
+    void updateTimeTestFromDatabase() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -194,7 +194,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void deleteTimeTestFromCache() {
+    void deleteTimeTestFromCache() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -211,7 +211,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void deleteTimeTestFromDatabase() {
+    void deleteTimeTestFromDatabase() {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
@@ -230,7 +230,7 @@ public class TimeServiceImplTest {
     }
 
     @Test
-    public void deleteTimeTestNotFound() {
+    void deleteTimeTestNotFound() {
 
         Integer testId = 1;
 

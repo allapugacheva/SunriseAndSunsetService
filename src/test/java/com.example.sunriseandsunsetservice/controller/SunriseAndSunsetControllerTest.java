@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class SunriseAndSunsetControllerTest {
+class SunriseAndSunsetControllerTest {
 
     @Mock
     SunriseAndSunsetService sunService;
@@ -29,7 +29,7 @@ public class SunriseAndSunsetControllerTest {
     SunriseAndSunsetController sunController;
 
     @Test
-    public void findSunriseAndSunsetTimeTest() {
+    void findSunriseAndSunsetTimeTest() {
 
         Double testLat = 52.111385, testLng = 26.102528;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -45,7 +45,7 @@ public class SunriseAndSunsetControllerTest {
     }
 
     @Test
-    public void findManySunriseAndSunsetTimesTest() {
+    void findManySunriseAndSunsetTimesTest() {
 
         List<SunriseAndSunsetRequest> testData = List.of(new SunriseAndSunsetRequest(52.111385, 26.102528, LocalDate.of(2024, 4, 8)),
                 new SunriseAndSunsetRequest(53.132294, 26.018415, LocalDate.of(2024, 4, 8)));
@@ -61,7 +61,7 @@ public class SunriseAndSunsetControllerTest {
     }
 
     @Test
-    public void readAllSunrisesAnsSunsetsTest() {
+    void readAllSunrisesAnsSunsetsTest() {
 
         List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
                 new SunriseAndSunsetResponse("Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
@@ -75,7 +75,7 @@ public class SunriseAndSunsetControllerTest {
     }
 
     @Test
-    public void getByIdTest() {
+    void getByIdTest() {
 
         Integer testDateId = 1, testLocationId = 1;
         SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528,
@@ -90,7 +90,7 @@ public class SunriseAndSunsetControllerTest {
     }
 
     @Test
-    public void updateSunriseAndSunsetTest() {
+    void updateSunriseAndSunsetTest() {
 
         Integer testDateId = 1, testLocationId = 1;
         Double testLat = 52.111385, testLng = 26.102528;
@@ -107,7 +107,7 @@ public class SunriseAndSunsetControllerTest {
     }
 
     @Test
-    public void deleteSunriseAndSunsetTimeTest() {
+    void deleteSunriseAndSunsetTimeTest() {
 
         Integer testDateId = 1, testLocationId = 1;
         SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528,
@@ -122,7 +122,7 @@ public class SunriseAndSunsetControllerTest {
     }
 
     @Test
-    public void findDaytimeLengthTest() {
+    void findDaytimeLengthTest() {
 
         Integer testDateId = 1, testLocationId = 1;
         DaytimeResponse expectedResult = new DaytimeResponse(LocalTime.of(13, 32, 18));

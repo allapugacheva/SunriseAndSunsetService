@@ -113,7 +113,7 @@ public class TimeServiceImpl implements TimeService {
       timeRepository.delete(time);
       cache.remove(TIME_KEY + id);
     } else {
-      throw new RuntimeException(TIME_INFO + id + " has connections.");
+      throw new IllegalArgumentException(TIME_INFO + id + " has connections.");
     }
 
     return new TimeResponse(time.getSunriseTime(), time.getSunsetTime());

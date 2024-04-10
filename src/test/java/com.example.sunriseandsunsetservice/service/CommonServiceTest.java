@@ -6,28 +6,18 @@ import com.example.sunriseandsunsetservice.model.Location;
 import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.DateRepository;
 import com.example.sunriseandsunsetservice.repository.LocationRepository;
-import com.example.sunriseandsunsetservice.repository.TimezoneRepository;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CommonServiceTest {
+class CommonServiceTest {
 
     @Mock
     private DateRepository dateRepository;
@@ -36,43 +26,37 @@ public class CommonServiceTest {
     private LocationRepository locationRepository;
 
     @Mock
-    private RestTemplate restTemplate = new RestTemplate();
-
-    @Mock
-    private ObjectMapper objectMapper = new ObjectMapper();
-
-    @Mock
     private InMemoryCache cache;
 
     @InjectMocks
     private CommonService service;
 
     @Test
-    public void notValidLatTestInvalid() {
+    void notValidLatTestInvalid() {
 
         assertTrue(service.notValidLat(-91.0));
     }
 
     @Test
-    public void notValidLatTestValid() {
+    void notValidLatTestValid() {
 
         assertFalse(service.notValidLat(89.0));
     }
 
     @Test
-    public void notValidLngInvalid() {
+    void notValidLngInvalid() {
 
         assertTrue(service.notValidLng(-181.0));
     }
 
     @Test
-    public void notValidLngValid() {
+    void notValidLngValid() {
 
         assertFalse(service.notValidLng(179.0));
     }
 
     @Test
-    public void updateDateFromCache() {
+    void updateDateFromCache() {
 
         Integer testId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -86,7 +70,7 @@ public class CommonServiceTest {
     }
 
     @Test
-    public void updateDateFromDatabase() {
+    void updateDateFromDatabase() {
 
         Integer testId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -102,7 +86,7 @@ public class CommonServiceTest {
     }
 
     @Test
-    public void updateDateFromNotFound() {
+    void updateDateFromNotFound() {
 
         Integer testId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -117,7 +101,7 @@ public class CommonServiceTest {
     }
 
     @Test
-    public void updateLocationFromCache() {
+    void updateLocationFromCache() {
 
         Integer testId = 1;
         Double testLat = 52.111385, testLng = 26.102528;
@@ -136,7 +120,7 @@ public class CommonServiceTest {
     }
 
     @Test
-    public void updateLocationFromDatabase() {
+    void updateLocationFromDatabase() {
 
         Integer testId = 1;
         Double testLat = 52.111385, testLng = 26.102528;
@@ -157,7 +141,7 @@ public class CommonServiceTest {
     }
 
     @Test
-    public void updateLocationNotFound() {
+    void updateLocationNotFound() {
 
         Integer testId = 1;
         Double testLat = 52.111385, testLng = 26.102528;

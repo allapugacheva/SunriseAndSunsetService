@@ -110,7 +110,7 @@ public class TimezoneServiceImpl implements TimezoneService {
       timezoneRepository.deleteById(id);
       cache.remove(TIMEZONE_KEY + id);
     } else {
-      throw new RuntimeException(TIMEZONE_INFO + id + " has connections.");
+      throw new IllegalArgumentException(TIMEZONE_INFO + id + " has connections.");
     }
 
     return new TimezoneResponse(timezone.getSunTimezone());

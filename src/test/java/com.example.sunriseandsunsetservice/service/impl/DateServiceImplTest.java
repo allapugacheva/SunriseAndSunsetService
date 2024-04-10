@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DateServiceImplTest {
+class DateServiceImplTest {
 
     @Mock
     private DateRepository dateRepository;
@@ -35,7 +35,7 @@ public class DateServiceImplTest {
     private DateServiceImpl dateService;
 
     @Test
-    public void createDateTestNew() {
+    void createDateTestNew() {
 
         LocalDate testDate = LocalDate.of(2024, 4, 8);
         Date expectedResult = new Date(testDate);
@@ -52,7 +52,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void createDateTestExisting() {
+    void createDateTestExisting() {
 
         LocalDate testDate = LocalDate.of(2024, 4, 8);
         Date expectedResult = new Date(testDate);
@@ -67,7 +67,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void createManyDatesTest() {
+    void createManyDatesTest() {
 
         List<DateRequest> testDates = List.of(new DateRequest(LocalDate.of(2024, 4,8)),
                 new DateRequest(LocalDate.of(2024, 4,9)));
@@ -88,7 +88,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void readAllDatesTest() {
+    void readAllDatesTest() {
 
         List<DateResponse> expectedResult = List.of(new DateResponse(LocalDate.of(2024, 4,8)),
                 new DateResponse(LocalDate.of(2024, 4,9)));
@@ -105,7 +105,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromCache() {
+    void getByIdTestFromCache() {
 
         Integer testId = 1;
         Date expectedResult = new Date(LocalDate.of(2024, 4, 8));
@@ -120,7 +120,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromDatabase() {
+    void getByIdTestFromDatabase() {
 
         Integer testId = 1;
         Date expectedResult = new Date(LocalDate.of(2024, 4, 8));
@@ -137,7 +137,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNotFound() {
+    void getByIdTestNotFound() {
 
         Integer testId = 1;
 
@@ -151,7 +151,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void updateDateTest() {
+    void updateDateTest() {
 
         Integer testId = 1;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
@@ -164,7 +164,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void deleteDateTestExisting() {
+    void deleteDateTestExisting() {
 
         Integer testId = 1;
         Date expectedResult = new Date(LocalDate.of(2024, 4, 8));
@@ -179,7 +179,7 @@ public class DateServiceImplTest {
     }
 
     @Test
-    public void deleteDateTestNotFound() {
+    void deleteDateTestNotFound() {
 
         Integer testId = 1;
 

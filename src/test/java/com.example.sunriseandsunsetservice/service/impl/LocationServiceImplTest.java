@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class LocationServiceImplTest {
+class LocationServiceImplTest {
 
     @Mock
     private LocationRepository locationRepository;
@@ -34,7 +34,7 @@ public class LocationServiceImplTest {
     private LocationServiceImpl locationService;
 
     @Test
-    public void createLocationTestNew() {
+    void createLocationTestNew() {
 
         String testLocation = "Пинск";
         Double testLat = 52.111385, testLng = 26.102528;
@@ -52,7 +52,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void createLocationTestExisting() {
+    void createLocationTestExisting() {
 
         String testLocation = "Пинск";
         Double testLat = 52.111385, testLng = 26.102528;
@@ -70,7 +70,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void createManyLocationsTest() {
+    void createManyLocationsTest() {
 
         List<LocationRequest> testLocations = List.of(new LocationRequest(53.132294, 26.018415),
                 new LocationRequest(52.111385, 26.102528));
@@ -95,7 +95,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void readAllLocationsTest() {
+    void readAllLocationsTest() {
 
         List<LocationResponse> expectedResult = List.of(new LocationResponse("Барановичи", 53.132294, 26.018415),
                 new LocationResponse("Пинск", 52.111385, 26.102528));
@@ -116,7 +116,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromCache() {
+    void getByIdTestFromCache() {
 
         Integer testId = 1;
         String testLocation = "Пинск";
@@ -135,7 +135,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void getByIdTestFromDatabase() {
+    void getByIdTestFromDatabase() {
 
         Integer testId = 1;
         String testLocation = "Пинск";
@@ -156,7 +156,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void getByIdTestNotFound() {
+    void getByIdTestNotFound() {
 
         Integer testId = 1;
 
@@ -170,7 +170,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void updateLocationTest() {
+    void updateLocationTest() {
 
         Integer testId = 1;
         String testLocation = "Пинск";
@@ -188,7 +188,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void deleteLocationTestExisting() {
+    void deleteLocationTestExisting() {
 
         Integer testId = 1;
         String testLocation = "Пинск";
@@ -207,7 +207,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void deleteLocationTestNotFound() {
+    void deleteLocationTestNotFound() {
 
         Integer testId = 1;
 
