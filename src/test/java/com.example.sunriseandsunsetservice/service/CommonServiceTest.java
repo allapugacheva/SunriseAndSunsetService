@@ -114,7 +114,7 @@ class CommonServiceTest {
 
         String response = service.updateLocation(testId, testLat, testLng);
 
-        assertEquals(response, "Пинск");
+        assertEquals("Пинск", response);
 
         verify(cache).get("Location" + testId);
     }
@@ -134,7 +134,7 @@ class CommonServiceTest {
 
         String response = service.updateLocation(testId, testLat, testLng);
 
-        assertEquals(response, "Пинск");
+        assertEquals("Пинск", response);
 
         verify(cache).get("Location" + testId);
         verify(locationRepository).findById(testId);
