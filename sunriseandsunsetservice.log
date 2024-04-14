@@ -770,3 +770,6 @@ com.example.sunriseandsunsetservice.controller.TimezoneController#createManyTime
 01:01:07.842 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
 01:01:07.855 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
 01:01:07.862 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+01:11:08.848 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+01:11:08.865 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+01:11:08.873 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2

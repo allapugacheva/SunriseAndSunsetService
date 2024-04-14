@@ -8,6 +8,7 @@ import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.DateRepository;
 import com.example.sunriseandsunsetservice.repository.LocationRepository;
 import com.example.sunriseandsunsetservice.repository.TimeRepository;
+import com.example.sunriseandsunsetservice.repository.TimezoneRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +31,9 @@ class CommonServiceTest {
 
     @Mock
     private TimeRepository timeRepository;
+
+    @Mock
+    private TimezoneRepository timezoneRepository;
 
     @Mock
     private InMemoryCache cache;
@@ -216,6 +220,28 @@ class CommonServiceTest {
 
         verify(cache).get("Location" + testId);
         verify(locationRepository).findById(testId);
+    }
+
+    @Test
+    void updateLocationNew() {
+
+        Integer testId = 1;
+        Double testLat = 52.111385, testLng = 26.102528;
+        Location expectedResult = new Location("Пинск", testLat, testLng);
+        Timezone testTimezone = new Timezone("Europe/Minsk");
+        expectedResult.setTimezone(testTimezone);
+
+        when(cache.get("Location" + testId)).thenReturn(null);
+        when(locationRepository.findById(testId)).thenReturn(java.util.Optional.of(expectedResult));
+        when(locationRepository.findByLatitudeAndLongitude(testLat, testLng)).thenReturn(null);
+        when(timezoneRepository.findBySunTimezone(anyString())).thenReturn(testTimezone);
+
+        service.updateLocation(testId, testLat, testLng);
+
+        verify(cache).get("Location" + testId);
+        verify(locationRepository).findById(testId);
+        verify(locationRepository).findByLatitudeAndLongitude(testLat, testLng);
+        verify(timezoneRepository).findBySunTimezone(anyString());
     }
 
     @Test
