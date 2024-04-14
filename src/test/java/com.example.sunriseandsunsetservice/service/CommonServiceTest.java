@@ -41,24 +41,34 @@ class CommonServiceTest {
     void notValidLatTestInvalid() {
 
         assertTrue(service.notValidLat(-91.0));
+        assertTrue(service.notValidLat(91.0));
     }
 
     @Test
     void notValidLatTestValid() {
 
+        assertFalse(service.notValidLat(-89.0));
         assertFalse(service.notValidLat(89.0));
+
+        assertFalse(service.notValidLat(-90.0));
+        assertFalse(service.notValidLat(90.0));
     }
 
     @Test
     void notValidLngInvalid() {
 
         assertTrue(service.notValidLng(-181.0));
+        assertTrue(service.notValidLng(181.0));
     }
 
     @Test
     void notValidLngValid() {
 
+        assertFalse(service.notValidLng(-179.0));
         assertFalse(service.notValidLng(179.0));
+
+        assertFalse(service.notValidLng(180.0));
+        assertFalse(service.notValidLng(-180.0));
     }
 
     @Test
@@ -70,7 +80,7 @@ class CommonServiceTest {
     }
 
     @Test
-    void getSunriseAndSunsetTime() {
+    void getSunriseAndSunsetTimeExist() {
 
         LocalTime testSunriseTime = LocalTime.of(6, 15, 56), testSunsetTime = LocalTime.of(20, 16, 15);
         Time expectedTime = new Time(testSunriseTime, testSunsetTime);
@@ -83,6 +93,24 @@ class CommonServiceTest {
         assertEquals(testSunsetTime, response.getSunsetTime());
 
         verify(timeRepository).findBySunriseTimeAndSunsetTime(testSunriseTime, testSunsetTime);
+    }
+
+    @Test
+    void getSunriseAndSunsetTime() {
+
+        LocalTime testSunriseTime = LocalTime.of(6, 15, 56), testSunsetTime = LocalTime.of(20, 16, 15);
+        Time expectedTime = new Time(testSunriseTime, testSunsetTime);
+
+        when(timeRepository.findBySunriseTimeAndSunsetTime(testSunriseTime, testSunsetTime)).thenReturn(null);
+        when(timeRepository.save(any(Time.class))).thenReturn(expectedTime);
+
+        Time response = service.getSunriseAndSunsetTime(53.132294, 26.018415, LocalDate.of(2024, 4, 14), "Europe/Minsk");
+
+        assertEquals(testSunriseTime, response.getSunriseTime());
+        assertEquals(testSunsetTime, response.getSunsetTime());
+
+        verify(timeRepository).findBySunriseTimeAndSunsetTime(testSunriseTime, testSunsetTime);
+        verify(timeRepository).save(any(Time.class));
     }
 
     @Test

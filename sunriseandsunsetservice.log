@@ -767,3 +767,6 @@ com.example.sunriseandsunsetservice.controller.TimezoneController#createManyTime
 00:40:47.809 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 00:40:47.811 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 00:40:47.816 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+01:01:07.842 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+01:01:07.855 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+01:01:07.862 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
