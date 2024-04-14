@@ -88,7 +88,7 @@ class CommonServiceTest {
     @Test
     void clearTimeNotFound() {
 
-        assertThrows(NoSuchElementException.class, () -> service.clearTime(new Date(), new Location(), null));
+        assertThrows(NoSuchElementException.class, () -> service.clearTime(null, null, null));
     }
 
     @Test
