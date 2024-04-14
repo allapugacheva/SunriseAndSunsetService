@@ -6,18 +6,22 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+/**
+ * Aspect for counter.
+ */
 @Aspect
 @Component
 public class CounterAspect {
 
-    private final Counter counter = new Counter();
+  private final Counter counter = new Counter();
 
-    @Pointcut("execution(* com.example.sunriseandsunsetservice.service.SunriseAndSunsetService.*(..))")
-    public void mainService() {}
+  @Pointcut("execution(* com.example.sunriseandsunsetservice.service"
+        + ".SunriseAndSunsetService.*(..))")
+  public void mainService() {}
 
-    @Before("mainService()")
-    public void incrementBefore() {
+  @Before("mainService()")
+  public void incrementBefore() {
 
-        counter.inc();
-    }
+    counter.inc();
+  }
 }

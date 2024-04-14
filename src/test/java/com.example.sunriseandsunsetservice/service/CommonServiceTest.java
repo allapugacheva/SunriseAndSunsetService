@@ -3,15 +3,18 @@ package com.example.sunriseandsunsetservice.service;
 import com.example.sunriseandsunsetservice.cache.InMemoryCache;
 import com.example.sunriseandsunsetservice.model.Date;
 import com.example.sunriseandsunsetservice.model.Location;
+import com.example.sunriseandsunsetservice.model.Time;
 import com.example.sunriseandsunsetservice.model.Timezone;
 import com.example.sunriseandsunsetservice.repository.DateRepository;
 import com.example.sunriseandsunsetservice.repository.LocationRepository;
+import com.example.sunriseandsunsetservice.repository.TimeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,6 +27,9 @@ class CommonServiceTest {
 
     @Mock
     private LocationRepository locationRepository;
+
+    @Mock
+    private TimeRepository timeRepository;
 
     @Mock
     private InMemoryCache cache;
@@ -53,6 +59,47 @@ class CommonServiceTest {
     void notValidLngValid() {
 
         assertFalse(service.notValidLng(179.0));
+    }
+
+    @Test
+    void getTimezoneAndPlaceTest() {
+
+        String[] result = service.getTimezoneAndPlace(0.0, 0.0);
+
+        assertArrayEquals(new String[]{"Africa/Accra", "Funko"}, result);
+    }
+
+    @Test
+    void getSunriseAndSunsetTime() {
+
+        LocalTime testSunriseTime = LocalTime.of(6, 15, 56), testSunsetTime = LocalTime.of(20, 16, 15);
+        Time expectedTime = new Time(testSunriseTime, testSunsetTime);
+
+        when(timeRepository.findBySunriseTimeAndSunsetTime(testSunriseTime, testSunsetTime)).thenReturn(expectedTime);
+
+        Time response = service.getSunriseAndSunsetTime(53.132294, 26.018415, LocalDate.of(2024, 4, 14), "Europe/Minsk");
+
+        assertEquals(testSunriseTime, response.getSunriseTime());
+        assertEquals(testSunsetTime, response.getSunsetTime());
+
+        verify(timeRepository).findBySunriseTimeAndSunsetTime(testSunriseTime, testSunsetTime);
+    }
+
+    @Test
+    void clearTimeNotFound() {
+
+        assertThrows(NoSuchElementException.class, () -> service.clearTime(new Date(), new Location(), null));
+    }
+
+    @Test
+    void clearTimeTest() {
+
+        Time testTime = new Time();
+        testTime.setId(0);
+
+        service.clearTime(new Date(), new Location(), testTime);
+
+        verify(timeRepository).delete(testTime);
     }
 
     @Test

@@ -49,8 +49,12 @@ public class Timezone {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Timezone timezone)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Timezone timezone)) {
+      return false;
+    }
     return Objects.equals(id, timezone.id) && Objects.equals(sunTimezone, timezone.sunTimezone);
   }
 

@@ -86,9 +86,15 @@ public class Location {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Location location)) return false;
-    return Objects.equals(id, location.id) && Objects.equals(sunLocation, location.sunLocation) && Objects.equals(latitude, location.latitude) && Objects.equals(longitude, location.longitude);
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Location location)) {
+      return false;
+    }
+    return Objects.equals(id, location.id) && Objects.equals(sunLocation, location.sunLocation)
+            && Objects.equals(latitude, location.latitude)
+            && Objects.equals(longitude, location.longitude);
   }
 
   @Override

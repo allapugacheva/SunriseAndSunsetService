@@ -69,9 +69,14 @@ public class Time {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Time time)) return false;
-    return Objects.equals(id, time.id) && Objects.equals(sunriseTime, time.sunriseTime) && Objects.equals(sunsetTime, time.sunsetTime);
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Time time)) {
+      return false;
+    }
+    return Objects.equals(id, time.id) && Objects.equals(sunriseTime, time.sunriseTime)
+            && Objects.equals(sunsetTime, time.sunsetTime);
   }
 
   @Override

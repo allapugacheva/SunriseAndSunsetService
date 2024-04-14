@@ -2,18 +2,21 @@ package com.example.sunriseandsunsetservice.counter;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Counter class.
+ */
 @Component
 public class Counter {
 
-    private int count = 0;
+  private int count = 0;
 
-    public synchronized void inc() {
+  public synchronized void inc() {
 
-        this.count++;
-    }
+    this.count++;
+  }
 
-    public synchronized int getCount() {
+  public synchronized int getCount() {
 
-        return this.count;
-    }
+    return this.count;
+  }
 }

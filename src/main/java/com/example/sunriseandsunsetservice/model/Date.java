@@ -80,8 +80,12 @@ public class Date {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Date date)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Date date)) {
+      return false;
+    }
     return Objects.equals(id, date.id) && Objects.equals(sunDate, date.sunDate);
   }
 
