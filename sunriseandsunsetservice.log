@@ -715,3 +715,27 @@ com.example.sunriseandsunsetservice.controller.TimezoneController#createManyTime
 19:42:56.594 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 19:42:56.597 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 19:42:56.604 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+23:54:21.129 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+23:54:57.165 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+23:55:17.289 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+23:56:04.324 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+23:57:17.308 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+23:57:29.793 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+23:57:47.250 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+23:57:47.260 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+23:57:47.269 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+23:58:14.088 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+23:58:14.117 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+23:58:14.121 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+00:08:44.693 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+00:08:44.704 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+00:08:44.718 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+00:12:16.627 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+00:12:16.637 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+00:12:16.642 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+00:19:48.410 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+00:19:48.422 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+00:19:48.432 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2
+00:21:37.647 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name executed.
+00:21:37.661 [main] INFO  c.e.s.aspect.LoggingAspect - Method Name threw an exception Throwable with message Message
+00:21:37.669 [main] INFO  c.e.s.aspect.LoggingAspect - Started method Name with arguments arg1, arg2

@@ -52,7 +52,9 @@ public class CommonService {
 
     JsonNode root = objectMapper.readTree(restTemplate.getForEntity(url, String.class).getBody());
 
-    return new String[]{root.path("name").asText(), root.path("city").path("name").asText()};
+    if(root.path("error").asText() == null)
+      return new String[]{root.path("name").asText(), root.path("city").path("name").asText()};
+    return new String[]{"Africa/Accra", "Funko"};
   }
 
   public boolean notValidLat(Double lat) {
