@@ -17,6 +17,6 @@ public interface DateRepository extends JpaRepository<Date, Integer> {
   Date findBySunDate(LocalDate date);
 
   @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.response"
-         + ".DateResponse(d.sunDate) FROM Date AS d")
+         + ".DateResponse(d.id, d.sunDate) FROM Date AS d")
   List<DateResponse> findAllDates();
 }

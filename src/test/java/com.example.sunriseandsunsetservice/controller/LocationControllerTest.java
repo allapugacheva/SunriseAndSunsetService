@@ -27,7 +27,7 @@ class LocationControllerTest {
     void createLocationTest() {
 
         Double testLat = 53.132294, testLng = 26.018415;
-        LocationResponse expectedResult = new LocationResponse("Барановичи", testLat, testLng);
+        LocationResponse expectedResult = new LocationResponse(0,"Барановичи", testLat, testLng);
 
         when(locationService.createLocation(testLat, testLng)).thenReturn(expectedResult);
 
@@ -42,8 +42,8 @@ class LocationControllerTest {
 
         List<LocationRequest> testLocations = List.of(new LocationRequest(53.132294, 26.018415),
                 new LocationRequest(52.111385, 26.102528));
-        List<LocationResponse> expectedResult = List.of(new LocationResponse("Барановичи", 53.132294, 26.018415),
-                new LocationResponse("Пинск", 52.111385, 26.102528));
+        List<LocationResponse> expectedResult = List.of(new LocationResponse(0, "Барановичи", 53.132294, 26.018415),
+                new LocationResponse(0, "Пинск", 52.111385, 26.102528));
 
         when(locationService.createManyLocations(testLocations)).thenReturn(expectedResult);
 
@@ -56,8 +56,8 @@ class LocationControllerTest {
     @Test
     void readAllLocationsTest() {
 
-        List<LocationResponse> expectedResult = List.of(new LocationResponse("Барановичи", 53.132294, 26.018415),
-                new LocationResponse("Пинск", 52.111385, 26.102528));
+        List<LocationResponse> expectedResult = List.of(new LocationResponse(0, "Барановичи", 53.132294, 26.018415),
+                new LocationResponse(0, "Пинск", 52.111385, 26.102528));
 
         when(locationService.readAllLocations()).thenReturn(expectedResult);
 
@@ -71,7 +71,7 @@ class LocationControllerTest {
     void getByIdTest() {
 
         Integer testId = 1;
-        LocationResponse expectedResult = new LocationResponse("Барановичи", 53.132294, 26.018415);
+        LocationResponse expectedResult = new LocationResponse(0, "Барановичи", 53.132294, 26.018415);
 
         when(locationService.getById(testId)).thenReturn(expectedResult);
 
@@ -86,7 +86,7 @@ class LocationControllerTest {
 
         Integer testId = 1;
         Double testLat = 53.132294, testLng = 26.018415;
-        LocationResponse expectedResult = new LocationResponse("Барановичи", testLat, testLng);
+        LocationResponse expectedResult = new LocationResponse(0, "Барановичи", testLat, testLng);
 
         when(locationService.updateLocation(testId, testLat, testLng)).thenReturn(expectedResult);
 
@@ -100,7 +100,7 @@ class LocationControllerTest {
     void deleteLocationTest() {
 
         Integer testId = 1;
-        LocationResponse expectedResult = new LocationResponse("Барановичи", 53.132294, 26.018415);
+        LocationResponse expectedResult = new LocationResponse(0, "Барановичи", 53.132294, 26.018415);
 
         when(locationService.deleteLocation(testId)).thenReturn(expectedResult);
 

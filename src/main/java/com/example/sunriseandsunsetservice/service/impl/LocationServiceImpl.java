@@ -56,7 +56,7 @@ public class LocationServiceImpl implements LocationService {
 
     cache.put(LOCATION_KEY + location.getId().toString(), location);
 
-    return new LocationResponse(location.getSunLocation(), lat, lng);
+    return new LocationResponse(location.getId(), location.getSunLocation(), lat, lng);
   }
 
   @Override
@@ -87,15 +87,15 @@ public class LocationServiceImpl implements LocationService {
       cache.put(LOCATION_KEY + id, tempLocation);
     }
 
-    return new LocationResponse(tempLocation.getSunLocation(), tempLocation.getLatitude(),
-        tempLocation.getLongitude());
+    return new LocationResponse(tempLocation.getId(), tempLocation.getSunLocation(),
+            tempLocation.getLatitude(), tempLocation.getLongitude());
   }
 
   @Override
   @Transactional
   public LocationResponse updateLocation(Integer id, Double lat, Double lng) {
 
-    return new LocationResponse(commonService.updateLocation(id, lat, lng), lat, lng);
+    return new LocationResponse(id, commonService.updateLocation(id, lat, lng), lat, lng);
   }
 
   @Override
@@ -113,7 +113,7 @@ public class LocationServiceImpl implements LocationService {
       throw new IllegalArgumentException(LOCATION_INFO + id + " has connections.");
     }
 
-    return new LocationResponse(location.getSunLocation(), location.getLatitude(),
+    return new LocationResponse(id, location.getSunLocation(), location.getLatitude(),
         location.getLongitude());
   }
 }

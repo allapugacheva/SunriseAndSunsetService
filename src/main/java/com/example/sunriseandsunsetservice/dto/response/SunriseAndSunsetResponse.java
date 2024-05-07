@@ -13,6 +13,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SunriseAndSunsetResponse {
+  private Integer locationId;
+  private Integer dateId;
   private String location;
   private Double latitude;
   private Double longitude;

@@ -42,10 +42,10 @@ public class Location {
   @JoinColumn(name = "timezone_id")
   private Timezone timezone;
 
-  @ManyToMany(mappedBy = "locations", fetch = FetchType.LAZY)
+  @ManyToMany(mappedBy = "locations", fetch = FetchType.EAGER)
   private Set<Date> dates = new HashSet<>();
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
+  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,
       CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(
         name = "location_time_mapping",

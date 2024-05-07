@@ -33,7 +33,7 @@ class SunriseAndSunsetControllerTest {
 
         Double testLat = 52.111385, testLng = 26.102528;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
-        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse("Пинск", testLat, testLng,
+        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse(0, 0, "Пинск", testLat, testLng,
                 testDate, LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28));
 
         when(sunService.findSunriseAndSunsetTime(testLat, testLng, testDate)).thenReturn(expectedResult);
@@ -49,8 +49,8 @@ class SunriseAndSunsetControllerTest {
 
         List<SunriseAndSunsetRequest> testData = List.of(new SunriseAndSunsetRequest(52.111385, 26.102528, LocalDate.of(2024, 4, 8)),
                 new SunriseAndSunsetRequest(53.132294, 26.018415, LocalDate.of(2024, 4, 8)));
-        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
-                new SunriseAndSunsetResponse("Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
+        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse(0, 0, "Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
+                new SunriseAndSunsetResponse(0, 0, "Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
 
         when(sunService.findManySunriseAndSunsetTimes(testData)).thenReturn(expectedResult);
 
@@ -63,8 +63,8 @@ class SunriseAndSunsetControllerTest {
     @Test
     void readAllSunrisesAnsSunsetsTest() {
 
-        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
-                new SunriseAndSunsetResponse("Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
+        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse(0, 0, "Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
+                new SunriseAndSunsetResponse(0, 0, "Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
 
         when(sunService.readAllSunrisesAnsSunsets()).thenReturn(expectedResult);
 
@@ -78,7 +78,7 @@ class SunriseAndSunsetControllerTest {
     void getByIdTest() {
 
         Integer testDateId = 1, testLocationId = 1;
-        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528,
+        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse(0, 0, "Пинск", 52.111385, 26.102528,
                 LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28));
 
         when(sunService.getById(testLocationId, testDateId)).thenReturn(expectedResult);
@@ -95,7 +95,7 @@ class SunriseAndSunsetControllerTest {
         Integer testDateId = 1, testLocationId = 1;
         Double testLat = 52.111385, testLng = 26.102528;
         LocalDate testDate = LocalDate.of(2024, 4, 8);
-        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse("Пинск", testLat, testLng,
+        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse(0, 0, "Пинск", testLat, testLng,
                 testDate, LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28));
 
         when(sunService.updateSunriseAndSunset(testLocationId, testDateId, testLat, testLng, testDate)).thenReturn(expectedResult);
@@ -110,7 +110,7 @@ class SunriseAndSunsetControllerTest {
     void deleteSunriseAndSunsetTimeTest() {
 
         Integer testDateId = 1, testLocationId = 1;
-        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528,
+        SunriseAndSunsetResponse expectedResult = new SunriseAndSunsetResponse(0, 0, "Пинск", 52.111385, 26.102528,
                 LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28));
 
         when(sunService.deleteSunriseAndSunsetTime(testLocationId, testDateId)).thenReturn(expectedResult);
@@ -125,7 +125,7 @@ class SunriseAndSunsetControllerTest {
     void findDaytimeLengthTest() {
 
         Integer testDateId = 1, testLocationId = 1;
-        DaytimeResponse expectedResult = new DaytimeResponse(LocalTime.of(13, 32, 18));
+        DaytimeResponse expectedResult = new DaytimeResponse(0, LocalTime.of(13, 32, 18));
 
         when(sunService.findDaytimeLength(testDateId, testLocationId)).thenReturn(expectedResult);
 

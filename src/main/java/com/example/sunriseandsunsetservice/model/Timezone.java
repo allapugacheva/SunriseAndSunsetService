@@ -30,7 +30,7 @@ public class Timezone {
 
   private String sunTimezone;
 
-  @OneToMany(mappedBy = "timezone", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "timezone", fetch = FetchType.EAGER)
   private Set<Location> locations = new HashSet<>();
 
   /**

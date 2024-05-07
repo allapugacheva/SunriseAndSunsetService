@@ -44,7 +44,7 @@ public class DateServiceImpl implements DateService {
 
     cache.put(DATE_KEY + date.getId().toString(), date);
 
-    return new DateResponse(date.getSunDate());
+    return new DateResponse(date.getId(), date.getSunDate());
   }
 
   @Override
@@ -73,7 +73,7 @@ public class DateServiceImpl implements DateService {
       cache.put(DATE_KEY + id, tempDate);
     }
 
-    return new DateResponse(tempDate.getSunDate());
+    return new DateResponse(tempDate.getId(), tempDate.getSunDate());
   }
 
   @Override
@@ -82,7 +82,7 @@ public class DateServiceImpl implements DateService {
 
     commonService.updateDate(id, date);
 
-    return new DateResponse(date);
+    return new DateResponse(id, date);
   }
 
   @Override
@@ -101,6 +101,6 @@ public class DateServiceImpl implements DateService {
       throw new IllegalArgumentException(DATE_INFO + id + " has connections.");
     }
 
-    return new DateResponse(date.getSunDate());
+    return new DateResponse(id, date.getSunDate());
   }
 }

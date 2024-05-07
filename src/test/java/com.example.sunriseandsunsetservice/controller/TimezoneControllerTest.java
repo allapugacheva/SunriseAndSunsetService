@@ -29,7 +29,7 @@ class TimezoneControllerTest {
     void createTimezoneTest() {
 
         String testTimezone = "Europe/Minsk";
-        TimezoneResponse expectedResult = new TimezoneResponse(testTimezone);
+        TimezoneResponse expectedResult = new TimezoneResponse(0, testTimezone);
 
         when(timezoneService.createTimezone(testTimezone)).thenReturn(expectedResult);
 
@@ -43,7 +43,7 @@ class TimezoneControllerTest {
     void createManyTimezonesTest() {
 
         List<TimezoneRequest> testTimezones = List.of(new TimezoneRequest("Europe/Minsk"), new TimezoneRequest("Europe/Moscow"));
-        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
+        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse(0, "Europe/Minsk"), new TimezoneResponse(0, "Europe/Moscow"));
 
         when(timezoneService.createManyTimezones(testTimezones)).thenReturn(expectedResult);
 
@@ -56,7 +56,7 @@ class TimezoneControllerTest {
     @Test
     void readAllTimezonesTest() {
 
-        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
+        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse(0, "Europe/Minsk"), new TimezoneResponse(0, "Europe/Moscow"));
 
         when(timezoneService.readAllTimezones()).thenReturn(expectedResult);
 
@@ -70,7 +70,7 @@ class TimezoneControllerTest {
     void getByIdTest() {
 
         Integer testId = 1;
-        TimezoneResponse expectedResult = new TimezoneResponse("Europe/Minsk");
+        TimezoneResponse expectedResult = new TimezoneResponse(0, "Europe/Minsk");
 
         when(timezoneService.getById(testId)).thenReturn(expectedResult);
 
@@ -85,7 +85,7 @@ class TimezoneControllerTest {
 
         Integer testId = 1;
         String testTimezone = "Europe/Minsk";
-        TimezoneResponse expectedResult = new TimezoneResponse(testTimezone);
+        TimezoneResponse expectedResult = new TimezoneResponse(0, testTimezone);
 
         when(timezoneService.updateTimezone(testId, testTimezone)).thenReturn(expectedResult);
 
@@ -99,7 +99,7 @@ class TimezoneControllerTest {
     void deleteTimezoneTest() {
 
         Integer testId = 1;
-        TimezoneResponse expectedResult = new TimezoneResponse("Europe/Minsk");
+        TimezoneResponse expectedResult = new TimezoneResponse(0, "Europe/Minsk");
 
         when(timezoneService.deleteTimezone(testId)).thenReturn(expectedResult);
 

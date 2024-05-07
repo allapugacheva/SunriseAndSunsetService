@@ -42,7 +42,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + timezone.getId().toString(), timezone);
 
-    return new TimezoneResponse(newTimezone);
+    return new TimezoneResponse(timezone.getId(), newTimezone);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class TimezoneServiceImpl implements TimezoneService {
       cache.put(TIMEZONE_KEY + id, tempTimezone);
     }
 
-    return new TimezoneResponse(tempTimezone.getSunTimezone());
+    return new TimezoneResponse(id, tempTimezone.getSunTimezone());
   }
 
   @Override
@@ -92,7 +92,7 @@ public class TimezoneServiceImpl implements TimezoneService {
 
     cache.put(TIMEZONE_KEY + id, timezone);
 
-    return new TimezoneResponse(newTimezone);
+    return new TimezoneResponse(id, newTimezone);
   }
 
   @Override
@@ -113,6 +113,6 @@ public class TimezoneServiceImpl implements TimezoneService {
       throw new IllegalArgumentException(TIMEZONE_INFO + id + " has connections.");
     }
 
-    return new TimezoneResponse(timezone.getSunTimezone());
+    return new TimezoneResponse(id, timezone.getSunTimezone());
   }
 }

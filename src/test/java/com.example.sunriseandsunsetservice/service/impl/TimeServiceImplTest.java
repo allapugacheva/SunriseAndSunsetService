@@ -70,8 +70,8 @@ class TimeServiceImplTest {
 
         List<TimeRequest> testTimes = List.of(new TimeRequest(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
                 new TimeRequest(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
-        List<TimeResponse> expectedResult = List.of(new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
-                new TimeResponse(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
+        List<TimeResponse> expectedResult = List.of(new TimeResponse(0, LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
+                new TimeResponse(0, LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
 
         when(timeRepository.findBySunriseTimeAndSunsetTime(LocalTime.of(6,31,10), LocalTime.of(20,3,28))).thenReturn(new Time(LocalTime.of(6,31,10), LocalTime.of(20,3,28)));
         when(timeRepository.findBySunriseTimeAndSunsetTime(LocalTime.of(6,28,54), LocalTime.of(20,5,11))).thenReturn(new Time(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
@@ -91,8 +91,8 @@ class TimeServiceImplTest {
     @Test
     void readAllTimesTest() {
 
-        List<TimeResponse> expectedResult = List.of(new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
-                new TimeResponse(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
+        List<TimeResponse> expectedResult = List.of(new TimeResponse(0, LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
+                new TimeResponse(0, LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
 
         when(timeRepository.findAllTimes()).thenReturn(expectedResult);
 

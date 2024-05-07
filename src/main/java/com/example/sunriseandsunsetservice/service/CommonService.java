@@ -52,7 +52,7 @@ public class CommonService {
 
     JsonNode root = objectMapper.readTree(restTemplate.getForEntity(url, String.class).getBody());
 
-    if (root.path("error").asText() == null) {
+    if (root.get("error") == null) {
       return new String[]{root.path("name").asText(), root.path("city").path("name").asText()};
     }
     return new String[]{"Africa/Accra", "Funko"};

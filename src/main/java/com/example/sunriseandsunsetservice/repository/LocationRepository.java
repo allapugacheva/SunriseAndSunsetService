@@ -28,10 +28,10 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
                          @Param("location_id") Integer locationId);
 
   @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.response"
-          + ".LocationResponse(l.sunLocation, l.latitude, l.longitude) FROM Location AS l")
+          + ".LocationResponse(l.id, l.sunLocation, l.latitude, l.longitude) FROM Location AS l")
   List<LocationResponse> findAllLocations();
 
-  @Query(value = "SELECT l.sun_location,"
+  @Query(value = "SELECT l.id, d.id, l.sun_location,"
           + " l.latitude, l.longitude, d.sun_date, t.sunrise_time, t.sunset_time FROM date AS d"
           + " JOIN location_date_mapping AS ldm ON d.id = ldm.date_id"
           + " JOIN location l ON ldm.location_id = l.id"

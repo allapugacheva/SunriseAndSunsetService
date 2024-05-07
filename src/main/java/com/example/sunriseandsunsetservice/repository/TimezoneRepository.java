@@ -16,6 +16,6 @@ public interface TimezoneRepository extends JpaRepository<Timezone, Integer> {
   Timezone findBySunTimezone(String s);
 
   @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.response."
-         + "TimezoneResponse(tz.sunTimezone) FROM Timezone AS tz")
+         + "TimezoneResponse(tz.id, tz.sunTimezone) FROM Timezone AS tz")
   List<TimezoneResponse> findAllTimezones();
 }

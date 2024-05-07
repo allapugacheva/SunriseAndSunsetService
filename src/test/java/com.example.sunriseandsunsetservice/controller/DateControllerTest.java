@@ -28,7 +28,7 @@ class DateControllerTest {
     void createDateTest() {
 
         LocalDate testDate = LocalDate.of(2024, 4,8);
-        DateResponse expectedResult = new DateResponse(testDate);
+        DateResponse expectedResult = new DateResponse(0, testDate);
 
         when(dateService.createDate(testDate)).thenReturn(expectedResult);
 
@@ -43,8 +43,8 @@ class DateControllerTest {
 
         List<DateRequest> testDates = List.of(new DateRequest(LocalDate.of(2024, 4,8)),
                 new DateRequest(LocalDate.of(2024, 4,9)));
-        List<DateResponse> expectedResult = List.of(new DateResponse(LocalDate.of(2024, 4,8)),
-                new DateResponse(LocalDate.of(2024, 4,9)));
+        List<DateResponse> expectedResult = List.of(new DateResponse(0, LocalDate.of(2024, 4,8)),
+                new DateResponse(0, LocalDate.of(2024, 4,9)));
 
         when(dateService.createManyDates(testDates)).thenReturn(expectedResult);
 
@@ -57,8 +57,8 @@ class DateControllerTest {
     @Test
     void readAllDatesTest() {
 
-        List<DateResponse> expectedResult = List.of(new DateResponse(LocalDate.of(2024, 4,8)),
-                new DateResponse(LocalDate.of(2024, 4,9)));
+        List<DateResponse> expectedResult = List.of(new DateResponse(0, LocalDate.of(2024, 4,8)),
+                new DateResponse(0, LocalDate.of(2024, 4,9)));
 
         when(dateService.readAllDates()).thenReturn(expectedResult);
 
@@ -72,7 +72,7 @@ class DateControllerTest {
     void getByIdTest() {
 
         Integer testId = 1;
-        DateResponse expectedResult = new DateResponse(LocalDate.of(2024, 4,8));
+        DateResponse expectedResult = new DateResponse(0, LocalDate.of(2024, 4,8));
 
         when(dateService.getById(testId)).thenReturn(expectedResult);
 
@@ -87,7 +87,7 @@ class DateControllerTest {
 
         Integer testId = 1;
         LocalDate testDate = LocalDate.of(2024, 4,8);
-        DateResponse expectedResult = new DateResponse(testDate);
+        DateResponse expectedResult = new DateResponse(0, testDate);
 
         when(dateService.updateDate(testId, testDate)).thenReturn(expectedResult);
 
@@ -101,7 +101,7 @@ class DateControllerTest {
     void deleteDateTest() {
 
         Integer testId = 1;
-        DateResponse expectedResult = new DateResponse(LocalDate.of(2024, 4,8));
+        DateResponse expectedResult = new DateResponse(0, LocalDate.of(2024, 4,8));
 
         when(dateService.deleteDate(testId)).thenReturn(expectedResult);
 

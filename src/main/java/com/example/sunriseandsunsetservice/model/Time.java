@@ -33,10 +33,10 @@ public class Time {
 
   private LocalTime sunsetTime;
 
-  @ManyToMany(mappedBy = "times", fetch = FetchType.LAZY)
+  @ManyToMany(mappedBy = "times", fetch = FetchType.EAGER)
   private Set<Date> dates = new HashSet<>();
 
-  @ManyToMany(mappedBy = "times", fetch = FetchType.LAZY)
+  @ManyToMany(mappedBy = "times", fetch = FetchType.EAGER)
   private Set<Location> locations = new HashSet<>();
 
   /**

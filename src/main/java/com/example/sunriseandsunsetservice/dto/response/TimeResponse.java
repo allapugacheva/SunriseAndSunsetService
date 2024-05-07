@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class TimeResponse {
+  private Integer id;
   private LocalTime sunriseTime;
   private LocalTime sunsetTime;
 }

@@ -11,5 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class TimezoneResponse {
+  private Integer id;
   private String timezone;
 }

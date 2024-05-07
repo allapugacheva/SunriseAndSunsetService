@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class LocationResponse {
+  private Integer id;
   private String location;
   private Double latitude;
   private Double longitude;

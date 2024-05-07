@@ -71,8 +71,8 @@ class DateServiceImplTest {
 
         List<DateRequest> testDates = List.of(new DateRequest(LocalDate.of(2024, 4,8)),
                 new DateRequest(LocalDate.of(2024, 4,9)));
-        List<DateResponse> expectedResult = List.of(new DateResponse(LocalDate.of(2024, 4,8)),
-                new DateResponse(LocalDate.of(2024, 4,9)));
+        List<DateResponse> expectedResult = List.of(new DateResponse(0, LocalDate.of(2024, 4,8)),
+                new DateResponse(0, LocalDate.of(2024, 4,9)));
 
         when(dateRepository.findBySunDate(testDates.get(0).getDate())).thenReturn(new Date(testDates.get(0).getDate()));
         when(dateRepository.findBySunDate(testDates.get(1).getDate())).thenReturn(new Date(testDates.get(1).getDate()));
@@ -90,8 +90,8 @@ class DateServiceImplTest {
     @Test
     void readAllDatesTest() {
 
-        List<DateResponse> expectedResult = List.of(new DateResponse(LocalDate.of(2024, 4,8)),
-                new DateResponse(LocalDate.of(2024, 4,9)));
+        List<DateResponse> expectedResult = List.of(new DateResponse(0, LocalDate.of(2024, 4,8)),
+                new DateResponse(0, LocalDate.of(2024, 4,9)));
 
         when(dateRepository.findAllDates()).thenReturn(expectedResult);
 

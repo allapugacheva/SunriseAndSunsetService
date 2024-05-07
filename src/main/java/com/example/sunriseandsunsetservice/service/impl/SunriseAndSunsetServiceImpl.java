@@ -95,7 +95,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     cache.put(DATE_KEY + date.getId().toString(), date);
     cache.put(LOCATION_KEY + location.getId().toString(), location);
 
-    return new SunriseAndSunsetResponse(location.getSunLocation(), location.getLatitude(),
+    return new SunriseAndSunsetResponse(location.getId(), date.getId(),
+            location.getSunLocation(), location.getLatitude(),
             location.getLongitude(), date.getSunDate(), time.getSunriseTime(),
             time.getSunsetTime());
   }
@@ -116,11 +117,11 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
   public List<SunriseAndSunsetResponse> readAllSunrisesAnsSunsets() {
 
     return locationRepository.findAllData().stream()
-            .map(row -> new SunriseAndSunsetResponse((String) row[0],
-                    (Double) row[1], (Double) row[2],
-                    ((java.sql.Date) row[3]).toLocalDate(),
-                    ((java.sql.Time) row[4]).toLocalTime(),
-                    ((java.sql.Time) row[5]).toLocalTime()))
+            .map(row -> new SunriseAndSunsetResponse((Integer)row[0], (Integer)row[1],
+                    (String) row[2], (Double) row[3], (Double) row[4],
+                    ((java.sql.Date) row[5]).toLocalDate(),
+                    ((java.sql.Time) row[6]).toLocalTime(),
+                    ((java.sql.Time) row[7]).toLocalTime()))
             .toList();
   }
 
@@ -147,7 +148,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
               + locationId + " have no common time.");
     }
 
-    return new SunriseAndSunsetResponse(tempLocation.getSunLocation(), tempLocation.getLatitude(),
+    return new SunriseAndSunsetResponse(locationId, dateId,
+            tempLocation.getSunLocation(), tempLocation.getLatitude(),
             tempLocation.getLongitude(), tempDate.getSunDate(),
             tempTime.getSunriseTime(), tempTime.getSunsetTime());
   }
@@ -157,7 +159,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
   @Transactional
   public SunriseAndSunsetResponse updateSunriseAndSunset(Integer locationId, Integer dateId,
                                                          Double lat, Double lng, LocalDate date) {
-
     if (commonService.notValidLat(lat) || commonService.notValidLng(lng)) {
       throw new BadRequestException("Invalid latitude or longitude");
     }
@@ -184,7 +185,6 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     }
 
     Time time = timeRepository.findCommonTime(dateId, locationId);
-
     if ((location.getDates().contains(date) && location.getTimes().contains(time))
             && (time.getDates().contains(date) && time.getLocations().contains(location))
             && (date.getTimes().contains(time) && date.getLocations().contains(location))) {
@@ -198,6 +198,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
       location.deleteTime(time);
       date.deleteTime(time);
 
+      locationRepository.save(location);
+
       cache.remove(DATE_KEY + dateId);
       cache.remove(LOCATION_KEY + locationId);
       cache.remove("Time" + time.getId());
@@ -205,19 +207,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
       throw new IllegalArgumentException("Data has connections.");
     }
 
-    if (location.getDates().isEmpty() && location.getTimes().isEmpty()) {
-      locationRepository.delete(location);
-    }
-
-    if (date.getTimes().isEmpty() && date.getLocations().isEmpty()) {
-      dateRepository.delete(date);
-    }
-
-    if (time.getDates().isEmpty() && time.getLocations().isEmpty()) {
-      timeRepository.delete(time);
-    }
-
-    return new SunriseAndSunsetResponse(location.getSunLocation(), location.getLatitude(),
+    return new SunriseAndSunsetResponse(locationId, dateId,
+            location.getSunLocation(), location.getLatitude(),
       location.getLongitude(), date.getSunDate(), time.getSunriseTime(),
       time.getSunsetTime());
   }
@@ -228,7 +219,8 @@ public class SunriseAndSunsetServiceImpl implements SunriseAndSunsetService {
     DaytimeResponse response = (DaytimeResponse) cache.get("Daytime" + dateId + locationId);
 
     if (response == null) {
-      response = new DaytimeResponse(LocalTime.MIDNIGHT.plusSeconds(locationRepository
+      response = new DaytimeResponse(Integer.valueOf(locationId.toString()
+              + dateId.toString()), LocalTime.MIDNIGHT.plusSeconds(locationRepository
            .findDaytimeLength(dateId, locationId)));
 
       if (response.getDuration() == LocalTime.of(0, 0)) {

@@ -66,7 +66,7 @@ class TimezoneServiceImplTest {
     void createManyTimesTest() {
 
         List<TimezoneRequest> testTimezones = List.of(new TimezoneRequest("Europe/Minsk"), new TimezoneRequest("Europe/Moscow"));
-        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
+        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse(0, "Europe/Minsk"), new TimezoneResponse(0, "Europe/Moscow"));
 
         when(timezoneRepository.findBySunTimezone("Europe/Minsk")).thenReturn(new Timezone("Europe/Minsk"));
         when(timezoneRepository.findBySunTimezone("Europe/Moscow")).thenReturn(new Timezone("Europe/Moscow"));
@@ -83,7 +83,7 @@ class TimezoneServiceImplTest {
     @Test
     void readAllTimesTest() {
 
-        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse("Europe/Minsk"), new TimezoneResponse("Europe/Moscow"));
+        List<TimezoneResponse> expectedResult = List.of(new TimezoneResponse(0, "Europe/Minsk"), new TimezoneResponse(0, "Europe/Moscow"));
 
         when(timezoneRepository.findAllTimezones()).thenReturn(expectedResult);
 

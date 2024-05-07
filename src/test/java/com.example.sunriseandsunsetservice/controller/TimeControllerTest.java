@@ -28,7 +28,7 @@ class TimeControllerTest {
     void createTimeTest() {
 
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
-        TimeResponse expectedResult = new TimeResponse(testSunriseTime, testSunsetTime);
+        TimeResponse expectedResult = new TimeResponse(0, testSunriseTime, testSunsetTime);
 
         when(timeService.createTime(testSunriseTime, testSunsetTime)).thenReturn(expectedResult);
 
@@ -43,8 +43,8 @@ class TimeControllerTest {
 
         List<TimeRequest> testTimes = List.of(new TimeRequest(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
                 new TimeRequest(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
-        List<TimeResponse> expectedResult = List.of(new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
-                new TimeResponse(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
+        List<TimeResponse> expectedResult = List.of(new TimeResponse(0, LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
+                new TimeResponse(0, LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
 
         when(timeService.createManyTimes(testTimes)).thenReturn(expectedResult);
 
@@ -57,8 +57,8 @@ class TimeControllerTest {
     @Test
     void readAllTimesTest() {
 
-        List<TimeResponse> expectedResult = List.of(new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
-                new TimeResponse(LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
+        List<TimeResponse> expectedResult = List.of(new TimeResponse(0, LocalTime.of(6,31,10), LocalTime.of(20,3,28)),
+                new TimeResponse(0, LocalTime.of(6,28,54), LocalTime.of(20,5,11)));
 
         when(timeService.readAllTimes()).thenReturn(expectedResult);
 
@@ -72,7 +72,7 @@ class TimeControllerTest {
     void getByIdTest() {
 
         Integer testId = 1;
-        TimeResponse expectedResult = new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28));
+        TimeResponse expectedResult = new TimeResponse(0, LocalTime.of(6,31,10), LocalTime.of(20,3,28));
 
         when(timeService.getById(testId)).thenReturn(expectedResult);
 
@@ -87,7 +87,7 @@ class TimeControllerTest {
 
         Integer testId = 1;
         LocalTime testSunriseTime = LocalTime.of(6,31,10), testSunsetTime = LocalTime.of(20,3,28);
-        TimeResponse expectedResult = new TimeResponse(testSunriseTime, testSunsetTime);
+        TimeResponse expectedResult = new TimeResponse(0, testSunriseTime, testSunsetTime);
 
         when(timeService.updateTime(testId, testSunriseTime, testSunsetTime)).thenReturn(expectedResult);
 
@@ -101,7 +101,7 @@ class TimeControllerTest {
     void deleteTimeTest() {
 
         Integer testId = 1;
-        TimeResponse expectedResult = new TimeResponse(LocalTime.of(6,31,10), LocalTime.of(20,3,28));
+        TimeResponse expectedResult = new TimeResponse(0, LocalTime.of(6,31,10), LocalTime.of(20,3,28));
 
         when(timeService.deleteTime(testId)).thenReturn(expectedResult);
 

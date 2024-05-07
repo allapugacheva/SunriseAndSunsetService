@@ -12,5 +12,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class DateResponse {
-  LocalDate date;
+  private Integer id;
+  private LocalDate date;
 }

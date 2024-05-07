@@ -74,8 +74,8 @@ class LocationServiceImplTest {
 
         List<LocationRequest> testLocations = List.of(new LocationRequest(53.132294, 26.018415),
                 new LocationRequest(52.111385, 26.102528));
-        List<LocationResponse> expectedResult = List.of(new LocationResponse("Барановичи", 53.132294, 26.018415),
-                new LocationResponse("Пинск", 52.111385, 26.102528));
+        List<LocationResponse> expectedResult = List.of(new LocationResponse(0, "Барановичи", 53.132294, 26.018415),
+                new LocationResponse(0, "Пинск", 52.111385, 26.102528));
 
         when(locationRepository.findByLatitudeAndLongitude(testLocations.get(0).getLat(), testLocations.get(0).getLng())).thenReturn(new Location("Барановичи" ,testLocations.get(0).getLat(), testLocations.get(0).getLng()));
         when(locationRepository.findByLatitudeAndLongitude(testLocations.get(1).getLat(), testLocations.get(1).getLng())).thenReturn(new Location("Пинск" ,testLocations.get(1).getLat(), testLocations.get(1).getLng()));
@@ -97,8 +97,8 @@ class LocationServiceImplTest {
     @Test
     void readAllLocationsTest() {
 
-        List<LocationResponse> expectedResult = List.of(new LocationResponse("Барановичи", 53.132294, 26.018415),
-                new LocationResponse("Пинск", 52.111385, 26.102528));
+        List<LocationResponse> expectedResult = List.of(new LocationResponse(0, "Барановичи", 53.132294, 26.018415),
+                new LocationResponse(0, "Пинск", 52.111385, 26.102528));
 
         when(locationRepository.findAllLocations()).thenReturn(expectedResult);
 

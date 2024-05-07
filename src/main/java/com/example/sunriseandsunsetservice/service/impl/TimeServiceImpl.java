@@ -43,7 +43,7 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + time.getId().toString(), time);
 
-    return new TimeResponse(sunriseTime, sunsetTime);
+    return new TimeResponse(time.getId(), sunriseTime, sunsetTime);
   }
 
   @Override
@@ -74,7 +74,7 @@ public class TimeServiceImpl implements TimeService {
       cache.put(TIME_KEY + id, tempTime);
     }
 
-    return new TimeResponse(tempTime.getSunriseTime(), tempTime.getSunsetTime());
+    return new TimeResponse(tempTime.getId(), tempTime.getSunriseTime(), tempTime.getSunsetTime());
   }
 
   @Override
@@ -95,7 +95,7 @@ public class TimeServiceImpl implements TimeService {
 
     cache.put(TIME_KEY + id, time);
 
-    return new TimeResponse(sunriseTime, sunsetTime);
+    return new TimeResponse(id, sunriseTime, sunsetTime);
   }
 
   @Override
@@ -116,6 +116,6 @@ public class TimeServiceImpl implements TimeService {
       throw new IllegalArgumentException(TIME_INFO + id + " has connections.");
     }
 
-    return new TimeResponse(time.getSunriseTime(), time.getSunsetTime());
+    return new TimeResponse(id, time.getSunriseTime(), time.getSunsetTime());
   }
 }

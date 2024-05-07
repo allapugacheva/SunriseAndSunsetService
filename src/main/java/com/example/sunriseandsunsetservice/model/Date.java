@@ -34,7 +34,7 @@ public class Date {
 
   private LocalDate sunDate;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
+  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,
       CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(
         name = "location_date_mapping",
@@ -42,7 +42,7 @@ public class Date {
         inverseJoinColumns =  @JoinColumn(name = "location_id"))
   private Set<Location> locations = new HashSet<>();
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,
+  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,
       CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(
         name = "date_time_mapping",

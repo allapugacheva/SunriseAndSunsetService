@@ -18,7 +18,7 @@ public interface TimeRepository extends JpaRepository<Time, Integer> {
   Time findBySunriseTimeAndSunsetTime(LocalTime sunrise, LocalTime sunset);
 
   @Query(value = "SELECT new com.example.sunriseandsunsetservice.dto.response"
-         + ".TimeResponse(t.sunriseTime, t.sunsetTime) FROM Time AS t")
+         + ".TimeResponse(t.id, t.sunriseTime, t.sunsetTime) FROM Time AS t")
   List<TimeResponse> findAllTimes();
 
   @Query(value = "SELECT t FROM Time t"

@@ -12,5 +12,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class DaytimeResponse {
-  LocalTime duration;
+  private Integer id;
+  private LocalTime duration;
 }

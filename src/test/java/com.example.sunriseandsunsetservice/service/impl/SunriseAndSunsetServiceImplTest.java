@@ -182,8 +182,8 @@ class SunriseAndSunsetServiceImplTest {
 
         List<SunriseAndSunsetRequest> testData = List.of(new SunriseAndSunsetRequest(testLat1, testLng1, LocalDate.of(2024, 4, 8)),
                 new SunriseAndSunsetRequest(53.132294, 26.018415, LocalDate.of(2024, 4, 8)));
-        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse(testLocation1, testLat1, testLng1, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
-                new SunriseAndSunsetResponse(testLocation2, 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
+        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse(0, 0, testLocation1, testLat1, testLng1, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
+                new SunriseAndSunsetResponse(0, 0, testLocation2, 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
 
         when(locationRepository.findByLatitudeAndLongitude(testLat1, testLng1)).thenReturn(expectedLocation1);
         when(locationRepository.findByLatitudeAndLongitude(testLat2, testLng2)).thenReturn(expectedLocation2);
@@ -212,10 +212,10 @@ class SunriseAndSunsetServiceImplTest {
     @Test
     void readAllLocationsTest() {
 
-        Object[] row1 = {"Пинск", 52.111385, 26.102528, java.sql.Date.valueOf(LocalDate.of(2024, 4, 8)), java.sql.Time.valueOf(LocalTime.of(6, 31, 10)), java.sql.Time.valueOf(LocalTime.of(20, 3, 28))};
-        Object[] row2 = {"Барановичи", 53.132294, 26.018415, java.sql.Date.valueOf(LocalDate.of(2024, 4, 9)), java.sql.Time.valueOf(LocalTime.of(6, 29, 51)), java.sql.Time.valueOf(LocalTime.of(20, 5, 28))};
-        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse("Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
-                new SunriseAndSunsetResponse("Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
+        Object[] row1 = {0, 0, "Пинск", 52.111385, 26.102528, java.sql.Date.valueOf(LocalDate.of(2024, 4, 8)), java.sql.Time.valueOf(LocalTime.of(6, 31, 10)), java.sql.Time.valueOf(LocalTime.of(20, 3, 28))};
+        Object[] row2 = {0, 0, "Барановичи", 53.132294, 26.018415, java.sql.Date.valueOf(LocalDate.of(2024, 4, 9)), java.sql.Time.valueOf(LocalTime.of(6, 29, 51)), java.sql.Time.valueOf(LocalTime.of(20, 5, 28))};
+        List<SunriseAndSunsetResponse> expectedResult = List.of(new SunriseAndSunsetResponse(0, 0, "Пинск", 52.111385, 26.102528, LocalDate.of(2024, 4, 8), LocalTime.of(6, 31, 10), LocalTime.of(20, 3, 28)),
+                new SunriseAndSunsetResponse(0, 0, "Барановичи", 53.132294, 26.018415, LocalDate.of(2024, 4, 8), LocalTime.of(6, 29, 51), LocalTime.of(20, 5, 28)));
 
         when(locationRepository.findAllData()).thenReturn(Arrays.asList(row1, row2));
 
@@ -511,7 +511,7 @@ class SunriseAndSunsetServiceImplTest {
 
         Integer testDateId = 1, testLocationId = 1;
         long expectedDuration = 13 * 60 * 60 + 32 * 60 + 18;
-        DaytimeResponse expectedResponse = new DaytimeResponse(LocalTime.of(13, 32, 18));
+        DaytimeResponse expectedResponse = new DaytimeResponse(0, LocalTime.of(13, 32, 18));
 
         when(cache.get("Daytime" + testDateId + testLocationId)).thenReturn(null);
         when(locationRepository.findDaytimeLength(testDateId, testLocationId)).thenReturn(expectedDuration);
