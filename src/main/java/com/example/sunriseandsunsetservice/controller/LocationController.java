@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for location.
  */
 @Tag(name = "Location CRUD")
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/suntime")

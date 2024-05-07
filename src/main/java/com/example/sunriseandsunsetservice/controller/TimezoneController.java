@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for timezone.
  */
 @Tag(name = "Timezone CRUD")
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/suntime")

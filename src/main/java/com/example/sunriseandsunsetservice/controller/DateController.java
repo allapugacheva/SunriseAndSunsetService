@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for date.
  */
 @Tag(name = "Date CRUD")
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/suntime")

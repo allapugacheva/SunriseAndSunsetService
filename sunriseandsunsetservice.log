@@ -1247,3 +1247,86 @@
 21:07:03.244 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 21:07:03.265 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 21:07:03.275 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+11:23:02.832 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+11:23:02.889 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Starting SunriseAndSunsetServiceApplication using Java 17.0.10 with PID 3168 (D:\SunriseAndSunsetService\target\classes started by user in D:\SunriseAndSunsetService)
+11:23:02.891 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - No active profile set, falling back to 1 default profile: "default"
+11:23:04.350 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+11:23:04.425 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 66 ms. Found 4 JPA repository interfaces.
+11:23:05.478 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+11:23:05.493 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+11:23:05.496 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+11:23:05.496 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+11:23:05.580 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+11:23:05.580 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2621 ms
+11:23:05.838 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+11:23:05.951 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+11:23:06.001 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+11:23:06.398 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+11:23:06.450 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+11:23:06.733 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3b33fff9
+11:23:06.736 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+11:23:08.328 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+11:23:08.643 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+11:23:09.257 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+11:23:10.405 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+11:23:11.886 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+11:23:11.927 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+11:23:11.939 [main] INFO  c.e.s.SunriseAndSunsetServiceApplication - Started SunriseAndSunsetServiceApplication in 9.545 seconds (process running for 12.016)
+11:24:03.259 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:24:03.259 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+11:24:03.261 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+11:24:03.306 [http-nio-8080-exec-1] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 1.
+11:24:03.308 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:24:03.422 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:24:03.493 [http-nio-8080-exec-6] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 2.
+11:24:03.493 [http-nio-8080-exec-6] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:24:03.501 [http-nio-8080-exec-6] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:25:57.585 [http-nio-8080-exec-4] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 3.
+11:25:57.586 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:25:57.601 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:26:12.571 [http-nio-8080-exec-2] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 4.
+11:26:12.572 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:26:12.595 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:29:09.125 [http-nio-8080-exec-8] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 5.
+11:29:09.126 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Started method findSunriseAndSunsetTime with arguments 53.132294, 26.018415, 2024-05-07
+11:29:09.389 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Started method getSunriseAndSunsetTime with arguments 53.132294, 26.018415, 2024-05-07, Europe/Minsk
+11:29:11.245 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Method getSunriseAndSunsetTime executed.
+11:29:11.250 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Method findSunriseAndSunsetTime executed.
+11:29:11.334 [http-nio-8080-exec-3] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 6.
+11:29:11.335 [http-nio-8080-exec-3] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:29:11.353 [http-nio-8080-exec-3] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:29:11.360 [http-nio-8080-exec-1] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 7.
+11:29:11.361 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:29:11.365 [http-nio-8080-exec-1] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:29:55.276 [http-nio-8080-exec-6] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 8.
+11:29:55.276 [http-nio-8080-exec-6] INFO  c.e.s.aspect.LoggingAspect - Started method getById with arguments 4, 31
+11:29:55.361 [http-nio-8080-exec-6] INFO  c.e.s.aspect.LoggingAspect - Method getById executed.
+11:29:55.366 [http-nio-8080-exec-10] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 9.
+11:29:55.366 [http-nio-8080-exec-10] INFO  c.e.s.aspect.LoggingAspect - Started method getById with arguments 4, 31
+11:29:55.424 [http-nio-8080-exec-10] INFO  c.e.s.aspect.LoggingAspect - Method getById executed.
+11:29:58.551 [http-nio-8080-exec-4] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 10.
+11:29:58.551 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Started method updateSunriseAndSunset with arguments 4, 31, 52.1113862, 26.1025274, 2024-05-08
+11:29:58.679 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Started method getSunriseAndSunsetTime with arguments 52.1113862, 26.1025274, 2024-05-08, Europe/Minsk
+11:29:59.975 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Method getSunriseAndSunsetTime executed.
+11:29:59.978 [http-nio-8080-exec-4] INFO  c.e.s.aspect.LoggingAspect - Method updateSunriseAndSunset executed.
+11:30:00.059 [http-nio-8080-exec-7] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 11.
+11:30:00.059 [http-nio-8080-exec-7] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:30:00.065 [http-nio-8080-exec-7] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:30:00.076 [http-nio-8080-exec-2] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 12.
+11:30:00.076 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:30:00.084 [http-nio-8080-exec-2] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:30:11.792 [http-nio-8080-exec-8] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 13.
+11:30:11.793 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Started method deleteSunriseAndSunsetTime with arguments 4, 20
+11:30:11.889 [http-nio-8080-exec-8] INFO  c.e.s.aspect.LoggingAspect - Method deleteSunriseAndSunsetTime executed.
+11:30:11.899 [http-nio-8080-exec-3] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 14.
+11:30:11.900 [http-nio-8080-exec-3] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:30:11.902 [http-nio-8080-exec-3] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:33:04.561 [http-nio-8080-exec-6] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 15.
+11:33:04.561 [http-nio-8080-exec-6] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:33:04.566 [http-nio-8080-exec-6] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:37:03.574 [http-nio-8080-exec-5] INFO  c.e.s.aspect.CounterAspect - Current number of service calls: 16.
+11:37:03.575 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Started method readAllSunrisesAnsSunsets with no arguments
+11:37:03.580 [http-nio-8080-exec-5] INFO  c.e.s.aspect.LoggingAspect - Method readAllSunrisesAnsSunsets executed.
+11:48:47.317 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+11:48:47.338 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+11:48:47.344 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

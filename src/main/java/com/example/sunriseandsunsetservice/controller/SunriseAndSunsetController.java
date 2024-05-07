@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for sunrise and sunset.
  */
 @Tag(name = "Sunrise and sunset CRUD")
-@CrossOrigin("*")
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/suntime")
