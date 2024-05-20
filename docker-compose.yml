@@ -1,50 +1,50 @@
-#version: '3.9'
-#
-#services:
-#  app:
-#    image: 'sun-service-docker'
-#    build:
-#      context: .
-#    container_name: app
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - db
-#    environment:
-#      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
-#      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
-#      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#
-#  db:
-#    image: 'postgres'
-#    container_name: db
-#    environment:
-#      - POSTGRES_USER=${POSTGRES_USER}
-#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+version: '3.9'
 
-version: '3'
 services:
-  db:
-    image: postgres
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-  backend:
+  app:
+    image: 'sun-service-docker'
     build:
       context: .
-      dockerfile: Dockerfile
-    environment:
-      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    container_name: app
     ports:
       - "8080:8080"
     depends_on:
       - db
-volumes:
-  postgres_data:
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres'
+    container_name: db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+#version: '3'
+#services:
+#  db:
+#    image: postgres
+#    environment:
+#      - POSTGRES_USER=${POSTGRES_USER}
+#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#      - POSTGRES_DB=${POSTGRES_DB}
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#  backend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    environment:
+#      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+#      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+#      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#volumes:
+#  postgres_data:
